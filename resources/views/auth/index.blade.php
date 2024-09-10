@@ -207,6 +207,27 @@
                                 </a>
                             </li>
                             <li class="nav-item {{ Route::currentRouteName() == 'auth.index' ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('auth.celula') }}"><span
+                                        class="active-item-here"></span>
+                                    <i class="fa fa-cogs mr-5"></i>
+                                    <span>Gestión de Células</span>
+                                </a>
+                            </li>
+                            <li class="nav-item {{ Route::currentRouteName() == 'auth.index' ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('auth.asistentes') }}"><span
+                                        class="active-item-here"></span>
+                                    <i class="fa fa-users mr-5"></i>
+                                    <span>Gestión de Asistentes</span>
+                                </a>
+                            </li>
+                            <li class="nav-item {{ Route::currentRouteName() == 'auth.index' ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('auth.asistentes') }}"><span
+                                        class="active-item-here"></span>
+                                    <i class="fa fa-users mr-5"></i>
+                                    <span>Asistencia</span>
+                                </a>
+                            </li>
+                            {{-- <li class="nav-item {{ Route::currentRouteName() == 'auth.index' ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('auth.index') }}"><span
                                         class="active-item-here"></span>
                                     <i class="fa fa-male mr-5"></i> <span>Empleador</span>
@@ -254,7 +275,7 @@
                                         class="active-item-here"></span>
                                     <i class="fa fa-bolt mr-5"></i> <span>Programas de Inserción rápida</span>
                                 </a>
-                            </li>
+                            </li> --}}
                         @endif
                         @if (Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_DESARROLLADOR)
                             <li class="nav-item dropdown">
@@ -267,11 +288,11 @@
                                                 class="fa fa-user mr-5"></i> Gestión de
                                             Usuarios</a>
                                     </li>
-                                    <li class="nav-item"><a class="nav-link"
+                                    {{-- <li class="nav-item"><a class="nav-link"
                                             href="{{ route('auth.alumnosancionado') }}"><i
                                                 class="fa fa-gavel mr-5"></i> Estudiantes
                                             Sancionados</a>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </li>
                         @endif
@@ -295,33 +316,30 @@
                                 </li>
                             </ul>
                         </li> --}}
-                        @if (Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_DESARROLLADOR)
+                        {{-- @if (Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_DESARROLLADOR)
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                     <span class="active-item-here"> <i class="fa fa-calendar-alt mr-5"></i></span>
-                                    {{-- <i class="fa fa-cog mr-5"></i> --}}
                                     <span>Gestión de Eventos</span>
                                 </a>
                                 <ul class="dropdown-menu multilevel scale-up-left">
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('auth.eventos') }}">
                                             <i class="fa fa-calendar mr-5"></i>
-                                            <!-- Ícono de calendario para "Listado de Eventos" -->
                                             Listado de Eventos
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('auth.eventosasistencia') }}">
                                             <i class="fa fa-check-circle mr-5"></i>
-                                            <!-- Ícono de verificación para "Asistencia" -->
                                             Registrar Asistencia
                                         </a>
                                     </li>
                            
                                 </ul>
                             </li>
-                        @endif
+                        @endif --}}
                     </ul>
                 </div>
             </nav>

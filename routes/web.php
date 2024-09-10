@@ -308,6 +308,21 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
 
 
 
+    /* IACYM JAC */
+    /* GESTIÓN DE CELULAS */
+    Route::group(['prefix' => 'celula'], function () {
+        Route::get('/', 'Auth\CelulaController@index')->name('auth.celula');
+        Route::get('/list_all', 'Auth\CelulaController@list_all')->name('auth.celula.list_all');
+        /* Route::post('/store', 'Auth\EventosAsistenciaController@store')->name('auth.eventosasistencia.store');
+        Route::post('/update', 'Auth\EventosAsistenciaController@update')->name('auth.eventosasistencia.update'); */
+    });
+    Route::group(['prefix' => 'asistentes'], function () {
+        Route::get('/', 'Auth\AsistentesController@index')->name('auth.asistentes');
+        Route::get('/list_all', 'Auth\AsistentesController@list_all')->name('auth.asistentes.list_all');
+        /* Route::post('/store', 'Auth\EventosAsistenciaController@store')->name('auth.eventosasistencia.store');
+        Route::post('/update', 'Auth\EventosAsistenciaController@update')->name('auth.eventosasistencia.update'); */
+    });
+
 });
 
 
