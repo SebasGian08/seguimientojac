@@ -11,17 +11,24 @@ class Asistentes extends Model
         use SoftDeletes;
 
         protected $fillable = [
-            'nombre','descripcion'
+            'id','nombre','descripcion','nombre','apellido','fecha_nac','distrito_id','direccion','tel','genero','celula_id','estado'
         ];
     
         public $timestamps = false;
     
         protected $dates = ['deleted_at'];
     
-       /*  public function eventosasistencia()
+      // Definir la relación con Distrito
+        public function distrito()
         {
-            return $this->hasMany(EventosAsistencia::class, 'id_evento', 'id');
-        } */
+            return $this->belongsTo(Distrito::class, 'distrito_id');
+        }
+
+        // Definir la relación con Celula
+        public function celula()
+        {
+            return $this->belongsTo(Celula::class, 'celula_id');
+        }
     
         
         

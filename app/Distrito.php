@@ -16,4 +16,9 @@ class Distrito extends Model
     public $timestamps = false;
 
     protected $dates = ['deleted_at'];
+
+    public function asistentes()
+    {
+        return $this->hasMany(Asistentes::class);
+    }
 }

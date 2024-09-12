@@ -23,198 +23,186 @@ class InicioController extends Controller
     public function index(Request $request)
     {
         $fechaDesde = $request->input('fecha_desde', "2000-01-01");
-        // Obtener la fecha actual y sumar un día
-        /* Actualizado para que lo reportes sumen 1 dias mas */
         $fechaHasta = $request->input('fecha_hasta', Carbon::now()->addDay()->format('Y-m-d'));
-        
-        
-
+    
         // Obtener datos filtrados por fechas
-        $empresas = $this->getEmpresasPorTipoPersona($fechaDesde, $fechaHasta);
-        $programasContratados = $this->getProgramasContratados($fechaDesde, $fechaHasta);
-        $totalEmpresasAprobadas = $this->getTotalEmpresasAprobadas($fechaDesde, $fechaHasta);
-        $totalUsuarios = $this->getTotalUsuarios($fechaDesde, $fechaHasta);
-        $totalAvisos = $this->getTotalAvisos($fechaDesde, $fechaHasta);
-        $totalAvisosporEmpleador = $this->getTotalAvisosporEmpleador($fechaDesde, $fechaHasta);
-        $totalContratadosporCarrera = $this->getTotalContratadosporCarrera($fechaDesde, $fechaHasta);
-        $TotalUsuariosporCarrera = $this->getTotalUsuariosporCarrera($fechaDesde, $fechaHasta);
-
-
+        $totalAsistentes = $this->getTotalDeAsistentes($fechaDesde, $fechaHasta);
+        $totalCelulas = $this->getTotalCelulas($fechaDesde, $fechaHasta);
+        $totalActividades = $this->getTotalActividades($fechaDesde, $fechaHasta);
+    
+        $TotalDeAsistentesporCelula = $this->getTotalDeAsistentesporCelula($fechaDesde, $fechaHasta);
+        $seguimientoPorCelula = $this->getSeguimientoPorCelula($fechaDesde, $fechaHasta);
+        $asistenciasPresente = $this->getTotalAsistenciaP($fechaDesde, $fechaHasta);
+        $asistenciasAusente = $this->getTotalAsistenciaA($fechaDesde, $fechaHasta);
+        
+        // Obtener datos para el gráfico sin promedio
+        $asistenciasPorPrograma = $this->getTotalAsistenciasPorPrograma($fechaDesde, $fechaHasta);
+    
         // Pasar los datos a la vista 'auth.inicio.index'
         if (Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_DESARROLLADOR ||
-        Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_ADMINISTRADOR){
-            return view('auth.inicio.index', compact('TotalUsuariosporCarrera', 
-            'totalContratadosporCarrera', 'totalAvisosporEmpleador', 'totalAvisos', 
-            'totalUsuarios', 'totalEmpresasAprobadas', 'empresas', 'programasContratados', 
-            'fechaDesde', 'fechaHasta'));
+            Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_ADMINISTRADOR) {
+            return view('auth.inicio.index', compact('totalAsistentes', 
+                'totalCelulas', 'totalActividades', 'TotalDeAsistentesporCelula', 'seguimientoPorCelula',
+                'asistenciasPresente', 'asistenciasAusente','asistenciasPorPrograma', 
+                'fechaDesde', 'fechaHasta'));
         }
+    
         return redirect('/auth/principal'); // Redirige a una página predeterminada si la condición no se cumple
     }
     
-    // Métodos privados con filtro por fecha
-    /* Primer Grafico */
-    private function getEmpresasPorTipoPersona($fecha_desde, $fecha_hasta)
-    {
-        return DB::table('empresas as e')
-            ->join('tipo_personas as tp', 'e.tipo_persona', '=', 'tp.id')
-            ->whereBetween('e.created_at', [$fecha_desde, $fecha_hasta])
-            ->whereNull('e.deleted_at')
-            ->selectRaw('tp.tipo as tipo_persona, COUNT(*) as cantidad')
-            ->groupBy('e.tipo_persona', 'tp.tipo')
-            ->get();
-    }
+    
+    
 
-    /* Quinto Grafico */
-    private function getProgramasContratados($fecha_desde, $fecha_hasta)
-    {
-        $programasContratados = DB::table('participantes as p')
-            ->join('programas as pr', 'p.id_programa', '=', 'pr.id')
-            ->select('pr.tipo_programa', DB::raw('COUNT(*) as cantidad_contratados'))
-            ->where('p.estado', 'Contratado')
-            ->whereBetween('pr.registro', [$fecha_desde, $fecha_hasta])
-            ->whereNull('pr.deleted_at')
-            ->whereNull('p.deleted_at') // no contar con los eliminados participantes
-            ->groupBy('pr.tipo_programa')
-            ->get();
-
-        return $programasContratados;
-    }
-
-    /* Indicadores */
-    private function getTotalEmpresasAprobadas($fecha_desde, $fecha_hasta)
-    {
-        return DB::table('empresas')
-            /* ->where('aprobado', '1') */ /* Quite porque quiere en general aprobadas y desaprobadas */
-            ->whereBetween('created_at', [$fecha_desde, $fecha_hasta])
-            ->whereNull('deleted_at') // no contar con los eliminados
-            ->count();
-    }
-
-    private function getTotalUsuarios($fecha_desde, $fecha_hasta)
-    {
-        return DB::table('alumnos')
-            ->whereBetween('created_at', [$fecha_desde, $fecha_hasta])
-            ->whereNull('deleted_at') // no contar con los eliminados
-            ->count();
-    }
-
-    /* private function getTotalAvisos($fecha_desde, $fecha_hasta)
-    {
-        return DB::table('avisos')
-            ->whereBetween('created_at', [$fecha_desde, $fecha_hasta])
-            ->whereNull('deleted_at') // no contar con los eliminados
-            ->count();
-    } */
-    private function getTotalAvisos($fecha_desde, $fecha_hasta)
-    {
-        return DB::table('avisos')
-            ->join('empresas', 'avisos.empresa_id', '=', 'empresas.id')
-            ->whereBetween('avisos.created_at', [$fecha_desde, $fecha_hasta])
-            ->whereNull('avisos.deleted_at') // no contar con los eliminados
-            ->whereNull('empresas.deleted_at') // empresas no eliminadas
-            ->count();
-    }
-
-    /* Fin Indicadores */
-
-    /* Tercer Grafico */
-    public function getTotalAvisosporEmpleador($fecha_desde, $fecha_hasta)
-    {
-        $results = DB::table('empresas as e')
-            ->join('tipo_personas as t', 't.id', '=', 'e.tipo_persona')
-            ->join('avisos as a', 'e.id', '=', 'a.empresa_id')
+        /* Indicadores */
+        private function getTotalDeAsistentes($fecha_desde, $fecha_hasta)
+        {
+            return DB::table('asistentes')
+                /* ->where('aprobado', '1') */ /* Quite porque quiere en general aprobadas y desaprobadas */
+                ->whereBetween('created_at', [$fecha_desde, $fecha_hasta])
+                ->whereNull('deleted_at') // no contar con los eliminados
+                ->count();
+        }
+    
+        private function getTotalCelulas($fecha_desde, $fecha_hasta)
+        {
+            return DB::table('celulas')
+                ->whereBetween('created_at', [$fecha_desde, $fecha_hasta])
+                ->whereNull('deleted_at') // no contar con los eliminados
+                ->count();
+        }
+    
+    
+        private function getTotalActividades($fecha_desde, $fecha_hasta)
+        {
+            return DB::table('calendarios')
+                ->whereBetween('created_at', [$fecha_desde, $fecha_hasta])
+                ->whereNull('deleted_at') // no contar con los eliminados
+                ->count();
+        }
+    
+        /* Fin Indicadores */
+        
+        // Métodos privados con filtro por fecha
+        /* Primer Grafico */
+        private function getTotalDeAsistentesporCelula($fecha_desde, $fecha_hasta)
+        {
+            return DB::table('asistentes as a')
+            ->join('celulas as c', 'a.celula_id', '=', 'c.id')
             ->whereBetween('a.created_at', [$fecha_desde, $fecha_hasta])
-            ->whereNull('e.deleted_at') // no contar con los eliminados
             ->whereNull('a.deleted_at')
-            ->select('t.tipo as tipo_persona', DB::raw('COUNT(*) as total'))
-            ->groupBy('t.tipo')
+            ->selectRaw('c.nombre as celula, COUNT(*) as cantidad_asistentes')
+            ->groupBy('c.nombre')
             ->get();
-
-        // Preparar los datos para Highcharts
-        $series = [];
-        foreach ($results as $dato) {
-            $serie = [
-                'name' => $dato->tipo_persona,
-                'y' => $dato->total,
-            ];
-            $series[] = $serie;
         }
+        /* Segundo Grafico */
 
-        // Retornar los datos en formato JSON
-        return $series;
-    }
+        public function getSeguimientoPorCelula($fecha_desde, $fecha_hasta)
+        {
+            return DB::table('seguimiento as s')
+                ->join('celulas as c', 's.celula_id', '=', 'c.id')
+                ->whereBetween('s.fecha_contacto', [$fecha_desde, $fecha_hasta])
+                ->selectRaw('c.nombre as celula, COUNT(*) as cantidad_seguimientos')
+                ->groupBy('c.nombre')
+                ->orderBy('cantidad_seguimientos', 'desc') // Ordenar de mayor a menor
+                ->get();
+        }
+        
 
-    /* Cuarto Grafico */
-    /* Cambie porque no deb contarse los avisos eliminados */
-    /* public function getTotalContratadosporCarrera($fecha_desde, $fecha_hasta)
-    {
-        $datos = DB::table('alumno_avisos AS aa')
-            ->join('alumnos AS a', 'aa.alumno_id', '=', 'a.id')
-            ->join('estados AS e', 'aa.estado_id', '=', 'e.id')
-            ->join('avisos AS av', 'aa.aviso.id', '=', 'av.id')
-            ->leftJoin('areas AS ar', 'a.area_id', '=', 'ar.id')
-            ->where('e.nombre', '=', 'CONTRATADO')
-            ->whereBetween('aa.created_at', [$fecha_desde, $fecha_hasta])
+        /* Tercer Grafico */
+        public function getTotalAsistenciaP($fecha_desde, $fecha_hasta)
+        {
+            $results = DB::table('asistentes as a')
+            ->join('asistencias as s', 'a.id', '=', 's.asistente_id')
+            ->whereBetween('s.fecha_registro', [$fecha_desde, $fecha_hasta])
             ->whereNull('a.deleted_at') // no contar con los eliminados
-            ->groupBy('ar.nombre')
-            ->select('ar.nombre AS nombre_area', DB::raw('COUNT(*) AS total_contratados'))
+            ->whereNull('s.deleted_at')
+            ->where('s.estado', 'presente') // filtrar solo las asistencias con estado "presente"
+            ->select('a.nombre as asistente', DB::raw('COUNT(*) as total_asistencias'))
+            ->groupBy('a.nombre')
             ->get();
 
-        $series = [];
-        foreach ($datos as $dato) {
-            $serie = [
-                'name' => $dato->nombre_area,
-                'y' => $dato->total_contratados,
-                'drilldown' => $dato->nombre_area, // Puedes ajustar esto según tu necesidad
-            ];
-            $series[] = $serie;
+            // Preparar los datos para Highcharts
+            $series = [];
+            foreach ($results as $dato) {
+                $serie = [
+                    'name' => $dato->asistente,
+                    'y' => $dato->total_asistencias,
+                ];
+                $series[] = $serie;
+            }
+
+            // Retornar los datos en formato JSON
+            return $series;
         }
 
-        return $series;
-    } */
-
-    public function getTotalContratadosporCarrera($fecha_desde, $fecha_hasta)
-    {
-        $datos = DB::table('alumno_avisos AS aa')
-            ->join('alumnos AS a', 'aa.alumno_id', '=', 'a.id')
-            ->join('estados AS e', 'aa.estado_id', '=', 'e.id')
-            ->join('avisos AS av', 'aa.aviso_id', '=', 'av.id') // Corrección aquí
-            ->leftJoin('areas AS ar', 'a.area_id', '=', 'ar.id')
-            ->where('e.nombre', '=', 'CONTRATADO')
-            ->whereBetween('aa.created_at', [$fecha_desde, $fecha_hasta])
-            ->whereNull('a.deleted_at') // no contar con los alumnos eliminados
-            ->whereNull('av.deleted_at') // Asegurarse que los avisos no estén eliminados
-            ->groupBy('ar.nombre')
-            ->select('ar.nombre AS nombre_area', DB::raw('COUNT(*) AS total_contratados'))
+        /* Cuarto Grafico */
+        public function getTotalAsistenciaA($fecha_desde, $fecha_hasta)
+        {
+            $results = DB::table('asistentes as a')
+            ->join('asistencias as s', 'a.id', '=', 's.asistente_id')
+            ->whereBetween('s.fecha_registro', [$fecha_desde, $fecha_hasta])
+            ->whereNull('a.deleted_at') // no contar con los eliminados
+            ->whereNull('s.deleted_at')
+            ->where('s.estado', 'ausente') // filtrar solo las asistencias con estado "ausente"
+            ->select('a.nombre as asistente', DB::raw('COUNT(*) as total_asistencias'))
+            ->groupBy('a.nombre')
             ->get();
 
-        $series = [];
-        foreach ($datos as $dato) {
-            $serie = [
-                'name' => $dato->nombre_area,
-                'y' => $dato->total_contratados,
-                'drilldown' => $dato->nombre_area, // Puedes ajustar esto según tu necesidad
-            ];
-            $series[] = $serie;
+            // Preparar los datos para Highcharts
+            $series = [];
+            foreach ($results as $dato) {
+                $serie = [
+                    'name' => $dato->asistente,
+                    'y' => $dato->total_asistencias,
+                ];
+                $series[] = $serie;
+            }
+
+            // Retornar los datos en formato JSON
+            return $series;
         }
 
-        return $series;
-    }
+
+        
+        public function getTotalAsistenciasPorPrograma($fechaDesde, $fechaHasta)
+        {
+            // Obtener el conteo de asistentes por programa
+            $conteosPorPrograma = DB::table('asistencias as a')
+                ->join('tipo_programas as tp', 'a.programa_id', '=', 'tp.id')
+                ->whereBetween('a.fecha_registro', [$fechaDesde, $fechaHasta])
+                ->whereNull('a.deleted_at')
+                ->where('a.estado', 'presente') // Filtrar solo asistentes presentes
+                ->select('a.programa_id', 'tp.nombre as nombre_programa', DB::raw('COUNT(DISTINCT a.asistente_id) as total_asistentes'))
+                ->groupBy('a.programa_id', 'tp.nombre')
+                ->get();
+
+            // Preparar los datos para Highcharts
+            $series = [];
+            foreach ($conteosPorPrograma as $dato) {
+                $serie = [
+                    'name' => $dato->nombre_programa,
+                    'y' => $dato->total_asistentes,
+                ];
+                $series[] = $serie;
+            }
+
+            return $series;
+        }
+
+        public function listSeguimiento(Request $request)
+        {
+            // Llamar al procedimiento almacenado
+            $data = DB::select('CALL ObtenerDatosAsistencia()');
+            // Retornar los datos en formato JSON
+            return response()->json([
+                'data' => $data
+            ]);
+        }
 
 
-    /* Segundo Grafico */
 
-    public function getTotalUsuariosporCarrera($fecha_desde, $fecha_hasta)
-    {
-        $resultados = DB::table('alumnos')
-            ->select('alumnos.area_id', 'areas.nombre AS nombre_area', DB::raw('COUNT(alumnos.id) AS cantidad_alumnos'))
-            ->join('areas', 'alumnos.area_id', '=', 'areas.id')
-            ->whereBetween('alumnos.created_at', [$fecha_desde, $fecha_hasta])
-            ->whereNull('alumnos.deleted_at') // no contar con los eliminados
-            ->groupBy('alumnos.area_id', 'areas.nombre')
-            ->orderBy('alumnos.area_id')
-            ->get();
+        
 
-        return $resultados;
-    }
+
+        
 }

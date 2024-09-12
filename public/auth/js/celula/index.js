@@ -28,7 +28,9 @@ $(function () {
                 },
             },
             { title: "Nombre de Celula", data: "nombre", class: "text-left" },
+            { title: "Lider Encargado", data: "nombrelider", class: "text-left" },
             { title: "Descripción", data: "descripcion", class: "text-left" },
+            { title: "Estado", data: "estado", class: "text-left" },
             {
                 data: null,
                 render: function (data) {
@@ -57,7 +59,7 @@ $(function () {
     });
 
     function invocarModalView(id) {
-        invocarModal(`/auth/eventos/partialView/${id ? id : 0}`, function ($modal) {
+        invocarModal(`/auth/celula/partialView/${id ? id : 0}`, function ($modal) {
             if ($modal.attr("data-reload") === "true") $dataTableEventos.ajax.reload(null, false);
         });
     }
@@ -66,13 +68,13 @@ $(function () {
 
     /* Para abrir modal y ver participantes */
     $table.on("click", ".btn-view-participants", function () {
-        const id = $dataTableEventos.row($(this).parents("tr")).data().id;
+        const id = $dataTableCelula.row($(this).parents("tr")).data().id;
         invocarModalViewParticipantesE(id);
     });
 
     function invocarModalViewParticipantesE(id) {
-        invocarModal(`/auth/eventos/partialViewAsistentes/${id ? id : 0}`, function ($modal) {
-            if ($modal.attr("data-reload") === "true") $dataTableEventos.ajax.reload(null, false);
+        invocarModal(`/auth/celula/partialViewAsistentes/${id ? id : 0}`, function ($modal) {
+            if ($modal.attr("data-reload") === "true") $dataTableCelula.ajax.reload(null, false);
         });
     }
     
@@ -83,13 +85,13 @@ $(function () {
         formData.append("_token", $("input[name=_token]").val());
         formData.append("id", id);
         confirmAjax(
-            `/auth/eventos/delete`,
+            `/auth/celula/delete`,
             formData,
             "POST",
             null,
             null,
             function () {
-                $dataTableEventos.ajax.reload(null, false);
+                $dataTableCelula.ajax.reload(null, false);
             }
         );
     });

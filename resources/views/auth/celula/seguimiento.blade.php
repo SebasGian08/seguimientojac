@@ -1,0 +1,101 @@
+<div id="modalMantenimientoParticipantes" class="modal modal-fill fade" data-backdrop="false" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <form enctype="multipart/form-data" action="{{-- {{ route('auth.programa.storeParticipantes') }} --}}" id="registroParticipantes" method="POST">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> Registrar Seguimiento a {{ $Entity != null ? $Entity->apellido : '' }},
+                        {{ $Entity != null ? $Entity->nombre : '' }}</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <input type="hidden" name="asistente_id" class="asistente_id"
+                            value="{{ $Entity != null ? $Entity->id : '' }}" required>
+
+                        <div style="display: flex; flex-wrap: wrap;">
+                            <div class="form-group col-lg-6">
+                                <label for="fecha-ultima-sesion" class="m-0 label-primary" style="font-size: 15px;">
+                                    <i class="fa fa-calendar-day"></i> Fecha de la Última Sesión de Discipulado
+                                </label>
+                                <input type="date" class="form-control form-control-sm" id="fecha-ultima-sesion"
+                                    name="fecha-ultima-sesion" required>
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label for="tipo-contacto" class="m-0 label-primary" style="font-size: 15px;">
+                                    <i class="fa fa-phone"></i> Tipo de Contacto
+                                </label>
+                                <select class="form-control form-control-sm" id="tipo-contacto" name="tipo-contacto"
+                                    required>
+                                    <option value="">Seleccione una opción</option>
+                                    <option value="Llamada">Llamada</option>
+                                    <option value="Mensaje">Mensaje WhatsAap</option>
+                                    <option value="Reunión en persona">Reunión en persona</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label for="detalles-ultimo-contacto" class="m-0 label-primary"
+                                    style="font-size: 15px;">
+                                    <i class="fa fa-info-circle"></i> Detalles del Último Contacto
+                                </label>
+                                <textarea class="form-control form-control-sm" id="detalles-ultimo-contacto" name="detalles-ultimo-contacto"
+                                    rows="3" required></textarea>
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label for="peticiones-oracion" class="m-0 label-primary" style="font-size: 15px;">
+                                    <i class="fa fa-praying-hands"></i> Peticiones de Oración Específicas
+                                </label>
+                                <textarea class="form-control form-control-sm" id="peticiones-oracion" name="peticiones-oracion" rows="3"
+                                    required></textarea>
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <!-- Botón de Envío -->
+                                <button type="submit" class="btn btn-primary "
+                                    style="background-color:#2ecc71; border-color:#2ecc71; color:#fff;">
+                                    <i class="fa fa-user-plus"></i> Registrar Seguimiento
+                                </button>
+                                <!-- Botón de Cancelar (opcional) -->
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                    style="background-color:#e74c3c; border-color:#e74c3c; color:#fff;">
+                                    <i class="fa fa-times"></i> Cerrar
+                                </button>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="col-lg-12 col-md-12">
+                            <div class="table-wrapper">
+                                <table id="tableSeguimiento"
+                                    class="display table table-bordered table-hover table-condensed">
+                                    <thead>
+                                        {{-- Contenido de JS --}}
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{{-- <script>
+    // Define las variables en el contexto global de JavaScript
+    var userProfileId = @json(Auth::guard('web')->user()->profile_id);
+    var PERFIL_DESARROLLADOR = @json(\BolsaTrabajo\App::$PERFIL_DESARROLLADOR);
+</script> --}}
+<script type="text/javascript" src="{{ asset('auth/js/celula/_Seguimiento.js') }}"></script>

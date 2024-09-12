@@ -67,60 +67,92 @@
                         <div class="form-group col-lg-6">
                             <label for="nombres" class="m-0 label-primary" style="font-size: 15px;">
                                 <i class="fa fa-check"></i> Nombre del Asistente</label>
-                            <input autocomplete="off" type="text" class="form-control form-control-m" id="nombres" name="nombres" placeholder="Ingrese nombre del asistente" required>
+                            <input autocomplete="off" type="text" class="form-control form-control-lg" id="nombres"
+                                name="nombres" placeholder="Ingrese nombre del asistente" required>
                         </div>
-            
+
                         <div class="form-group col-lg-6">
                             <label for="apellidos" class="m-0 label-primary" style="font-size: 15px;">
                                 <i class="fa fa-check"></i> Apellidos</label>
-                            <input autocomplete="off" type="text" class="form-control form-control-m" id="apellidos" name="apellidos" placeholder="Ingrese apellidos del asistente" required>
+                            <input autocomplete="off" type="text" class="form-control form-control-lg" id="apellidos"
+                                name="apellidos" placeholder="Ingrese apellidos del asistente" required>
                         </div>
-            
+
                         <div class="form-group col-lg-6">
                             <label for="fecha_cumpleanos" class="m-0 label-primary" style="font-size: 15px;">
-                                <i class="fa fa-calendar"></i> Fecha de Cumpleaños</label>
-                            <input autocomplete="off" type="date" class="form-control form-control-m" id="fecha_cumpleanos" name="fecha_cumpleanos" required>
-                        </div>
-            
-                        <div class="form-group col-lg-6">
-                            <label for="direccion" class="m-0 label-primary" style="font-size: 15px;">
-                                <i class="fa fa-home"></i> Dirección</label>
-                            <input autocomplete="off" type="text" class="form-control form-control-m" id="direccion" name="direccion" placeholder="Ingrese dirección del asistente" required>
+                                <i class="fa fa-calendar"></i> Fecha de Nacimiento</label>
+                            <input autocomplete="off" type="date" class="form-control form-control-lg"
+                                id="fecha_cumpleanos" name="fecha_cumpleanos" required>
                         </div>
                         <div class="form-group col-lg-6">
-                            <label for="telefono" class="m-0 label-primary" style="font-size: 15px;">
-                                <i class="fa fa-phone"></i> Teléfono</label>
-                            <input autocomplete="off" type="tel" class="form-control form-control-m" id="telefono" name="telefono" placeholder="Ingrese número de teléfono" required>
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label for="genero" class="m-0 label-primary" style="font-size: 15px;">
-                                <i class="fa fa-genderless"></i> Género</label>
-                            <select class="form-control form-control-m" id="genero" name="genero" required>
-                                <option value="" disabled selected>Seleccione su género</option>
-                                <option value="masculino">Masculino</option>
-                                <option value="femenino">Femenino</option>
-                                <option value="otro">Otro</option>
+                            <label for="distrito" class="m-0 label-primary" style="font-size: 15px;">
+                                <i class="fa fa-map-marker"></i> Distrito</label>
+                            <select class="form-control form-control-lg" id="distrito" name="distrito" required>
+                                <option value="" disabled selected>Seleccione Distrito</option>
+                                @foreach($distritos as $distritos)
+                                    <option value="{{ $distritos->id }}">{{ $distritos->nombre }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group col-lg-6">
-                            <label for="celula" class="m-0 label-primary" style="font-size: 15px;">
-                                <i class="fa fa-tag"></i> Célula</label>
-                                <select class="form-control form-control-m" id="celula" name="celula" required>
-                                    <option value="" disabled selected>Seleccione Celula..</option>
-                                    <option value="masculino">Celula Gracia</option>
-                                    {{-- <option value="femenino">Femenino</option>
-                                    <option value="otro">Otro</option> --}}
-                                </select>
+                            <label for="direccion" class="m-0 label-primary" style="font-size: 15px;">
+                                <i class="fa fa-home"></i> Dirección</label>
+                            <input autocomplete="off" type="text" class="form-control form-control-lg" id="direccion"
+                                name="direccion" placeholder="Ingrese dirección del asistente" required>
                         </div>
+
+                        <div class="form-group col-lg-6">
+                            <label for="telefono" class="m-0 label-primary" style="font-size: 15px;">
+                                <i class="fa fa-phone"></i> Teléfono/Celular
+                            </label>
+                            <input
+                                autocomplete="off"
+                                type="tel"
+                                class="form-control form-control-lg"
+                                min="6"
+                                id="telefono"
+                                name="telefono"
+                                placeholder="Ingrese número de teléfono"
+                                required
+                                oninput="this.value = this.value.replace(/\D/g, '')"
+                            >
+                        </div>
+                        
+
+                        <div class="form-group col-lg-6">
+                            <label for="genero" class="m-0 label-primary" style="font-size: 15px;">
+                                <i class="fa fa-genderless"></i> Género</label>
+                            <select class="form-control form-control-lg" id="genero" name="genero" required>
+                                <option value="" disabled selected>Seleccione su género</option>
+                                <option value="masculino">Masculino</option>
+                                <option value="femenino">Femenino</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-lg-6">
+                            <label for="celula" class="m-0 label-primary" style="font-size: 15px;">
+                                <i class="fa fa-tag"></i> Célula
+                            </label>
+                            <select class="form-control form-control-lg" id="celula" name="celula" required>
+                                <option value="" disabled selected>Seleccione Celula..</option>
+                                @foreach ($celulas as $celula)
+                                    <option value="{{ $celula->id }}">{{ $celula->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+
+
                     </div>
-            
+
+
                     <div class="form-group col-lg-12">
-                        <button type="submit" class="btn btn-primary btn-lg" style="font-size: 13px;">
+                        <button type="submit" class="btn btn-primary btn-lg" style="font-size: 16px;">
                             <i class="fa fa-save"></i> Registrar Asistente</button>
                     </div>
                 </form>
             </div>
-            
+
 
 
         </div>
@@ -139,7 +171,7 @@
             <div class="row">
                 <div class="col-md-12">
 
-                    <table id="tableCelula" width="100%"
+                    <table id="tableAsistentes" width="100%"
                         class='table dataTables_wrapper container-fluid dt-bootstrap4 no-footer'></table>
                 </div>
             </div>
@@ -151,5 +183,5 @@
 @section('scripts')
     <script type="text/javascript" src="{{ asset('auth/plugins/datatable/datatables.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('auth/plugins/datatable/dataTables.config.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('auth/js/celula/index.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('auth/js/asistentes/index.js') }}"></script>
 @endsection

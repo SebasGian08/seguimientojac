@@ -206,27 +206,64 @@
                                     <i class="fa fa-home mr-5"></i> <span>Inicio</span>
                                 </a>
                             </li>
-                            <li class="nav-item {{ Route::currentRouteName() == 'auth.index' ? 'active' : '' }}">
+                            <li class="nav-item {{ Route::currentRouteName() == 'auth.calendario' ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('auth.calendario') }}"><span
+                                        class="active-item-here"></span>
+                                    <i class="fa fa-calendar mr-5"></i>
+                                    <span>Calendario de Actividades</span>
+                                </a>
+                            </li>
+                            <li class="nav-item {{ Route::currentRouteName() == 'auth.celula' ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('auth.celula') }}"><span
                                         class="active-item-here"></span>
-                                    <i class="fa fa-cogs mr-5"></i>
+                                    <i class="fa fa-users mr-5"></i>
                                     <span>Gestión de Células</span>
                                 </a>
                             </li>
-                            <li class="nav-item {{ Route::currentRouteName() == 'auth.index' ? 'active' : '' }}">
+                            {{-- <li class="nav-item {{ Route::currentRouteName() == 'auth.asistentes' ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('auth.asistentes') }}"><span
                                         class="active-item-here"></span>
-                                    <i class="fa fa-users mr-5"></i>
+                                    <i class="fa fa-user mr-5"></i>
                                     <span>Gestión de Asistentes</span>
                                 </a>
                             </li>
-                            <li class="nav-item {{ Route::currentRouteName() == 'auth.index' ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('auth.asistentes') }}"><span
+                            --}}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <span class="active-item-here"></span>
+                                    <i class="fa fa-user mr-5"></i>
+                                    <span>Gestión de Asistencia</span>
+                                </a>
+                                <ul class="dropdown-menu multilevel scale-up-left">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('auth.asistencia') }}">
+                                            <i class="fa fa-user mr-5"></i> Registro de Asistencia
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('auth.asistentes') }}">
+                                            <i class="fa fa-save mr-5"></i> Registro de Participantes
+                                        </a>
+                                    </li>
+                                    @if (Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_DESARROLLADOR)
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('auth.asistencia.listado') }}">
+                                                <i class="fa fa-table mr-5"></i> Listado de Asistencia
+                                            </a>
+                                        </li>
+                                    @endif
+                                </ul>
+                            </li>
+
+
+                            {{--  <li class="nav-item {{ Route::currentRouteName() == 'auth.index' ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('auth.asistencia') }}"><span
                                         class="active-item-here"></span>
                                     <i class="fa fa-users mr-5"></i>
                                     <span>Asistencia</span>
                                 </a>
-                            </li>
+                            </li> --}}
                             {{-- <li class="nav-item {{ Route::currentRouteName() == 'auth.index' ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('auth.index') }}"><span
                                         class="active-item-here"></span>

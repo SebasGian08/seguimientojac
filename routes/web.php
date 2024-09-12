@@ -113,12 +113,8 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
 
     Route::group(['prefix' => 'inicio'], function () {
         Route::get('/', 'Auth\InicioController@index')->name('auth.inicio');
-        
+        Route::get('/listSeguimiento', 'Auth\InicioController@listSeguimiento')->name('auth.inicio.listSeguimiento');
 
-        // Route::post('/store', 'Auth\InicioController@store')->name('auth.inicio.store');
-        // Route::get('/list_all', 'Auth\InicioController@list')->name('auth.inicio.list');
-        // Route::post('/delete', 'Auth\InicioController@delete')->name('auth.inicio.delete');
-        /* Route::get('/list_all', 'Auth\AvisoPostulacionController@list')->name('auth.avisoPostulacion.list'); */
     });
 
     Route::group(['prefix' => 'alumno'], function () {
@@ -313,15 +309,40 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
     Route::group(['prefix' => 'celula'], function () {
         Route::get('/', 'Auth\CelulaController@index')->name('auth.celula');
         Route::get('/list_all', 'Auth\CelulaController@list_all')->name('auth.celula.list_all');
-        /* Route::post('/store', 'Auth\EventosAsistenciaController@store')->name('auth.eventosasistencia.store');
-        Route::post('/update', 'Auth\EventosAsistenciaController@update')->name('auth.eventosasistencia.update'); */
+        Route::post('/store', 'Auth\CelulaController@store')->name('auth.celula.store');
+        /*  Route::post('/update', 'Auth\EventosAsistenciaController@update')->name('auth.eventosasistencia.update'); */
+        Route::post('/delete', 'Auth\CelulaController@delete')->name('auth.celula.delete');
+        Route::get('/partialViewAsistentes/{id}', 'Auth\CelulaController@partialViewAsistentes')->name('auth.celula.create');
+        Route::get('/mostrarAsistentes', 'Auth\CelulaController@mostrarAsistentes')->name('auth.celula.mostrarAsistentes');
+        Route::get('/modalSeguimientoAsistentes/{id}', 'Auth\CelulaController@modalSeguimientoAsistentes')->name('auth.celula.create');
+        Route::get('/listSeguimiento', 'Auth\CelulaController@listSeguimiento')->name('auth.celula.listSeguimiento');
+       
     });
     Route::group(['prefix' => 'asistentes'], function () {
         Route::get('/', 'Auth\AsistentesController@index')->name('auth.asistentes');
         Route::get('/list_all', 'Auth\AsistentesController@list_all')->name('auth.asistentes.list_all');
+        Route::post('/delete', 'Auth\AsistentesController@delete')->name('auth.asistentes.delete');
         /* Route::post('/store', 'Auth\EventosAsistenciaController@store')->name('auth.eventosasistencia.store');
         Route::post('/update', 'Auth\EventosAsistenciaController@update')->name('auth.eventosasistencia.update'); */
     });
+    Route::group(['prefix' => 'asistencia'], function () {
+        Route::get('', 'Auth\AsistenciaController@index')->name('auth.asistencia');
+        Route::get('listado', 'Auth\AsistenciaController@verlistado')->name('auth.asistencia.listado');
+        Route::post('/asistentesPorCelula', 'Auth\AsistenciaController@asistentesPorCelula')->name('auth.asistentes.asistentesPorCelula');
+    });
+
+    Route::group(['prefix' => 'calendario'], function () {
+        Route::get('', 'Auth\CalendarioController@index')->name('auth.calendario');
+        //listar en el calendario
+        Route::get('list_all', 'Auth\CalendarioController@list_all')->name('auth.calendario.list_all');
+        // routes/web.php
+        Route::post('/store', 'Auth\CalendarioController@store')->name('auth.calendario.store');
+        // routes/web.php
+        Route::post('/delete', 'Auth\CalendarioController@delete')->name('auth.calendario.delete');
+
+    });
+
+    
 
 });
 

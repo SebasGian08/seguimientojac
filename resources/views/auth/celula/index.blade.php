@@ -60,33 +60,44 @@
                 </div>
             </div>
             <div class="form-row">
-                <form class="col-lg-12 col-md-12" action="{{-- {{ route('auth.eventosasistencia.store') }} --}}" method="post">
+                <form class="col-lg-12 col-md-12" action="{{ route('auth.celula.store') }}" method="post">
                     @csrf
-                    {{-- <input type="hidden" name="id_user" class="id_user" value="{{ $userId }}" required> --}}
                     <div style="display: flex; flex-wrap: wrap;">
                         <div class="form-group col-lg-6">
+                            <label for="liderid" class="m-0 label-primary" style="font-size: 15px;">
+                                <i class="fa fa-tag"></i> Líder de Célula
+                            </label>
+                            <select class="form-control form-control-lg" id="lider_id" name="lider_id" required>
+                                <option value="" disabled selected>Seleccione Líder..</option>
+                                @foreach ($user as $user)
+                                    <option value="{{ $user->id }}">{{ $user->nombres }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-6">
                             <label for="nombre" class="m-0 label-primary" style="font-size: 15px;">
-                                <i class="fa fa-check"></i> Nombre de Celula</label>
-                            <input autocomplete="off" type="text" class="form-control form-control-m" id="nombres"
-                                name="nombres" placeholder="Ingrese nombre de celula" required>
+                                <i class="fa fa-check"></i> Nombre de Célula
+                            </label>
+                            <input autocomplete="off" type="text" class="form-control form-control-lg" id="nombre"
+                                name="nombre" placeholder="Ingrese nombre de célula" required>
                         </div>
                         <div class="form-group col-lg-6">
                             <label for="descripcion" class="m-0 label-primary" style="font-size: 15px;">
-                                <i class="fa fa-check"></i> Descripción <span style="color:#2ecc71;font-size:12px;">(opcional)</span>
+                                <i class="fa fa-check"></i> Descripción <span
+                                    style="color:#2ecc71;font-size:12px;">(opcional)</span>
                             </label>
-                            <input autocomplete="off" type="text" class="form-control form-control-m" id="descripcion"
-                                name="descripcion" placeholder="Ingrese Descripcion">
+                            <input autocomplete="off" type="text" class="form-control form-control-lg" id="descripcion"
+                                name="descripcion" placeholder="Ingrese Descripción">
                         </div>
                     </div>
 
                     <div class="form-group col-lg-12">
-                        <button type="submit" class="btn btn-primary btn-lg" style="font-size: 13px;">
-                            <i class="fa fa-save"></i> Registrar Célula</button>
+                        <button type="submit" class="btn btn-primary btn-lg" style="font-size: 16px;">
+                            <i class="fa fa-save"></i> Registrar Célula
+                        </button>
                     </div>
                 </form>
             </div>
-
-
         </div>
         <hr>
         <style>

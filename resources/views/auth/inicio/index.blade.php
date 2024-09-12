@@ -34,18 +34,18 @@
 @section('contenido')
     <div class="content-wrapper">
 
-        <section class="content-header d-flex justify-content-between align-items-center">          
+        <section class="content-header d-flex justify-content-between align-items-center">
             <h2>
                 Dashboard
                 <small>| Inicio</small>
-            </h2>           
-        <!-- Botón de refresco alineado a la derecha -->
-        <div>
-            <a href="javascript:void(0)" class="btn-m btn-secondary-m" onclick="window.location.reload();">
-                <i class="fa fa-refresh"></i> Refrescar | Dashboard
-            </a>
-        </div>
-    </section>
+            </h2>
+            <!-- Botón de refresco alineado a la derecha -->
+            <div>
+                <a href="javascript:void(0)" class="btn-m btn-secondary-m" onclick="window.location.reload();">
+                    <i class="fa fa-refresh"></i> Refrescar | Dashboard
+                </a>
+            </div>
+        </section>
 
         <br>
         {{-- Cargando --}}
@@ -144,20 +144,20 @@
                         style="background: linear-gradient(to bottom right, #007bc5, #00b2e9);">
                         <div class="title">
                             <p class="title-text" style="color:rgb(255, 255, 255)">
-                                <i class="fa fa-building"></i> Total de Empresas
+                                <i class="fa fa-user"></i> Total de Asistentes
                                 <span class="icon-up"><i class="fa fa-arrow-up"></i></span>
                             </p>
                         </div>
                         <div class="data">
-                            <p id="totalEmpresasAprobadas" style="color: white">
-                                {{ $totalEmpresasAprobadas }}
+                            <p id="totalAsistentes" style="color: white">
+                                {{ $totalAsistentes }}
                             </p>
                             <div class="range">
                                 <div class="fill" style="background-color: #00e272 !important;"></div>
                             </div>
                         </div>
                         <div style="margin-top: 10px;"> <!-- Espacio entre contenido principal y enlace -->
-                            <a href="{{ route('auth.index') }}" class="ver-mas"
+                            <a href="{{ route('auth.asistentes') }}" class="ver-mas"
                                 style="color: white; text-decoration: none; margin-top: 10px;">
                                 Ver más <i class="fa fa-chevron-right"></i>
                             </a>
@@ -173,20 +173,20 @@
                     <div class="totales text-center">
                         <div class="title">
                             <p class="title-text" style="color:rgb(0, 175, 102)">
-                                <i class="fa fa-users"></i> Total de Usuarios
+                                <i class="fa fa-users"></i> Total de Celulas
                                 <span class="icon-up"><i class="fa fa-arrow-up"></i></span>
                             </p>
                         </div>
                         <div class="data">
                             <p id="totalUsuarios">
-                                {{ $totalUsuarios }}
+                                {{ $totalCelulas }}
                             </p>
                             <div class="range">
                                 <div class="fill" style="background-color: #00e272 !important;"></div>
                             </div>
                         </div>
                         <div style="margin-top: 10px;"> <!-- Espacio entre contenido principal y enlace -->
-                            <a href="{{ route('auth.alumno') }}" class="ver-mas"
+                            <a href="{{ route('auth.celula') }}" class="ver-mas"
                                 style="color: #00e272; text-decoration: none; margin-top: 10px;">
                                 Ver más <i class="fa fa-chevron-right"></i>
                             </a>
@@ -199,19 +199,19 @@
                         style="background: linear-gradient(to bottom right, #007bc5, #00b2e9);">
                         <div class="title">
                             <p class="title-text" style="color:rgb(255, 255, 255)">
-                                <i class="fa fa-bullhorn"></i> Total de Avisos
+                                <i class="fa fa-calendar mr-5"></i> Total de Actividades
                                 <span class="icon-up"><i class="fa fa-arrow-up"></i></span>
                             </p>
                         </div>
                         <div class="data">
-                            <p id="totalAvisos" style="color: white">
-                                {{ $totalAvisos }}
+                            <p id="totalActividades" style="color: white">
+                                {{ $totalActividades }}
                             </p>
                             <div class="range">
                                 <div class="fill" style="background-color: #00e272 !important;"></div>
                             </div>
                             <div style="margin-top: 10px;"> <!-- Espacio entre contenido principal y enlace -->
-                                <a href="{{ route('auth.aviso') }}" class="ver-mas"
+                                <a href="{{ route('auth.calendario') }}" class="ver-mas"
                                     style="color: white; text-decoration: none; margin-top: 10px;">
                                     Ver más <i class="fa fa-chevron-right"></i>
                                 </a>
@@ -232,6 +232,8 @@
 
         </div>
         <br>
+
+
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 mb-4">
@@ -243,7 +245,7 @@
                 <div class="col-lg-6 mb-4">
                     <div class="content-header"
                         style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
-                        <div id="usuarios"></div>
+                        <div id="seguimiento"></div>
                     </div>
                 </div>
             </div>
@@ -272,6 +274,15 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-lg-12 mb-4">
+                    <section class="content-header">
+                        @csrf
+                        <table id="tableInicio" width="100%"
+                            class='table dataTables_wrapper container-fluid dt-bootstrap4 no-footer'></table>
+                    </section>
+                </div>
+            </div>
         </div>
         <br>
     </div>
@@ -291,18 +302,51 @@
 
     <script type="text/javascript">
         // Obtener los datos proporcionados por el controlador
-        @isset($empresas)
 
-            // Obtener las empresas desde el controlador
-            var empresas = @json($empresas);
 
-            // Configurar el gráfico de Highcharts
-            Highcharts.chart('container', {
+        // Obtener las empresas desde el controlador
+        var TotalDeAsistentesporCelula = @json($TotalDeAsistentesporCelula);
+        // Configurar el gráfico de Highcharts
+        Highcharts.chart('container', {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: 'Cantidad de Asistentes por Célula'
+            },
+            tooltip: {
+                formatter: function() {
+                    return '<b>' + this.point.name + ': ' + this.point.percentage.toFixed(0) + '%</b>';
+                }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}: {point.y}'
+                    }
+                }
+            },
+            series: [{
+                name: 'Cantidad',
+                colorByPoint: true,
+                data: TotalDeAsistentesporCelula.map(item => ({
+                    name: item.celula,
+                    y: item.cantidad_asistentes
+                }))
+            }]
+        });
+
+        var data = @json($seguimientoPorCelula);
+
+            Highcharts.chart('seguimiento', {
                 chart: {
                     type: 'pie'
                 },
                 title: {
-                    text: 'INFORMACIÓN DE LAS EMPRESAS'
+                    text: 'Seguimiento por Célula'
                 },
                 tooltip: {
                     formatter: function() {
@@ -322,164 +366,131 @@
                 series: [{
                     name: 'Cantidad',
                     colorByPoint: true,
-                    data: empresas.map(item => ({
-                        name: item.tipo_persona,
-                        y: item.cantidad
+                    data: data.map(item => ({
+                        name: item.celula,
+                        y: item.cantidad_seguimientos
                     }))
                 }]
             });
 
-            /*  */
-
-            var programasContratados = @json($programasContratados);
-            console.log(programasContratados);
-
-            Highcharts.chart('otro', {
-                chart: {
-                    type: 'pie'
-                },
+        var seriesData = @json($asistenciasPresente);
+        Highcharts.chart('grafico', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                align: 'left',
+                text: 'Cantidad de Asistencias por Participante'
+            },
+            xAxis: {
+                type: 'category',
                 title: {
-                    text: 'CONTRATADOS POR PROGRAMA DE INSERCIÓN'
-                },
-                tooltip: {
-                    pointFormat: 'Contratados: <b>{point.y}</b>'
-                },
-                plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: true,
-                            distance: 20,
-                            format: '{point.name}: {point.y}'
-                        }
-                    }
-                },
-                series: [{
-                    name: 'Porcentaje',
-                    colorByPoint: true,
-                    data: programasContratados.map(function(programa) {
-                        return {
-                            name: programa.tipo_programa,
-                            y: parseFloat(programa.cantidad_contratados)
-                        };
-                    })
-                }]
-            });
-
-
-            /*  */
-            var seriesData = @json($totalAvisosporEmpleador);
-
-            Highcharts.chart('grafico', {
-                chart: {
-                    type: 'column'
-                },
+                    text: 'Participantes'
+                }
+            },
+            yAxis: {
                 title: {
-                    align: 'left',
-                    text: 'CANTIDAD DE AVISOS POR EMPLEADOR'
-                },
-                xAxis: {
-                    type: 'category'
-                },
-                yAxis: {
-                    title: {
-                        text: 'Cantidad de Avisos'
+                    text: 'Cantidad de Asistencias'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.y}'
                     }
-                },
-                legend: {
-                    enabled: false
-                },
-                plotOptions: {
-                    series: {
-                        borderWidth: 0,
-                        dataLabels: {
-                            enabled: true,
-                            format: '{point.y}'
-                        }
-                    }
-                },
-                series: [{
-                    name: 'Cantidad de Avisos',
-                    colorByPoint: true,
-                    data: seriesData
-                }]
-            });
+                }
+            },
+            series: [{
+                name: 'Cantidad de Asistencias',
+                colorByPoint: true,
+                data: seriesData
+            }]
+        });
 
-            /*  */
-            var carrera = @json($totalContratadosporCarrera);
-
-            Highcharts.chart('carreraporcontratado', {
-                chart: {
-                    type: 'column'
-                },
+        /*  */
+        var asistenciasAusente = @json($asistenciasAusente);
+        Highcharts.chart('carreraporcontratado', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                align: 'left',
+                text: 'Cantidad de Inasistencias por Participante'
+            },
+            xAxis: {
+                type: 'category',
                 title: {
-                    align: 'left',
-                    text: 'CANTIDAD DE CONTRATADOS POR PROGRAMA DE ESTUDIO'
-                },
-                xAxis: {
-                    type: 'category'
-                },
-                yAxis: {
-                    title: {
-                        text: 'Cantidad de Contratados'
-                    }
-                },
-                legend: {
-                    enabled: false
-                },
-                plotOptions: {
-                    series: {
-                        borderWidth: 0,
-                        dataLabels: {
-                            enabled: true,
-                            format: '{point.y}'
-                        }
-                    }
-                },
-                series: [{
-                    name: 'Cantidad de Contratados',
-                    colorByPoint: true,
-                    data: carrera
-                }]
-            });
-
-            // Convertir los datos de PHP a JavaScript
-            var TotalUsuariosporCarrera = @json($TotalUsuariosporCarrera);
-
-            // Preparar los datos para Highcharts
-            var seriesData = TotalUsuariosporCarrera.map(item => item.cantidad_alumnos);
-
-            // Configurar el gráfico de Highcharts
-            Highcharts.chart('usuarios', {
-                chart: {
-                    type: 'column' // Tipo de gráfico de columnas (bar chart)
-                },
+                    text: 'Participantes'
+                }
+            },
+            yAxis: {
                 title: {
-                    text: 'Usuarios Registrados por Programa de Estudio'
-                },
-                xAxis: {
-                    categories: TotalUsuariosporCarrera.map(item => item
-                        .nombre_area), // Usamos nombre_area como categorías
-                    title: {
-                        text: 'Programa de Estudio'
+                    text: 'Cantidad de Inasistencias'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.y}'
                     }
-                },
-                yAxis: {
-                    title: {
-                        text: 'Cantidad de Usuarios'
-                    }
-                },
-                series: [{
-                    name: 'Cantidad de Usuarios',
-                    data: seriesData
-                }]
-            });
+                }
+            },
+            series: [{
+                name: 'Cantidad de Contratados',
+                colorByPoint: true,
+                data: asistenciasAusente
+            }]
+        });
 
-            /* a */
-        @else
-            // Manejar el caso en el que $empresas no está definida
-            console.error('Variable $empresas no definida en la vista.');
-        @endisset
+        // Datos pasados desde el controlador
+        var seriesData = @json($asistenciasPorPrograma);
+
+        Highcharts.chart('otro', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                align: 'left',
+                text: 'Cantidad de Asistencias por Programa'
+            },
+            xAxis: {
+                type: 'category',
+                title: {
+                    text: 'Programa'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Cantidad de Asistencias'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.y}'
+                    }
+                }
+            },
+            series: [{
+                name: 'Cantidad de Asistencias',
+                colorByPoint: true,
+                data: seriesData
+            }]
+        });
     </script>
 @endsection
