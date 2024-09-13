@@ -27,7 +27,7 @@ $(function () {
                     return meta.row + 1;
                 },
             },
-            { title: "DNI", data: "dni", class: "text-left" },
+            /* { title: "DNI", data: "dni", class: "text-left" }, */
             {
                 title: "Nombres y Apellidos",
                 data: null,
@@ -73,16 +73,16 @@ $(function () {
     });
     /* Para abrir modal y editar */
     $table.on("click", ".btn-update", function () {
-        const id = $dataTableEventos.row($(this).parents("tr")).data().id;
+        const id = $dataTableAsistentes.row($(this).parents("tr")).data().id;
         invocarModalView(id);
     });
 
     function invocarModalView(id) {
         invocarModal(
-            `/auth/celula/partialView/${id ? id : 0}`,
+            `/auth/asistentes/partialView/${id ? id : 0}`,
             function ($modal) {
                 if ($modal.attr("data-reload") === "true")
-                    $dataTableEventos.ajax.reload(null, false);
+                    $dataTableAsistentes.ajax.reload(null, false);
             }
         );
     }

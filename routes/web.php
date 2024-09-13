@@ -316,19 +316,29 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
         Route::get('/mostrarAsistentes', 'Auth\CelulaController@mostrarAsistentes')->name('auth.celula.mostrarAsistentes');
         Route::get('/modalSeguimientoAsistentes/{id}', 'Auth\CelulaController@modalSeguimientoAsistentes')->name('auth.celula.create');
         Route::get('/listSeguimiento', 'Auth\CelulaController@listSeguimiento')->name('auth.celula.listSeguimiento');
-       
+        /* Editar */
+        Route::get('/partialView/{id}', 'Auth\CelulaController@partialView')->name('auth.celula.create');
+        Route::post('/update', 'Auth\CelulaController@update')->name('auth.celula.update');
+        /* Seguimiento */
+        Route::post('/storeSeguimiento', 'Auth\CelulaController@storeSeguimiento')->name('auth.celula.storeSeguimiento');
+        
     });
     Route::group(['prefix' => 'asistentes'], function () {
         Route::get('/', 'Auth\AsistentesController@index')->name('auth.asistentes');
         Route::get('/list_all', 'Auth\AsistentesController@list_all')->name('auth.asistentes.list_all');
         Route::post('/delete', 'Auth\AsistentesController@delete')->name('auth.asistentes.delete');
-        /* Route::post('/store', 'Auth\EventosAsistenciaController@store')->name('auth.eventosasistencia.store');
-        Route::post('/update', 'Auth\EventosAsistenciaController@update')->name('auth.eventosasistencia.update'); */
+        Route::post('/store', 'Auth\AsistentesController@store')->name('auth.asistentes.store');
+        Route::get('/partialView/{id}', 'Auth\AsistentesController@partialView')->name('auth.asistentes.create');
+        Route::post('/update', 'Auth\AsistentesController@update')->name('auth.asistentes.update');
     });
     Route::group(['prefix' => 'asistencia'], function () {
         Route::get('', 'Auth\AsistenciaController@index')->name('auth.asistencia');
         Route::get('listado', 'Auth\AsistenciaController@verlistado')->name('auth.asistencia.listado');
         Route::post('/asistentesPorCelula', 'Auth\AsistenciaController@asistentesPorCelula')->name('auth.asistentes.asistentesPorCelula');
+        Route::get('/list_all', 'Auth\AsistenciaController@list_all')->name('auth.asistencia.list_all');
+        Route::post('/delete', 'Auth\AsistenciaController@delete')->name('auth.asistencia.delete');
+        Route::post('/store', 'Auth\AsistenciaController@store')->name('auth.asistencia.store');
+        
     });
 
     Route::group(['prefix' => 'calendario'], function () {

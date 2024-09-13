@@ -60,68 +60,67 @@
                 </div>
             </div>
             <div class="form-row">
-                <form class="col-lg-12 col-md-12" action="{{-- {{ route('auth.eventosasistencia.store') }} --}}" method="post">
+                <form class="col-lg-12 col-md-12" action="{{ route('auth.asistentes.store') }}" method="post"
+                    enctype="multipart/form-data">
                     @csrf
-                    {{-- <input type="hidden" name="id_user" class="id_user" value="{{ $userId }}" required> --}}
                     <div style="display: flex; flex-wrap: wrap;">
                         <div class="form-group col-lg-6">
-                            <label for="nombres" class="m-0 label-primary" style="font-size: 15px;">
-                                <i class="fa fa-check"></i> Nombre del Asistente</label>
-                            <input autocomplete="off" type="text" class="form-control form-control-lg" id="nombres"
-                                name="nombres" placeholder="Ingrese nombre del asistente" required>
+                            <label for="nombre" class="m-0 label-primary" style="font-size: 15px;">
+                                <i class="fa fa-check"></i> Nombre del Asistente
+                            </label>
+                            <input autocomplete="off" type="text" class="form-control form-control-lg" id="nombre"
+                                name="nombre" placeholder="Ingrese nombre del asistente" required>
                         </div>
 
                         <div class="form-group col-lg-6">
                             <label for="apellidos" class="m-0 label-primary" style="font-size: 15px;">
-                                <i class="fa fa-check"></i> Apellidos</label>
-                            <input autocomplete="off" type="text" class="form-control form-control-lg" id="apellidos"
-                                name="apellidos" placeholder="Ingrese apellidos del asistente" required>
+                                <i class="fa fa-check"></i> Apellidos
+                            </label>
+                            <input autocomplete="off" type="text" class="form-control form-control-lg" id="apellido"
+                                name="apellido" placeholder="Ingrese apellidos del asistente" required>
                         </div>
 
                         <div class="form-group col-lg-6">
-                            <label for="fecha_cumpleanos" class="m-0 label-primary" style="font-size: 15px;">
-                                <i class="fa fa-calendar"></i> Fecha de Nacimiento</label>
-                            <input autocomplete="off" type="date" class="form-control form-control-lg"
-                                id="fecha_cumpleanos" name="fecha_cumpleanos" required>
+                            <label for="fecha_nac" class="m-0 label-primary" style="font-size: 15px;">
+                                <i class="fa fa-calendar"></i> Fecha de Nacimiento
+                            </label>
+                            <input autocomplete="off" type="date" class="form-control form-control-lg" id="fecha_nac"
+                                name="fecha_nac" required>
                         </div>
+
                         <div class="form-group col-lg-6">
                             <label for="distrito" class="m-0 label-primary" style="font-size: 15px;">
-                                <i class="fa fa-map-marker"></i> Distrito</label>
-                            <select class="form-control form-control-lg" id="distrito" name="distrito" required>
+                                <i class="fa fa-map-marker"></i> Distrito
+                            </label>
+                            <select class="form-control form-control-lg" id="distrito_id" name="distrito_id" required>
                                 <option value="" disabled selected>Seleccione Distrito</option>
-                                @foreach($distritos as $distritos)
+                                @foreach ($distritos as $distritos)
                                     <option value="{{ $distritos->id }}">{{ $distritos->nombre }}</option>
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="form-group col-lg-6">
                             <label for="direccion" class="m-0 label-primary" style="font-size: 15px;">
-                                <i class="fa fa-home"></i> Dirección</label>
+                                <i class="fa fa-home"></i> Dirección
+                            </label>
                             <input autocomplete="off" type="text" class="form-control form-control-lg" id="direccion"
-                                name="direccion" placeholder="Ingrese dirección del asistente" required>
+                                name="direccion" placeholder="Ingrese dirección del asistente">
                         </div>
 
                         <div class="form-group col-lg-6">
                             <label for="telefono" class="m-0 label-primary" style="font-size: 15px;">
                                 <i class="fa fa-phone"></i> Teléfono/Celular
                             </label>
-                            <input
-                                autocomplete="off"
-                                type="tel"
-                                class="form-control form-control-lg"
-                                min="6"
-                                id="telefono"
-                                name="telefono"
-                                placeholder="Ingrese número de teléfono"
-                                required
-                                oninput="this.value = this.value.replace(/\D/g, '')"
-                            >
+                            <input autocomplete="off" type="tel" class="form-control form-control-lg" min="6"
+                                id="tel" name="tel" placeholder="Ingrese número de teléfono"
+                                oninput="this.value = this.value.replace(/\D/g, '')">
                         </div>
-                        
 
                         <div class="form-group col-lg-6">
                             <label for="genero" class="m-0 label-primary" style="font-size: 15px;">
-                                <i class="fa fa-genderless"></i> Género</label>
+                                <i class="fa fa-genderless"></i> Género
+                            </label>
                             <select class="form-control form-control-lg" id="genero" name="genero" required>
                                 <option value="" disabled selected>Seleccione su género</option>
                                 <option value="masculino">Masculino</option>
@@ -133,7 +132,7 @@
                             <label for="celula" class="m-0 label-primary" style="font-size: 15px;">
                                 <i class="fa fa-tag"></i> Célula
                             </label>
-                            <select class="form-control form-control-lg" id="celula" name="celula" required>
+                            <select class="form-control form-control-lg" id="celula_id" name="celula_id" required>
                                 <option value="" disabled selected>Seleccione Celula..</option>
                                 @foreach ($celulas as $celula)
                                     <option value="{{ $celula->id }}">{{ $celula->nombre }}</option>
@@ -141,17 +140,24 @@
                             </select>
                         </div>
 
-
-
+                        <!-- Campo para seleccionar foto -->
+                        <div class="form-group col-lg-6">
+                            <label for="foto" class="m-0 label-primary" style="font-size: 15px;">
+                                <i class="fa fa-image"></i> Foto del Asistente
+                            </label>
+                            <input type="file" class="form-control form-control-lg" id="foto" name="foto"
+                                accept="image/*">
+                        </div>
                     </div>
-
 
                     <div class="form-group col-lg-12">
                         <button type="submit" class="btn btn-primary btn-lg" style="font-size: 16px;">
-                            <i class="fa fa-save"></i> Registrar Asistente</button>
+                            <i class="fa fa-save"></i> Registrar Asistente
+                        </button>
                     </div>
                 </form>
             </div>
+
 
 
 

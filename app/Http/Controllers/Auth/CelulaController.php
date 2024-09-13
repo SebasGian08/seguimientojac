@@ -4,6 +4,7 @@ namespace BolsaTrabajo\Http\Controllers\Auth;
 
 use BolsaTrabajo\Celula;
 use BolsaTrabajo\Asistentes;
+use BolsaTrabajo\Seguimiento;
 use BolsaTrabajo\User;
 use Illuminate\Support\Facades\Auth; // Importa la clase Auth
 use Illuminate\Http\Request;
@@ -64,8 +65,8 @@ class CelulaController extends Controller
             $status = true;
         }
 
-        // Redirige basado en el resultado de la operación
-        return $status ? redirect(route('auth.celula')) : redirect(route('auth.celula'))->withErrors($validator)->withInput();
+        // Redireccionar a la ruta del programa con un mensaje de éxito
+        return redirect()->route('auth.celula')->with('success', 'Celula registrada exitosamente.');
     }
 
 
@@ -146,12 +147,70 @@ class CelulaController extends Controller
                                 's.detalle', 's.oracion')
                         ->where('s.asistente_id', $asistenteId)
                         ->whereNull('s.deleted_at')
-                        ->orderBy('s.fecha_contacto', 'DESC')
+                        ->orderBy('s.fecha_contacto', 'asc')
                         ->get();
         
         return response()->json(['data' => $seguimientos]);
     }
 
 
+    /* EDITAR CELULA */
 
+    public function partialView($id)
+    {
+        // Asegúrate de que el ID es válido y que la entidad se encuentra en la base de datos
+        $entity = Celula::find($id);
+        $user = User::all();
+        // Pasar la entidad a la vista
+        return view('auth.celula.Editar', ['Entity' => $entity,'user' => $user]);
+    }
+
+    public function update(Request $request)
+    {
+        $status = false;
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+        ]);
+        if (!$validator->fails()){
+            $entity = Celula::find($request->id);
+            $entity->lider_id = $request->lider_id;
+            $entity->nombre = $request->nombre;
+            $entity->descripcion = $request->descripcion;
+
+            if($entity->save()) $status = true;            
+        }
+        return response()->json(['Success' => $status, 'Errors' => $validator->errors()]);
+    }
+
+    /* GUARDAR SEGUIMIENTO */
+    public function storeSeguimiento(Request $request)
+    {
+        $status = false;
+        
+        // Validar los datos de la solicitud
+        $validator = Validator::make($request->all(), [
+            'asistente_id' => 'required|exists:asistentes,id', // Asegúrate de que el ID del usuario exista en la tabla `users`
+        ]);
+        
+        // Verifica si la validación falla
+        if (!$validator->fails()) {
+            // Recolecta los datos para crear el nuevo registro
+            $data = [
+                'celula_id' => $request->celula_id, 
+                'asistente_id' => $request->asistente_id, 
+                'fecha_contacto' => $request->fecha_contacto,
+                'tipo_contacto' => $request->tipo_contacto,
+                'descripcion' => $request->descripcion,
+                'detalle' => $request->detalle,
+                'oracion' => $request->oracion,
+            ];
+
+            // Crea el nuevo registro en la base de datos
+            Seguimiento::create($data);
+            $status = true;
+        }
+
+        // Redireccionar a la ruta del programa con un mensaje de éxito
+        return redirect()->route('auth.celula')->with('success', 'Seguimiento registrado exitosamente.');
+    }
 }

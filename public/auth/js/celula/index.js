@@ -54,13 +54,13 @@ $(function () {
     });
     /* Para abrir modal y editar */
     $table.on("click", ".btn-update", function () {
-        const id = $dataTableEventos.row($(this).parents("tr")).data().id;
+        const id = $dataTableCelula.row($(this).parents("tr")).data().id;
         invocarModalView(id);
     });
 
     function invocarModalView(id) {
         invocarModal(`/auth/celula/partialView/${id ? id : 0}`, function ($modal) {
-            if ($modal.attr("data-reload") === "true") $dataTableEventos.ajax.reload(null, false);
+            if ($modal.attr("data-reload") === "true") $dataTableCelula.ajax.reload(null, false);
         });
     }
 

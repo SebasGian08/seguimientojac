@@ -303,8 +303,6 @@
     <script type="text/javascript">
         // Obtener los datos proporcionados por el controlador
 
-
-        // Obtener las empresas desde el controlador
         var TotalDeAsistentesporCelula = @json($TotalDeAsistentesporCelula);
         // Configurar el gráfico de Highcharts
         Highcharts.chart('container', {
@@ -339,47 +337,55 @@
             }]
         });
 
-        var data = @json($seguimientoPorCelula);
+        var data = @json($seguimientoPorCelula); // Carga los datos dinámicamente
+        Highcharts.chart('seguimiento', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Seguimiento por Célula',
+                align: 'center'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true, // Habilita las etiquetas de datos para mostrar nombre y cantidad
+                        format: '{point.name}: {point.y}'
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                name: 'Cantidad de Seguimientos',
+                colorByPoint: true,
+                data: data.map(item => ({
+                    name: item.celula,
+                    y: item.cantidad_seguimientos
+                }))
+            }]
+        });
 
-            Highcharts.chart('seguimiento', {
-                chart: {
-                    type: 'pie'
-                },
-                title: {
-                    text: 'Seguimiento por Célula'
-                },
-                tooltip: {
-                    formatter: function() {
-                        return '<b>' + this.point.name + ': ' + this.point.percentage.toFixed(0) + '%</b>';
-                    }
-                },
-                plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: true,
-                            format: '{point.name}: {point.y}'
-                        }
-                    }
-                },
-                series: [{
-                    name: 'Cantidad',
-                    colorByPoint: true,
-                    data: data.map(item => ({
-                        name: item.celula,
-                        y: item.cantidad_seguimientos
-                    }))
-                }]
-            });
 
         var seriesData = @json($asistenciasPresente);
         Highcharts.chart('grafico', {
             chart: {
-                type: 'column'
+                type: 'bar'
             },
             title: {
-                align: 'left',
+                align: 'center',
                 text: 'Cantidad de Asistencias por Participante'
             },
             xAxis: {
@@ -419,7 +425,7 @@
                 type: 'column'
             },
             title: {
-                align: 'left',
+                align: 'center',
                 text: 'Cantidad de Inasistencias por Participante'
             },
             xAxis: {
@@ -454,13 +460,12 @@
 
         // Datos pasados desde el controlador
         var seriesData = @json($asistenciasPorPrograma);
-
         Highcharts.chart('otro', {
             chart: {
                 type: 'column'
             },
             title: {
-                align: 'left',
+                align: 'center',
                 text: 'Cantidad de Asistencias por Programa'
             },
             xAxis: {

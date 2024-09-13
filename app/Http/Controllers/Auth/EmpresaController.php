@@ -4,6 +4,8 @@ namespace BolsaTrabajo\Http\Controllers\Auth;
 
 use BolsaTrabajo\Empresa;
 use BolsaTrabajo\Aviso;
+use BolsaTrabajo\Asistentes;
+use BolsaTrabajo\Calendario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use BolsaTrabajo\Http\Controllers\Controller;
@@ -58,16 +60,41 @@ class EmpresaController extends Controller
 
     public function notification()
     {
-        $countAviso = Aviso::whereNull('deleted_at')->where('estado_aviso', 0)->count();
-        $detailsAviso = Aviso::whereHas('empresas', function ($q) { $q->where('deleted_at',  null);})
-        ->where('estado_aviso', false)
-        ->with('empresas')->with('provincias')->with('areas')
-        ->with('modalidades')->with('horarios')->with('provincias')
-        ->with('distritos')
-        ->orderBy('avisos.created_at', 'DESC')
-        ->get();
-        return response()->json(['countaviso' => $countAviso, 'detailsaviso' => $detailsAviso]);
+        $now = now();
+        $threeDaysLater = $now->copy()->addDays(3);
+        $dates = [
+            $now->toDateString(), // Hoy
+            $now->copy()->addDays(1)->toDateString(), // 1 día
+            $now->copy()->addDays(2)->toDateString(), // 2 días
+            $now->copy()->addDays(3)->toDateString(), // 3 días
+        ];
+    
+        // Consultar asistentes con cumpleaños en los próximos 5 días, incluyendo hoy
+        $birthdayNotices = [];
+        for ($i = 0; $i <= 5; $i++) {
+            $targetDate = $now->copy()->addDays($i);
+    
+            $notices = Asistentes::whereMonth('fecha_nac', $targetDate->month)
+                ->whereDay('fecha_nac', $targetDate->day)
+                ->get();
+    
+            if ($notices->isNotEmpty()) {
+                $birthdayNotices[$i] = $notices;
+            }
+        }
+    
+        // Consultar eventos en el calendario que ocurren en los próximos 3 días, incluyendo hoy
+        $eventsNotices = Calendario::whereIn('fecha_registro', $dates)
+            ->get();
+    
+        return response()->json([
+            'birthdayNotices' => $birthdayNotices,
+            'eventsNotices' => $eventsNotices
+        ]);
     }
+    
+
+
 
     public function partialView($id)
     {

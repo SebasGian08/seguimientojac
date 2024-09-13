@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use BolsaTrabajo\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class AsistentesController extends Controller
 {
@@ -79,25 +80,148 @@ class AsistentesController extends Controller
                     $status = true;
                 } else {
                     // Error al intentar eliminar
-                    return response()->json(['Success' => $status, 'Message' => 'Error al intentar eliminar el asistente.']);
+                    return response()->json(['success' => $status, 'Message' => 'Error al intentar eliminar el asistente.']);
                 }
             } else {
                 // Mensaje específico si tiene registros asociados
                 if ($hasParticipants) {
-                    return response()->json(['Success' => $status, 'Message' => 'No se puede eliminar el asistente porque tiene registros de asistencia asociados.']);
+                    return response()->json(['success' => $status, 'Message' => 'No se puede eliminar el asistente porque tiene registros de asistencia asociados.']);
                 }
                 if ($hasFollowUps) {
-                    return response()->json(['Success' => $status, 'Message' => 'No se puede eliminar el asistente porque tiene seguimientos asociados.']);
+                    return response()->json(['success' => $status, 'Message' => 'No se puede eliminar el asistente porque tiene seguimientos asociados.']);
                 }
             }
         } else {
             // Asistentes no se encuentra
-            return response()->json(['Success' => $status, 'Message' => 'Asistente no encontrado.']);
+            return response()->json(['success' => $status, 'Message' => 'Asistente no encontrado.']);
         }
 
-        return response()->json(['Success' => $status]);
+        return response()->json(['success' => $status]);
     }
 
+    public function store(Request $request)
+    {
+        $status = false;
+        $random = Str::upper(Str::random(4)); // Genera un string aleatorio en mayúsculas
+        $foto = null;
+
+        // Validación de los datos del formulario
+        $validator = Validator::make($request->all(), [
+            'nombre' => 'required|string|max:100',
+            'apellido' => 'required|string|max:100',
+            'fecha_nac' => 'required|date',
+            'distrito_id' => 'required|integer|exists:distritos,id',
+            'genero' => 'required|string|max:20',
+            'celula_id' => 'required|integer|exists:celulas,id',
+        ]);
+
+        if ($validator->fails()) {
+            // Debugging validation errors
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Si se sube una foto, asigna un nombre único
+        if ($request->file('foto') != null) {
+            $foto = uniqid($random . "_") . '.' . $request->file('foto')->getClientOriginalExtension();
+        }
+
+        // Preparar los datos para crear el asistente
+        $data = [
+            'nombre' => $request->input('nombre'),
+            'apellido' => $request->input('apellido'),
+            'fecha_nac' => $request->input('fecha_nac'),
+            'distrito_id' => $request->input('distrito_id'),
+            'direccion' => $request->input('direccion'),
+            'tel' => $request->input('tel'),
+            'genero' => $request->input('genero'),
+            'celula_id' => $request->input('celula_id'),
+            'foto' => $foto ? 'uploads/fotos/' . $foto : null,
+            'estado' => 'Activo', // Valor predeterminado
+        ];
+        try {
+            Asistentes::create($data);
+
+            if ($request->file('foto') != null) {
+                $request->file('foto')->move(public_path('uploads/fotos'), $foto);
+            }
+            $status = true;
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error al registrar el asistente: ' . $e->getMessage());
+        }
+
+        // Redirigir con éxito o errores
+        return redirect()->route('auth.asistentes')->with('success', 'Asistente registrado exitosamente.');
+    }
+
+
+    public function partialView($id)
+    {
+        $entity = Asistentes::find($id);
+    
+        // Asegúrate de que la relación `distrito` esté cargada con el modelo `Asistentes`
+        $distritos = Distrito::all(); // Obtener todos los distritos disponibles
+        $celula = Celula::all(); 
+        return view('auth.asistentes._Editar', [
+            'Entity' => $entity,
+            'distritos' => $distritos,'celulas' => $celula,
+        ]);
+    }
+
+    public function update(Request $request)
+{
+    // Validar la solicitud
+    $validator = Validator::make($request->all(), [
+        'id' => 'required|integer|exists:asistentes,id', // Verifica que el ID exista en la base de datos
+        'foto' => 'nullable|mimes:jpg,jpeg,png|max:2048', // Validar la foto (opcional)
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
+    }
+
+    // Buscar el asistente
+    $asistente = Asistentes::findOrFail($request->input('id'));
+
+    // Actualizar los datos del asistente
+    $asistente->nombre = $request->input('nombre');
+    $asistente->apellido = $request->input('apellido');
+    $asistente->fecha_nac = $request->input('fecha_nac');
+    $asistente->distrito_id = $request->input('distrito_id');
+    $asistente->direccion = $request->input('direccion');
+    $asistente->tel = $request->input('tel');
+    $asistente->genero = $request->input('genero');
+    $asistente->celula_id = $request->input('celula_id');
+    $asistente->estado = $request->input('estado');
+
+    // Manejar la foto si se ha subido una nueva
+    if ($request->hasFile('foto')) {
+        // Eliminar la foto antigua si existe
+        if ($asistente->foto && file_exists(public_path($asistente->foto))) {
+            unlink(public_path($asistente->foto));
+        }
+
+        // Subir la nueva foto
+        $file = $request->file('foto');
+        $fileName = time() . '.' . $file->getClientOriginalExtension();
+        $filePath = 'uploads/fotos/';
+        $file->move(public_path($filePath), $fileName);
+
+        // Guardar la ruta de la nueva foto
+        $asistente->foto = $filePath . $fileName;
+    }
+
+    // Guardar el asistente actualizado
+    $asistente->save();
+
+    // Responder con éxito en formato JSON
+    return redirect()->route('auth.asistentes')->with('success', 'Registro creado exitosamente.');
+}
+
+
+    
+
+
+    
 
     
 }

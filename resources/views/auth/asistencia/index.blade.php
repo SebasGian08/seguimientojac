@@ -63,7 +63,7 @@
                 </div>
             </div>
             <div class="form-row">
-                <form class="col-lg-12 col-md-12" action="{{-- {{ route('auth.eventosasistencia.store') }} --}}" method="post">
+                <form class="col-lg-12 col-md-12" action="{{ route('auth.asistencia.store') }}" method="post">
                     @csrf
                     {{-- <input type="hidden" name="id_user" class="id_user" value="{{ $userId }}" required> --}}
                     <div style="display: flex; flex-wrap: wrap;">
@@ -72,76 +72,78 @@
                             <label for="tipoprograma" class="m-0 label-primary" style="font-size: 17px;">
                                 <i class="fa fa-briefcase"></i> Programa
                             </label>
-                            <select class="form-control form-control-lg" id="tipoprograma" name="tipoprograma" required>
+                            <select class="form-control form-control-lg" id="programa_id" name="programa_id" required>
                                 <option value="" disabled selected>Seleccione Programa..</option>
                                 @foreach ($tipoprograma as $tipoprograma)
                                     <option value="{{ $tipoprograma->id }}">{{ $tipoprograma->nombre }}</option>
                                 @endforeach
                             </select>
                         </div>
-                    
+
                         <!-- Fecha -->
                         <div class="form-group col-lg-6">
                             <label for="fecha" class="m-0 label-primary" style="font-size: 17px;">
                                 <i class="fa fa-calendar-alt"></i> Fecha
                             </label>
-                            <input type="date" class="form-control form-control-lg" id="fecha" name="fecha" required>
-                            <div id="fechaError" class="form-text text-danger" style="display: none; font-size: 12px; margin-top: 5px;">
+                            <input type="date" class="form-control form-control-lg" id="fecha_registro" name="fecha_registro"
+                                required>
+                            <div id="fechaError" class="form-text text-danger"
+                                style="display: none; font-size: 12px; margin-top: 5px;">
                                 <i class="fa fa-exclamation-circle"></i> Por favor, debes seleccionar un Sábado.
                             </div>
                         </div>
-                    
+
                         <!-- Célula -->
                         <div class="form-group col-lg-6">
                             <label for="celula" class="m-0 label-primary" style="font-size: 17px;">
                                 <i class="fa fa-users"></i> Célula
                             </label>
-                            <select class="form-control form-control-lg" id="celula" name="celula" required>
+                            <select class="form-control form-control-lg" id="celula_id" name="celula_id" required>
                                 <option value="" disabled selected>Seleccione Célula..</option>
                                 @foreach ($celulas as $celula)
                                     <option value="{{ $celula->id }}">{{ $celula->nombre }}</option>
                                 @endforeach
                             </select>
                         </div>
-                    
+
                         <!-- Asistentes -->
                         <div class="form-group col-lg-6">
                             <label for="asistentes" class="m-0 label-primary" style="font-size: 17px;">
                                 <i class="fa fa-user"></i> Asistentes
                             </label>
-                            <select class="form-control form-control-lg" id="asistentes" name="asistentes" required>
+                            <select class="form-control form-control-lg" id="asistente_id" name="asistente_id" required>
                                 <option value="" disabled selected>Seleccione Asistente..</option>
                                 <!-- Opciones dinámicas aquí -->
                             </select>
                         </div>
-                    
+
                         <!-- Asistió? -->
                         <div class="form-group col-lg-6">
                             <label for="asistio" class="m-0 label-primary" style="font-size: 17px;">
                                 <i class="fa fa-check-circle"></i> Estado
                             </label>
-                            <select class="form-control form-control-lg" id="asistio" name="asistio" required>
+                            <select class="form-control form-control-lg" id="estado" name="estado" required>
                                 <option value="" disabled selected>Seleccione..</option>
                                 <option value="presente">PRESENTE</option>
                                 <option value="ausente">AUSENTE</option>
                                 <option value="justificado">JUSTIFICADO</option>
                             </select>
                         </div>
-                    
+
                         <!-- Motivo de Justificación -->
                         <div class="form-group col-lg-6 hidden" id="motivo-container">
                             <label for="descripcion" class="m-0 label-primary" style="font-size: 17px;">
                                 <i class="fa fa-sticky-note"></i> Motivo de Justificación
                             </label>
-                            <input autocomplete="off" type="text" class="form-control form-control-lg" id="descripcion"
-                                name="descripcion" placeholder="Ingrese Descripción">
+                            <input autocomplete="off" type="text" class="form-control form-control-lg" id="motivo"
+                                name="motivo" placeholder="Ingrese Descripción">
                         </div>
                     </div>
-                    
+
 
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
-                            const asistioSelect = document.getElementById('asistio');
+                            const asistioSelect = document.getElementById('estado');
                             const motivoContainer = document.getElementById('motivo-container');
 
                             asistioSelect.addEventListener('change', function() {
@@ -152,7 +154,7 @@
                                 }
                             });
 
-                            const fechaInput = document.getElementById('fecha');
+                            const fechaInput = document.getElementById('fecha_registro');
                             const fechaError = document.getElementById('fechaError');
 
                             fechaInput.addEventListener('change', function() {
@@ -176,33 +178,7 @@
                     </div>
                 </form>
             </div>
-
-
         </div>
-
-
-
-        {{-- <hr>
-        <style>
-            .table th,
-            .table td {
-                border: 1px solid #ddd;
-                padding: 8px;
-                text-align: center;
-            }
-        </style> --}}
-
-        {{-- <section class="content-header">
-            @csrf
-            <div class="row">
-                <div class="col-md-12">
-
-                    <table id="tableCelula" width="100%"
-                        class='table dataTables_wrapper container-fluid dt-bootstrap4 no-footer'></table>
-                </div>
-            </div>
-        </section> --}}
-
     </div>
 @endsection
 
