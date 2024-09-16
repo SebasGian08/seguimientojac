@@ -61,7 +61,8 @@
                                     <option value="">Seleccione una opción</option>
                                     <option value="Llamada">Llamada</option>
                                     <option value="Mensaje">Mensaje WhatsApp</option>
-                                    <option value="Reunión en persona">Reunión en persona</option>
+                                    <option value="reunion">Reunión en persona</option>
+                                    <option value="nocontesta">No contesta</option>
                                     <option value="Otro">Otro</option>
                                 </select>
                             </div>
@@ -104,7 +105,13 @@
                                     <tbody>
                                         {{-- Contenido de la tabla --}}
                                     </tbody>
+                                    
                                 </table>
+                                <div class="form-group col-lg-3 col-md-12 d-flex flex-column">
+                                    <a href="javascript:void(0)" class="btn-m btn-success-m" onclick="clickExcel()">
+                                        <i class="fa fa-file"></i> Reporte de Seguimiento
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

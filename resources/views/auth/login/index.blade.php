@@ -7,7 +7,7 @@
     <meta name="Resource-type" content="Document">
     <meta http-equiv="X-UA-Compatible" content="IE=5; IE=6; IE=7; IE=8; IE=9; IE=10">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Bolsa Trabajo | Administrador</title>
+    <title>JAC | Administrador</title>
     <link rel="stylesheet" href="{{ asset('auth/css/login/index.min.css') }}">
 </head>
 
@@ -41,12 +41,12 @@
                 </div>
                 <button type="submit" class="button">Ingresar</button>
                 <br>
-                    {{-- Se Aumento  --}}
-                 <a href="{{ route('index') }}" class="return-label">Regresar a la página principal</a>
+                {{-- Se Aumento  --}}
+                <a href="{{ route('index') }}" class="return-label">Regresar a la página principal</a>
             </form>
         </div>
     </section>
-   
+
 </body>
 
 </html>

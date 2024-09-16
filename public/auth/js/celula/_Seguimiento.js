@@ -1,3 +1,7 @@
+function clickExcel(){
+    $('.dt-buttons .buttons-excel').click()
+}
+
 $(function () {
     const $table = $("#tableSeguimiento");
 

@@ -1,7 +1,7 @@
 @extends('auth.index')
 
 @section('titulo')
-    <title>BolsaTrabajo | Usuarios</title>
+    <title>JAC | Registro de Usuarios</title>
 @endsection
 
 @section('styles')
@@ -19,7 +19,8 @@
 
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <button type="button" id="modalRegistrarUsuarios" class="btn-primary"><i class="fa fa-plus"></i> Registrar Usuario</button>
+                    <button type="button" id="modalRegistrarUsuarios" class="btn-primary"><i class="fa fa-plus"></i> Registrar
+                        Usuario</button>
                 </li>
             </ol>
         </section>
@@ -28,7 +29,8 @@
             @csrf
             <div class="row">
                 <div class="col-md-12">
-                    <table id="tableUsuarios" class="table table-bordered table-striped display nowrap margin-top-10 dataTable no-footer"></table>
+                    <table id="tableUsuarios"
+                        class="table table-bordered table-striped display nowrap margin-top-10 dataTable no-footer"></table>
                 </div>
             </div>
         </section>

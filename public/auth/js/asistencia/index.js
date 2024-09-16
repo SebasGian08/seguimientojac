@@ -37,6 +37,11 @@ $(document).ready(function() {
     });
 });
 
+function clickExcel(){
+    $('.dt-buttons .buttons-excel').click()
+}
+
+
 $(function () {
     const $table = $("#tableAsistencia");
 
@@ -104,9 +109,6 @@ $(function () {
                 render: function (data) {
                     return (
                         '<div class="btn-group">' +
-                        '<a href="javascript:void(0)" class="btn-update btn btn-primary" idDato="' +
-                        data.id +
-                        '" style="margin-right: 5px;"><i class="fa fa-edit"></i> </a>' +
                         '<a href="javascript:void(0)" class="btn-delete btn btn-danger" idDato="' +
                         data.id +
                         '"><i class="fa fa-trash"></i> </a>'+
@@ -139,5 +141,7 @@ $(function () {
             }
         );
     });
+
+   
 });
 

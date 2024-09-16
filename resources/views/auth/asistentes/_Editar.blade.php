@@ -1,8 +1,8 @@
 <div id="modalMantenimientEdit" class="modal modal-fill fade" data-backdrop="false" tabindex="-1">
-    <div class="modal-dialog modal-lg" style="width: 30% !important;">
-        <form enctype="multipart/form-data" action="{{ route('auth.asistentes.update') }}" id="registroEditAsistente" method="POST" data-ajax="true"
-            data-close-modal="true" data-ajax-loading="#loading" data-ajax-success="OnSuccessRegistroEditAsistente"
-            data-ajax-failure="OnFailureRegistroEditAsistente">
+    <div class="modal-dialog modal-lg">
+        <form enctype="multipart/form-data" action="{{ route('auth.asistentes.update') }}" id="registroEditAsistente"
+            method="POST" data-ajax="true" data-close-modal="true" data-ajax-loading="#loading"
+            data-ajax-success="OnSuccessRegistroEditAsistente" data-ajax-failure="OnFailureRegistroEditAsistente">
 
             <div class="modal-content">
                 <div class="modal-header">
@@ -56,8 +56,9 @@
                                 </label>
                                 <div class="input-group">
                                     <select class="form-control" name="distrito_id" id="distrito_id" required>
-                                        @foreach($distritos as $distrito)
-                                            <option value="{{ $distrito->id }}" {{ $Entity && $Entity->distrito_id == $distrito->id ? 'selected' : '' }}>
+                                        @foreach ($distritos as $distrito)
+                                            <option value="{{ $distrito->id }}"
+                                                {{ $Entity && $Entity->distrito_id == $distrito->id ? 'selected' : '' }}>
                                                 {{ $distrito->nombre }}
                                             </option>
                                         @endforeach
@@ -91,8 +92,12 @@
                                 </label>
                                 <div class="input-group">
                                     <select class="form-control" name="genero" id="genero" required>
-                                        <option value="masculino" {{ $Entity && $Entity->genero == 'masculino' ? 'selected' : '' }}>Masculino</option>
-                                        <option value="femenino" {{ $Entity && $Entity->genero == 'masculino' ? 'selected' : '' }}>Femenino</option>
+                                        <option value="masculino"
+                                            {{ $Entity && $Entity->genero == 'masculino' ? 'selected' : '' }}>Masculino
+                                        </option>
+                                        <option value="femenino"
+                                            {{ $Entity && $Entity->genero == 'masculino' ? 'selected' : '' }}>Femenino
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -103,8 +108,9 @@
                                 </label>
                                 <div class="input-group">
                                     <select class="form-control" name="celula_id" id="celula_id" required>
-                                        @foreach($celulas as $celula)
-                                            <option value="{{ $celula->id }}" {{ $Entity && $Entity->celula_id == $celula->id ? 'selected' : '' }}>
+                                        @foreach ($celulas as $celula)
+                                            <option value="{{ $celula->id }}"
+                                                {{ $Entity && $Entity->celula_id == $celula->id ? 'selected' : '' }}>
                                                 {{ $celula->nombre }}
                                             </option>
                                         @endforeach
@@ -118,34 +124,85 @@
                                 </label>
                                 <div class="input-group">
                                     <select class="form-control" name="estado" id="estado" required>
-                                        <option value="Activo" {{ $Entity && $Entity->estado == 'Activo' ? 'selected' : '' }}>Activo</option>
-                                        <option value="Inactivo" {{ $Entity && $Entity->estado == 'Inactivo' ? 'selected' : '' }}>Inactivo</option>
+                                        <option value="Activo"
+                                            {{ $Entity && $Entity->estado == 'Activo' ? 'selected' : '' }}>Activo
+                                        </option>
+                                        <option value="Inactivo"
+                                            {{ $Entity && $Entity->estado == 'Inactivo' ? 'selected' : '' }}>Inactivo
+                                        </option>
                                     </select>
                                 </div>
                             </div>
-                            <!-- Foto Field -->
                             <div class="form-group col-lg-12">
-                                <label for="foto" class="m-0 label-primary">
-                                    Foto
-                                </label>
-                                <div class="input-group">
-                                    <input type="file" class="form-control" name="foto" id="foto">
+                                <label for="banner_anuncio" class="m-0 label-primary"
+                                    style="font-size: 15px;">Fotografía</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input form-control-lg" id="foto"
+                                        name="foto" onchange="validateFile(this)">
+                                    <label class="custom-file-label" for="banner_anuncio"
+                                        id="banner_label">Seleccionar
+                                        archivo...</label>
                                 </div>
-                                @if($Entity && $Entity->foto)
+                                <small id="fileHelp" class="form-text text-muted">Selecciona un archivo JPG o PNG.
+                                    (Se
+                                    recomienda 1200x1200px)</small>
+                                @error('banner')
+                                    <div class="alert alert-danger mt-2">
+                                        <i class="fa fa-exclamation-circle"></i> <!-- Add Icono de advertencia -->
+                                        <span class="ml-1">{{ $message }}</span>
+                                    </div>
+                                @enderror
+                                <span id="fileError" class="text-danger"></span>
+                                @if ($Entity && $Entity->foto)
                                     <div class="mt-2">
-                                        <img src="{{ asset($Entity->foto) }}" alt="Foto" class="img-thumbnail" style="max-width: 200px;">
+                                        <img src="{{ asset($Entity->foto) }}" alt="Foto" class="img-thumbnail"
+                                            style="max-width: 200px;">
                                     </div>
                                 @endif
+                                <!-- Add Aquí se mostrará el mensaje de error -->
                             </div>
+                            {{-- Codigo Sebastian --}}
+                            <script>
+                                function validateFile(input) {
+                                    var fileName = input.files[0].name;
+                                    var label = document.getElementById('banner_label');
+                                    var fileError = document.getElementById('fileError');
+                                    var validExtensions = ['jpg', 'jpeg', 'png']; // Extensiones válidas
+
+                                    // Obtener la extensión del archivo seleccionado
+                                    var fileExtension = fileName.split('.').pop().toLowerCase();
+
+                                    // Verificar si la extensión es válida
+                                    if (validExtensions.indexOf(fileExtension) == -1) {
+                                        label.innerText = 'Seleccionar archivo...';
+                                        fileError.innerHTML =
+                                            '<i class="fa fa-exclamation-circle"></i> Error: Seleccione un archivo JPG o PNG válido.';
+                                        input.value = ''; // Limpiar el valor del input file
+                                    } else {
+                                        label.innerText = fileName;
+                                        fileError.innerText = '';
+                                    }
+                                }
+                            </script>
+                            {{-- Fin Codigo --}}
                         </div>
                     </div>
-                    
+
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-bold btn-pure btn-primary">
-                        {{ $Entity != null ? 'Modificar' : 'Registrar' }} Asistente
+                <div class="form-group col-lg-12">
+                    <!-- Botón de Envío -->
+                    <hr>
+                    <button type="submit" class="btn btn-primary "
+                        style="background-color:#2ecc71; border-color:#2ecc71; color:#fff;">
+                        <i class="fa fa-user-plus"></i> Editar Participante
+                    </button>
+                    <!-- Botón de Cancelar (opcional) -->
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        style="background-color:#e74c3c; border-color:#e74c3c; color:#fff;">
+                        <i class="fa fa-times"></i> Cancelar
                     </button>
                 </div>
+
             </div>
         </form>
     </div>

@@ -1,7 +1,7 @@
 @extends('auth.index')
 
 @section('titulo')
-    <title>BolsaTrabajo | Alumnos Sancionados</title>
+    <title>JAC | Listado de Asistencia</title>
 @endsection
 
 @section('styles')
@@ -99,21 +99,13 @@
             @csrf
             <div class="row">
                 <div class="col-md-12">
-                    {{-- <div class="row align-items-center">
-                        <div class="col-lg-8">
-                            <div class="alert alert-success" role="alert">
-                                <span class="fa fa-check-circle"></span> <!-- Icono de check -->
-                                <strong>¡Atención!</strong> Para ver toda la información en la tabla, haz clic en el botón.
-                            </div>
-                        </div>
-                        <div class="form-group col-lg-3 col-md-12 d-flex flex-column">
-                            <a href="javascript:void(0)" id="btn_mostrar" class="btn-m btn-primary-m" mostrar=""
-                                onclick="mostrarTodo()" style="padding: 7.5px; background: #464646;">
-                                <i class="fa fa-eye"></i> Mostrar toda la Data</a>
-                        </div>
-                    </div> --}}
                     <table id="tableAsistencia" width="100%"
                         class='table dataTables_wrapper container-fluid dt-bootstrap4 no-footer'></table>
+                    <div class="form-group col-lg-3 col-md-12 d-flex flex-column">
+                        <a href="javascript:void(0)" class="btn-m btn-success-m" onclick="clickExcel()">
+                            <i class="fa fa-file"></i> Reporte de asistencia
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>

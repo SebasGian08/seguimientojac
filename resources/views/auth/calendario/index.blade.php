@@ -1,7 +1,7 @@
 @extends('auth.index')
 
 @section('titulo')
-    <title>BolsaTrabajo | Eventos Asistencia</title>
+    <title>JAC | Calendario</title>
 @endsection
 
 @section('styles')
@@ -31,7 +31,7 @@
     </style>
     <div class="content-wrapper">
         <section class="content-header">
-            <h1>Gestión</h1>
+            <h1>Calendario</h1>
         </section>
         <br>
         <br>
@@ -109,11 +109,7 @@
         <!-- Calendario -->
         <div id="calendar"></div>
         <!-- Menú contextual para eliminar eventos -->
-        <div id="contextMenu" style="display: none; position: absolute; background: white; border: 1px solid #ccc; z-index: 1000;">
-            <ul style="list-style-type: none; margin: 0; padding: 0;">
-                <li><button id="deleteEventButton">Eliminar</button></li>
-            </ul>
-        </div>
+
 
     </div>
 @endsection
@@ -135,7 +131,7 @@
             var calendarEl = document.getElementById('calendar');
             var contextMenu = document.getElementById('contextMenu');
             var eventIdToDelete = null;
-    
+
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 headerToolbar: {
@@ -158,7 +154,7 @@
                 dateClick: function(info) {
                     // Set the date in the modal
                     document.getElementById('eventDate').value = info.dateStr;
-    
+
                     // Show the modal
                     $('#eventModal').modal('show');
                 },
@@ -166,10 +162,10 @@
                     // Añadir un listener de clic derecho en los eventos
                     info.el.addEventListener('contextmenu', function(e) {
                         e.preventDefault(); // Evitar el menú contextual del navegador
-    
+
                         // Guardar el ID del evento que se va a eliminar
                         eventIdToDelete = info.event.id;
-    
+
                         // Mostrar el menú contextual
                         contextMenu.style.display = 'block';
                         contextMenu.style.left = e.pageX + 'px';
@@ -177,42 +173,9 @@
                     });
                 }
             });
-    
+
             calendar.render();
-    
-            // Manejar el clic en el botón de eliminar
-            document.getElementById('deleteEventButton').addEventListener('click', function() {
-                if (eventIdToDelete) {
-                    fetch(`{{ route('auth.calendario.delete') }}/${eventIdToDelete}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}' // Asegúrate de incluir el token CSRF
-                        }
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            // Recargar el calendario después de eliminar el evento
-                            calendar.refetchEvents();
-                        } else {
-                            console.error('Error deleting event');
-                        }
-                    })
-                    .catch(error => console.error('Error deleting event:', error));
-    
-                    // Ocultar el menú contextual
-                    contextMenu.style.display = 'none';
-                    eventIdToDelete = null;
-                }
-            });
-    
-            // Ocultar el menú contextual si se hace clic fuera de él
-            document.addEventListener('click', function(e) {
-                if (!contextMenu.contains(e.target)) {
-                    contextMenu.style.display = 'none';
-                }
-            });
+
         });
     </script>
-    
 @endsection

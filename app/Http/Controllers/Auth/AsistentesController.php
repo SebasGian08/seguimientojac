@@ -168,54 +168,55 @@ class AsistentesController extends Controller
     }
 
     public function update(Request $request)
-{
-    // Validar la solicitud
-    $validator = Validator::make($request->all(), [
-        'id' => 'required|integer|exists:asistentes,id', // Verifica que el ID exista en la base de datos
-        'foto' => 'nullable|mimes:jpg,jpeg,png|max:2048', // Validar la foto (opcional)
-    ]);
+    {
+        $status = false;
+        // Validar la solicitud
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|integer|exists:asistentes,id', // Verifica que el ID exista en la base de datos
+            'foto' => 'nullable|mimes:jpg,jpeg,png|max:2048', // Validar la foto (opcional)
+        ]);
 
-    if ($validator->fails()) {
-        return response()->json(['errors' => $validator->errors()], 422);
-    }
-
-    // Buscar el asistente
-    $asistente = Asistentes::findOrFail($request->input('id'));
-
-    // Actualizar los datos del asistente
-    $asistente->nombre = $request->input('nombre');
-    $asistente->apellido = $request->input('apellido');
-    $asistente->fecha_nac = $request->input('fecha_nac');
-    $asistente->distrito_id = $request->input('distrito_id');
-    $asistente->direccion = $request->input('direccion');
-    $asistente->tel = $request->input('tel');
-    $asistente->genero = $request->input('genero');
-    $asistente->celula_id = $request->input('celula_id');
-    $asistente->estado = $request->input('estado');
-
-    // Manejar la foto si se ha subido una nueva
-    if ($request->hasFile('foto')) {
-        // Eliminar la foto antigua si existe
-        if ($asistente->foto && file_exists(public_path($asistente->foto))) {
-            unlink(public_path($asistente->foto));
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // Subir la nueva foto
-        $file = $request->file('foto');
-        $fileName = time() . '.' . $file->getClientOriginalExtension();
-        $filePath = 'uploads/fotos/';
-        $file->move(public_path($filePath), $fileName);
+        // Buscar el asistente
+        $asistente = Asistentes::findOrFail($request->input('id'));
 
-        // Guardar la ruta de la nueva foto
-        $asistente->foto = $filePath . $fileName;
+        // Actualizar los datos del asistente
+        $asistente->nombre = $request->input('nombre');
+        $asistente->apellido = $request->input('apellido');
+        $asistente->fecha_nac = $request->input('fecha_nac');
+        $asistente->distrito_id = $request->input('distrito_id');
+        $asistente->direccion = $request->input('direccion');
+        $asistente->tel = $request->input('tel');
+        $asistente->genero = $request->input('genero');
+        $asistente->celula_id = $request->input('celula_id');
+        $asistente->estado = $request->input('estado');
+
+        // Manejar la foto si se ha subido una nueva
+        if ($request->hasFile('foto')) {
+            // Eliminar la foto antigua si existe
+            if ($asistente->foto && file_exists(public_path($asistente->foto))) {
+                unlink(public_path($asistente->foto));
+            }
+
+            // Subir la nueva foto
+            $file = $request->file('foto');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $filePath = 'uploads/fotos/';
+            $file->move(public_path($filePath), $fileName);
+
+            // Guardar la ruta de la nueva foto
+            $asistente->foto = $filePath . $fileName;
+        }
+
+        // Guardar el asistente actualizado
+        $asistente->save();
+        if($asistente->save()) $status = true;    
+        // Responder con éxito en formato JSON
+        return response()->json(['Success' => $status, 'Errors' => $validator->errors()]);
     }
-
-    // Guardar el asistente actualizado
-    $asistente->save();
-
-    // Responder con éxito en formato JSON
-    return redirect()->route('auth.asistentes')->with('success', 'Registro creado exitosamente.');
-}
 
 
     

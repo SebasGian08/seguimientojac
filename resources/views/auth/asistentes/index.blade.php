@@ -1,7 +1,7 @@
 @extends('auth.index')
 
 @section('titulo')
-    <title>BolsaTrabajo | Eventos Asistencia</title>
+    <title>JAC | Registro de Asistentes</title>
 @endsection
 
 @section('styles')
@@ -24,7 +24,7 @@
 
         <section class="content-header">
             <h1>
-                Gestión
+                Gestión de Asistentes
             </h1>
         </section>
 
@@ -140,14 +140,49 @@
                             </select>
                         </div>
 
-                        <!-- Campo para seleccionar foto -->
                         <div class="form-group col-lg-6">
-                            <label for="foto" class="m-0 label-primary" style="font-size: 15px;">
-                                <i class="fa fa-image"></i> Foto del Asistente
-                            </label>
-                            <input type="file" class="form-control form-control-lg" id="foto" name="foto"
-                                accept="image/*">
+                            <label for="banner_anuncio" class="m-0 label-primary"
+                                style="font-size: 15px;">Fotografía</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input form-control-lg" id="foto"
+                                    name="foto" onchange="validateFile(this)">
+                                <label class="custom-file-label" for="banner_anuncio" id="banner_label">Seleccionar
+                                    archivo...</label>
+                            </div>
+                            <small id="fileHelp" class="form-text text-muted">Selecciona un archivo JPG o PNG. (Se
+                                recomienda 1200x1200px)</small>
+                            @error('banner')
+                                <div class="alert alert-danger mt-2">
+                                    <i class="fa fa-exclamation-circle"></i> <!-- Add Icono de advertencia -->
+                                    <span class="ml-1">{{ $message }}</span>
+                                </div>
+                            @enderror
+                            <span id="fileError" class="text-danger"></span>
+                            <!-- Add Aquí se mostrará el mensaje de error -->
                         </div>
+                        {{-- Codigo Sebastian --}}
+                        <script>
+                            function validateFile(input) {
+                                var fileName = input.files[0].name;
+                                var label = document.getElementById('banner_label');
+                                var fileError = document.getElementById('fileError');
+                                var validExtensions = ['jpg', 'jpeg', 'png']; // Extensiones válidas
+
+                                // Obtener la extensión del archivo seleccionado
+                                var fileExtension = fileName.split('.').pop().toLowerCase();
+
+                                // Verificar si la extensión es válida
+                                if (validExtensions.indexOf(fileExtension) == -1) {
+                                    label.innerText = 'Seleccionar archivo...';
+                                    fileError.innerHTML =
+                                        '<i class="fa fa-exclamation-circle"></i> Error: Seleccione un archivo JPG o PNG válido.';
+                                    input.value = ''; // Limpiar el valor del input file
+                                } else {
+                                    label.innerText = fileName;
+                                    fileError.innerText = '';
+                                }
+                            }
+                        </script>
                     </div>
 
                     <div class="form-group col-lg-12">
@@ -176,9 +211,13 @@
             @csrf
             <div class="row">
                 <div class="col-md-12">
-
                     <table id="tableAsistentes" width="100%"
                         class='table dataTables_wrapper container-fluid dt-bootstrap4 no-footer'></table>
+                    <div class="form-group col-lg-3 col-md-12 d-flex flex-column">
+                        <a href="javascript:void(0)" class="btn-m btn-success-m" onclick="clickExcel()">
+                            <i class="fa fa-file"></i> Reporte de Asistentes
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>

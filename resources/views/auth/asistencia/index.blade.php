@@ -1,7 +1,7 @@
 @extends('auth.index')
 
 @section('titulo')
-    <title>BolsaTrabajo | Eventos Asistencia</title>
+    <title>JAC | Registro de Asistencia</title>
 @endsection
 
 @section('styles')
@@ -85,8 +85,8 @@
                             <label for="fecha" class="m-0 label-primary" style="font-size: 17px;">
                                 <i class="fa fa-calendar-alt"></i> Fecha
                             </label>
-                            <input type="date" class="form-control form-control-lg" id="fecha_registro" name="fecha_registro"
-                                required>
+                            <input type="date" class="form-control form-control-lg" id="fecha_registro"
+                                name="fecha_registro" required>
                             <div id="fechaError" class="form-text text-danger"
                                 style="display: none; font-size: 12px; margin-top: 5px;">
                                 <i class="fa fa-exclamation-circle"></i> Por favor, debes seleccionar un Sábado.

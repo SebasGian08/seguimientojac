@@ -14,7 +14,7 @@ class PrincipalController extends Controller
 
     public function index()
     {
-        if (Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_REGISTRADOR) {
+        if (Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_TIMOTEO) {
             return view('auth.principal.index');
         } // Opcionalmente, podrías manejar el caso en que la condición no se cumple
         return redirect('/auth/error'); // Redirige a una página predeterminada si la condición no se cumple

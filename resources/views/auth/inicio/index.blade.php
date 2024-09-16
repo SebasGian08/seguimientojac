@@ -1,7 +1,7 @@
 @extends('auth.index')
 
 @section('titulo')
-    <title>BolsaTrabajo | Inicio</title>
+    <title>JAC | Inicio</title>
 @endsection
 
 @section('styles')
@@ -9,28 +9,6 @@
     <link rel="stylesheet" href="{{ asset('auth/css/inicio/core.css') }}">
     {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css"> --}}
 @endsection
-<style type="text/css">
-    .txt_claro {
-        background: #79f57f63;
-        /* color: #fff; */
-    }
-
-    .label-as-badge {
-        border-radius: 1em;
-        font-size: 12px;
-        cursor: pointer;
-    }
-
-    table.dataTable th,
-    table.dataTable td {
-        white-space: nowrap;
-    }
-
-    .sorting_1 {
-        padding-left: 30px !important;
-    }
-</style>
-
 @section('contenido')
     <div class="content-wrapper">
 
@@ -285,17 +263,14 @@
             </div>
         </div>
         <br>
+
     </div>
 @endsection
 
 @section('scripts')
     <!-- Incluir archivos de Highcharts -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/boost.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/variwide.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
 
 
     <script type="text/javascript" src="{{ asset('auth/js/inicio/index.js') }}"></script>

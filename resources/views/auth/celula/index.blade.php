@@ -1,7 +1,7 @@
 @extends('auth.index')
 
 @section('titulo')
-    <title>BolsaTrabajo | Eventos Asistencia</title>
+    <title>JAC | Registro de Celula</title>
 @endsection
 
 @section('styles')
@@ -24,7 +24,7 @@
 
         <section class="content-header">
             <h1>
-                Gestión
+                Gestión de celulas 
             </h1>
         </section>
 

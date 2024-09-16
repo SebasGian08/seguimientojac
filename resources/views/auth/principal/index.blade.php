@@ -76,15 +76,14 @@
 
         <br>
 
-        <!-- SOLO PUEDE REGISTRAR EL REGISTRADOR -->
-        @if (Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_REGISTRADOR)
+        
         <div class="text-center mt-4">
             <a href="{{ route('auth.eventosasistencia') }}"
                 class="btn btn-success btn-lg d-flex align-items-center justify-content-center">
                 <i class="fa fa-check-circle mr-2"></i> Registrar Asistencia
             </a>
         </div>
-        @endif
+       
 
         <br>
     </div>

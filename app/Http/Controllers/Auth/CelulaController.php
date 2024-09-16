@@ -114,7 +114,7 @@ class CelulaController extends Controller
     public function mostrarAsistentes(Request $request)
     {
         $celula_id = $request->input('celula_id');
-
+    
         // Consulta usando el modelo Eloquent
         $asistentes = Asistentes::join('celulas as c', 'asistentes.celula_id', '=', 'c.id') // Unir con la tabla de células
                                 ->join('distritos as d', 'asistentes.distrito_id', '=', 'd.id') // Unir con la tabla de distritos
@@ -122,11 +122,13 @@ class CelulaController extends Controller
                                         'asistentes.fecha_nac', 'asistentes.direccion', 'asistentes.tel', 'asistentes.genero', 'asistentes.id',
                                         'd.nombre as distrito') // Seleccionar el nombre del distrito
                                 ->where('c.id', $celula_id) // Filtrar por el id de la célula
+                                ->where('asistentes.estado', 'Activo') // Filtrar por asistentes activos
                                 ->orderBy('asistentes.created_at', 'DESC') // Ordenar por la fecha de creación
                                 ->get();
-
+    
         return response()->json(['data' => $asistentes]);
     }
+    
 
 
     /* EDITAR 1 */     
