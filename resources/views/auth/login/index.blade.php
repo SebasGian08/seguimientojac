@@ -16,7 +16,7 @@
     <section class="login">
         <div class="wrap-content">
             <div class="form-logo">
-                <img src="{{ asset('app/img/logo.png') }}" alt="Instituto Arzobispo Loayza">
+                <img src="{{ asset('app/img/logojac.png') }}" alt="JAC">
             </div>
             <h3 class="form-title">Iniciar Sesión</h3>
             <form method="post" action="{{ route('auth.login.post') }}">

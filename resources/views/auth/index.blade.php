@@ -94,7 +94,7 @@
             <div class="inside-header">
                 <a href="{{ route('auth.inicio') }}" class="logo">
                     <span class="logo-m">
-                        <img src="{{ asset('app/img/logo.png') }}" alt="logo" class="light-logo" style = "max-width: 50% !important;">
+                        <img src="{{ asset('app/img/logojac.png') }}" alt="logo" class="light-logo" style = "max-width: 50% !important;">
                     </span>
                 </a>
                 <nav class="navbar navbar-static-top">
