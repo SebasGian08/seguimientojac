@@ -58,6 +58,7 @@ class CelulaController extends Controller
                 'lider_id' => $request->lider_id, // Usa `liderid` aquí
                 'nombre' => $request->nombre,
                 'descripcion' => $request->descripcion,
+                
             ];
 
             // Crea el nuevo registro en la base de datos
@@ -122,7 +123,7 @@ class CelulaController extends Controller
                                         'asistentes.fecha_nac', 'asistentes.direccion', 'asistentes.tel', 'asistentes.genero', 'asistentes.id',
                                         'd.nombre as distrito') // Seleccionar el nombre del distrito
                                 ->where('c.id', $celula_id) // Filtrar por el id de la célula
-                                ->where('asistentes.estado', 'Activo') // Filtrar por asistentes activos
+                                ->where('asistentes.estado', 1) // Filtrar por asistentes activos
                                 ->orderBy('asistentes.created_at', 'DESC') // Ordenar por la fecha de creación
                                 ->get();
     
@@ -160,12 +161,12 @@ class CelulaController extends Controller
 
     public function partialView($id)
     {
-        // Asegúrate de que el ID es válido y que la entidad se encuentra en la base de datos
         $entity = Celula::find($id);
-        $user = User::all();
-        // Pasar la entidad a la vista
-        return view('auth.celula.Editar', ['Entity' => $entity,'user' => $user]);
+        $users = User::all();
+        
+        return view('auth.celula.Editar', ['Entity' => $entity, 'users' => $users]);
     }
+
 
     public function update(Request $request)
     {
@@ -178,6 +179,7 @@ class CelulaController extends Controller
             $entity->lider_id = $request->lider_id;
             $entity->nombre = $request->nombre;
             $entity->descripcion = $request->descripcion;
+            $entity->estado = $request->estado;
 
             if($entity->save()) $status = true;            
         }

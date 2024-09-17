@@ -31,7 +31,7 @@
     </style>
     <div class="content-wrapper">
         <section class="content-header">
-            <h1>Calendario</h1>
+            <h1>Calendario de Actividades</h1>
         </section>
         <br>
         <br>
@@ -103,7 +103,6 @@
                         </button>
                     </div>
                 </form>
-
             </div>
         </div><br>
         <!-- Calendario -->

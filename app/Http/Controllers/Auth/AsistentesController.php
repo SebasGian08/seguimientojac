@@ -20,7 +20,9 @@ class AsistentesController extends Controller
     public function index()
     {
         // Obtén todas las células
-        $celulas = Celula::all();
+        $celulas = Celula::where('estado', 1) // Solo estado 1
+                 ->whereNull('deleted_at') // Excluir registros eliminados
+                 ->get();
         $distritos = Distrito::where('provincia_id', 15)
                             ->orderBy('nombre')  // Ordenar alfabéticamente por nombre
                             ->get();
@@ -136,7 +138,6 @@ class AsistentesController extends Controller
             'genero' => $request->input('genero'),
             'celula_id' => $request->input('celula_id'),
             'foto' => $foto ? 'uploads/fotos/' . $foto : null,
-            'estado' => 'Activo', // Valor predeterminado
         ];
         try {
             Asistentes::create($data);

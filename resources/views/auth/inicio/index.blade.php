@@ -210,8 +210,6 @@
 
         </div>
         <br>
-
-
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 mb-4">
@@ -270,11 +268,8 @@
 @section('scripts')
     <!-- Incluir archivos de Highcharts -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
-
-
-
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script type="text/javascript" src="{{ asset('auth/js/inicio/index.js') }}"></script>
-
     <script type="text/javascript">
         // Obtener los datos proporcionados por el controlador
 

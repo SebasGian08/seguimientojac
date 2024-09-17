@@ -1,9 +1,9 @@
 <div id="modalMantenimientoCelulas" class="modal modal-fill fade" data-backdrop="false" tabindex="-1">
-    <div class="modal-dialog modal-lg" style="width: 30% !important;">
+    <div class="modal-dialog modal-lg">
         <form enctype="multipart/form-data" action="{{ route('auth.celula.update') }}" id="registroCelulas" method="POST"
             data-ajax="true" data-close-modal="true" data-ajax-loading="#loading"
             data-ajax-success="OnSuccessRegistroCelulas" data-ajax-failure="OnFailureRegistroCelulas">
-            <div class="modal-content">
+            <div class="modal-content ">
                 <div class="modal-header">
                     <h5 class="modal-title">{{ $Entity != null ? 'Modificar' : ' Registrar' }} Celula</h5>
                     <button type="button" class="close" data-dismiss="modal">
@@ -16,16 +16,19 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-12">
-                                <label for="liderid" class="m-0 label-primary" style="font-size: 15px;">
-                                    <i class="fa fa-tag"></i> Líder de Célula
-                                </label>
+                                <label for="lider_id">Líder de Célula</label>
                                 <select class="form-control form-control-lg" id="lider_id" name="lider_id" required>
-                                    <option value="" disabled selected>Seleccione Líder..</option>
-                                    @foreach ($user as $user)
-                                        <option value="{{ $user->id }}">{{ $user->nombres }}</option>
+                                    <option value="" disabled>Select Líder..</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}" 
+                                            {{ $Entity && $Entity->lider_id == $user->id ? 'selected' : '' }}>
+                                            {{ $user->nombres }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
+                            
+                            
                             <div class="col-md-12">
                                 <label for="nombre">Nombre de Célula</label>
                                 <input type="text" class="form-input form-control-lg" name="nombre"
@@ -37,6 +40,21 @@
                                 <input type="text" class="form-input form-control-lg" name="descripcion"
                                     value="{{ $Entity ? $Entity->descripcion : '' }}" id="descripcion" autocomplete="off">
                                 <span data-valmsg-for="descripcion" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="estado">
+                                    Estado
+                                </label>
+                                <div class="input-group">
+                                    <select class="form-input form-control-lg" name="estado" id="estado" required>
+                                        <option value="1"
+                                            {{ $Entity && $Entity->estado == '1' ? 'selected' : '' }}>Activo
+                                        </option>
+                                        <option value="2"
+                                            {{ $Entity && $Entity->estado == '2' ? 'selected' : '' }}>Inactivo
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -24,7 +24,7 @@ class CalendarioController extends Controller
             return [
                 'title' => $event->nombre,
                 'start' => $startDate->format('Y-m-d'), // Convertir a DD/MM/YYYY para visualización
-                'classNames' => $event->estado == 'activo' ? ['activo'] : ['inactivo']
+                'classNames' => $event->estado == '1' ? ['activo'] : ['inactivo']
             ];
         });
 
@@ -62,7 +62,6 @@ class CalendarioController extends Controller
                 'nombre' => $validatedData['nombre'],
                 'fecha_registro' => $startDate, // Guardar la fecha tal como está
                 'lugar' => $validatedData['lugar'],
-                'estado' => 'activo', // o 'inactivo', dependiendo del caso
             ]);
 
             // Redireccionar a la ruta del programa con un mensaje de éxito
@@ -75,17 +74,55 @@ class CalendarioController extends Controller
     }
 
 
+    public function verlistado(){
+        $calendario = Calendario::all();
+        return view('auth.calendario.listado' , compact('calendario'));
+    }
 
+
+
+    public function listarCalendario()
+    {
+        // Obtener los datos del calendario con los campos necesarios
+        $calendarioData = Calendario::select('id', 'nombre', 'fecha_registro', 'estado', 'lugar')
+                                    ->orderby('id', 'desc')
+                                    ->get();
+
+        // Retornar los datos en formato JSON
+        return response()->json([
+            'data' => $calendarioData
+        ]);
+    }
+
+
+
+    public function partialView($id = null)
+    {
+        // Fetch the specific Calendario if an ID is provided; otherwise, get all
+        $calendario = $id ? Calendario::find($id) : null;
+    
+        return view('auth.calendario.Editar', [
+            'Entity' => $calendario
+        ]);
+    }
+    
     
 
-   /*  public function delete(Request $request)
+    public function update(Request $request)
     {
         $status = false;
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+        ]);
+        if (!$validator->fails()){
+            $entity = Calendario::find($request->id);
+            $entity->nombre = $request->nombre;
+            $entity->fecha_registro = $request->fecha_registro;
+            $entity->estado = $request->estado;
+            $entity->lugar = $request->lugar;
 
-        $entity = Cargo::find($request->id);
-
-        if($entity->delete()) $status = true;
-
-        return response()->json(['Success' => $status]);
-    } */
+            if($entity->save()) $status = true;            
+        }
+        return response()->json(['Success' => $status, 'Errors' => $validator->errors()]);
+    }
 }

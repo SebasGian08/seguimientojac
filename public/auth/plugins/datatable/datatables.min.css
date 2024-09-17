@@ -23,6 +23,38 @@ div.dt-autofill-handle {
   background: #0275d8;
 }
 
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.animated-online {
+  animation: pulse 1s infinite;
+}
+
+.highlight-row {
+  background-color: #EED202; /* Color amarillo claro para el resaltado */
+  color : #6d6000;
+}
+
+
+.estado-activo {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 4px 8px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+.estado-inactivo {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 4px 8px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
 div.dt-autofill-select {
   position: absolute;
   z-index: 1001;

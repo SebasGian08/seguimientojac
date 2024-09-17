@@ -24,10 +24,31 @@ class UsuariosController extends Controller
     
     public function list_all()  
     {
+        // Recupera los usuarios con sus perfiles relacionados
+        $users = User::with('profile') // Cambia 'profile' por el nombre correcto de la relación si es necesario
+            ->orderBy('id', 'desc')
+            ->get();
+        
+        // Mapea los usuarios para agregar una representación del estado
+        $formattedUsers = $users->map(function($user) {
+            // Convierte el estado en un texto legible
+            $estadoTexto = $user->estado === 1 ? 'Activo' : 'Inactivo';
+            
+            // Devuelve el usuario con el estado formateado
+            return [
+                'id' => $user->id,
+                'nombres' => $user->nombres,
+                'email' => $user->email,
+                'estado' => $estadoTexto,
+                'profile' => $user->profile, // Asegúrate de incluir cualquier otro campo necesario
+                'inicio_sesion' => $user->inicio_sesion,
+                'online' => $user->online
+            ];
+        });
+
+        // Devuelve la respuesta en formato JSON
         return response()->json([
-            'data' => User::with('profile') // Cambia 'profile' por el nombre correcto de la relación
-                ->orderBy('id', 'desc')
-                ->get()
+            'data' => $formattedUsers
         ]);
     }
 
@@ -46,15 +67,15 @@ class UsuariosController extends Controller
     {
         $status = false;
 
-        // Validación de los campos 'nombres', 'email' y otros
         $validator = Validator::make($request->all(), [
             'nombres' => 'required|unique:users,nombres,' . ($request->id ?? 'NULL') . ',id,deleted_at,NULL',
-            'email' => 'required|unique:users,email,' . ($request->id  ?? 'NULL') . ',id,deleted_at,NULL',
-            'password' => 'nullable|min:6', // Se valida solo si está presente
-            'profile_id' => 'required'
+            'email' => 'required|unique:users,email,' . ($request->id ?? 'NULL') . ',id,deleted_at,NULL',
+            'password' => 'nullable|min:6',
+            'profile_id' => 'required',
+            'estado' => 'required|in:1,2'
         ]);
 
-        // Verificar si la validación falla
+
         if ($validator->fails()) {
             return response()->json([
                 'Success' => $status,
@@ -62,7 +83,6 @@ class UsuariosController extends Controller
             ]);
         }
 
-        // Encontrar o crear la entidad User
         if ($request->id) {
             $entity = User::find($request->id);
             if (!$entity) {
@@ -87,6 +107,7 @@ class UsuariosController extends Controller
         $entity->nombres = trim($request->nombres);
         $entity->email = trim($request->email);
         $entity->profile_id = $request->profile_id;
+        $entity->estado = $request->estado;
 
         // Guardar la entidad
         if ($entity->save()) {
@@ -99,10 +120,6 @@ class UsuariosController extends Controller
             'Errors' => $validator->errors()
         ]);
     }
-
-
-
-    
 
     public function delete(Request $request)
     {

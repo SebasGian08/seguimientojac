@@ -14,7 +14,6 @@
                 <input type="hidden" name="celula_id" class="celula_id" value="{{ $Entity->id }}" required>
                 <div class="modal-body">
                     <div>
-                        
                         <div class="col-lg-12 col-md-12">
                             <div class="table-wrapper">
                                 <table id="tableAsistentes"

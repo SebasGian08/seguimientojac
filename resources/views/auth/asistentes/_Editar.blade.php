@@ -124,11 +124,11 @@
                                 </label>
                                 <div class="input-group">
                                     <select class="form-control" name="estado" id="estado" required>
-                                        <option value="Activo"
-                                            {{ $Entity && $Entity->estado == 'Activo' ? 'selected' : '' }}>Activo
+                                        <option value="1"
+                                            {{ $Entity && $Entity->estado == '1' ? 'selected' : '' }}>Activo
                                         </option>
-                                        <option value="Inactivo"
-                                            {{ $Entity && $Entity->estado == 'Inactivo' ? 'selected' : '' }}>Inactivo
+                                        <option value="2"
+                                            {{ $Entity && $Entity->estado == '2' ? 'selected' : '' }}>Inactivo
                                         </option>
                                     </select>
                                 </div>

@@ -65,7 +65,7 @@
             <div class="form-row">
                 <form class="col-lg-12 col-md-12" action="{{ route('auth.asistencia.store') }}" method="post">
                     @csrf
-                    {{-- <input type="hidden" name="id_user" class="id_user" value="{{ $userId }}" required> --}}
+                    <input type="hidden" name="id_user" class="id_user" value="{{ $userId }}" required>
                     <div style="display: flex; flex-wrap: wrap;">
                         <!-- Programa -->
                         <div class="form-group col-lg-6">
@@ -176,6 +176,7 @@
                         <button type="submit" class="btn btn-primary btn-lg" style="font-size: 17px;border-radius:15px;">
                             <i class="fa fa-save"></i> Registrar Asistencia</button>
                     </div>
+                    
                 </form>
             </div>
         </div>

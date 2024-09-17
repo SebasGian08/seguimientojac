@@ -5,6 +5,18 @@ function clickExcel(){
 $(function () {
     const $table = $("#tableAsistentes");
 
+    /* CALCULAR LA EDAD SEGUN LA FECHA DE NACIMIENTO */
+    function calculateAge(birthDate) {
+        const today = new Date();
+        const birth = new Date(birthDate);
+        let age = today.getFullYear() - birth.getFullYear();
+        const monthDifference = today.getMonth() - birth.getMonth();
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birth.getDate())) {
+            age--;
+        }
+        return age;
+    }
+
     var $dataTableAsistentes = $table.DataTable({
         columnDefs: [
             {
@@ -38,19 +50,35 @@ $(function () {
                 render: function (data, type, row) {
                     return row.nombre + " " + row.apellido; // Asegúrate de que 'nombre' y 'apellido' sean los nombres correctos
                 },
-                class: "text-left",
+                class: "text-center",
             },
             {
                 title: "Fecha de Nacimiento",
                 data: "fecha_nac",
-                class: "text-left",
+                class: "text-center",
             },
-            { title: "Distrito", data: "distrito_nombre", class: "text-left" },
-            { title: "Dirección", data: "direccion", class: "text-left" },
-            { title: "Teléfono", data: "tel", class: "text-left" },
-            { title: "Género", data: "genero", class: "text-left" },
-            { title: "Celula", data: "celula_nombre", class: "text-left" },
-            { title: "Estado", data: "estado", class: "text-left" },
+            {
+                title: "Edad",
+                data: "fecha_nac",
+                class: "text-center",
+                render: function (data) {
+                    return calculateAge(data);
+                },
+            },
+            { title: "Distrito", data: "distrito_nombre", class: "text-center" },
+            { title: "Dirección", data: "direccion", class: "text-center" },
+            { title: "Teléfono", data: "tel", class: "text-center" },
+            { title: "Género", data: "genero", class: "text-center" },
+            { title: "Celula", data: "celula_nombre", class: "text-center" },
+            {
+                title: "Estado",
+                data: "estado",
+                render: function (data) {
+                    return data === 1
+                        ? "<span class='estado-activo'>Activo</span>"
+                        : "<span class='estado-inactivo'>Inactivo</span>";
+                },
+            },
             {
                 data: null,
                 render: function (data) {
@@ -74,7 +102,20 @@ $(function () {
                 },
             },
         ],
+        drawCallback: function () {
+            // Se ejecuta cada vez que se dibuja la tabla
+            this.api().rows().every(function () {
+                var data = this.data();
+                var age = calculateAge(data.fecha_nac);
+                if (age > 25) {
+                    $(this.node()).addClass('highlight-row');
+                } else {
+                    $(this.node()).removeClass('highlight-row');
+                }
+            });
+        }
     });
+
     /* Para abrir modal y editar */
     $table.on("click", ".btn-update", function () {
         const id = $dataTableAsistentes.row($(this).parents("tr")).data().id;

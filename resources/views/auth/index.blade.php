@@ -21,13 +21,18 @@
 
     <style>
         /* CAMBIAR THEME DE SISTEMA */
-        .content-wrapper:before {
+        header {
+            /* background-color: white !important; */
+            background-color: #273746 !important;
+        }
+
+        /* .content-wrapper:before {
             background: radial-gradient(circle, rgba(0, 114, 191, 1) 37%, rgba(0, 195, 244, 1) 100%);
         }
 
         .main-nav {
             background: radial-gradient(circle, rgba(0, 114, 191, 1) 37%, rgba(0, 195, 244, 1) 100%);
-        }
+        } */
 
         .active-item-here {
             color: #34495e;
@@ -82,7 +87,28 @@
         .li_notifi:hover {
             background: rgb(231, 229, 229) !important;
         }
-        
+        .logo img {
+            max-width: 100%; /* Ajusta para no salirse del contenedor */
+            height: auto;    /* Mantiene la proporción */
+        }
+
+        @media (max-width: 767px) {
+            .logo img {
+                max-width: 20% !important; /* Ajusta el tamaño según el diseño móvil */
+            }
+        }
+
+        @media (min-width: 768px) {
+            .logo img {
+                max-width: 50%; /* Ajusta el tamaño para pantallas más grandes */
+            }
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
     <div class="wrapper">
 
@@ -94,17 +120,19 @@
             <div class="inside-header">
                 <a href="{{ route('auth.inicio') }}" class="logo">
                     <span class="logo-m">
-                        <img src="{{ asset('app/img/logojac.png') }}" alt="logo" class="light-logo" style = "max-width: 50% !important;">
+                        <img src="{{ asset('app/img/logojac.png') }}" alt="logo" class="light-logo">
                     </span>
                 </a>
                 <nav class="navbar navbar-static-top">
-                    <a href="#" class="sidebar-toggle d-block d-lg-none" data-toggle="push-menu" role="button" style="color: #363d4a;">
+                    <a href="#" class="sidebar-toggle d-block d-lg-none" data-toggle="push-menu" role="button"
+                        style="color: #ffffff;">
                         <span class="sr-only">Toggle navigation</span>
                     </a>
                     <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav mt-5">
                             <li id="notifications" class="dropdown notifications-menu">
-                                <button type="button" class="mt-3 dropdown-toggle btn btn-light" data-toggle="dropdown" style="margin-top:10px !important;">
+                                <button type="button" class="mt-3 dropdown-toggle btn btn-light" data-toggle="dropdown"
+                                    style="margin-top:10px !important;">
                                     <i class="mdi mdi-bell faa-ring animated"></i>
                                     <span class="badge badge-danger pt-3 pb-0" id="number_notify"></span>
                                 </button>
@@ -115,34 +143,42 @@
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <div class="user-image-wrapper">
-                                        <img src="{{ asset('auth/image/icon/usuario.jpg') }}" class="user-image" alt="User Image">
+                                        <img src="{{ asset('auth/image/icon/usuario.jpg') }}" class="user-image"
+                                            alt="User Image">
                                         <span class="status-indicator active"></span>
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu scale-up">
                                     <li class="user-header">
                                         <div class="user-image-wrapper">
-                                            <img src="{{ asset('auth/image/icon/usuario.jpg') }}" class="float-left" alt="User Image">
+                                            <img src="{{ asset('auth/image/icon/usuario.jpg') }}" class="float-left"
+                                                alt="User Image">
                                         </div>
                                         <p>
                                             {{ Auth::guard('web')->user()->nombres }}
                                             <small class="mb-5">{{ Auth::guard('web')->user()->email }}</small>
                                             <a href="#" class="btn btn-danger btn-sm btn-rounded">
-                                                <i class="fa fa-user"></i> {{ Auth::guard('web')->user()->profile->name }}
+                                                <i class="fa fa-user"></i>
+                                                {{ Auth::guard('web')->user()->profile->name }}
                                             </a>
                                         </p>
                                     </li>
                                     <li class="user-body">
                                         <div class="row no-gutters">
                                             <div class="col-12 text-left">
+                                                <a href="javascript:void(0)">
+                                                    <b class="text-success">●</b> En Línea
+                                                </a>
                                                 <a id="ModalCambiarPassword" href="javascript:void(0)">
                                                     <i class="fa fa-key"></i> Cambiar Contraseña
                                                 </a>
-                                                <a onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                                <a
+                                                    onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                                     <i class="fa fa-power-off"></i> {{ __('Cerrar Sesión') }}
                                                 </a>
-                                                <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" style="display: none;">
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                                     @csrf
+                                                    <input type="text" name="validacion" value="{{ Auth::guard('web')->user()->email }}">
                                                 </form>
                                             </div>
                                         </div>
@@ -153,7 +189,6 @@
                     </div>
                 </nav>
             </div>
-            
         </header>
 
         <div class="main-nav">
@@ -169,13 +204,31 @@
                                     <i class="fa fa-home mr-5"></i> <span>Inicio</span>
                                 </a>
                             </li>
-                            <li class="nav-item {{ Route::currentRouteName() == 'auth.calendario' ? 'active' : '' }}">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-calendar mr-5"></i>
+                                    <span>Actividades</span></a>
+                                <ul class="dropdown-menu multilevel scale-up-left">
+                                    <li class="nav-item"><a class="nav-link"
+                                            href="{{ route('auth.calendario') }}"><i class="fa fa-calendar mr-5"></i>
+                                            Calendario de Actividades</a>
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link"
+                                            href="{{ route('auth.calendario.listado') }}"><i
+                                                class="fa fa-calendar mr-5"></i> Listado de Actividades</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+                            {{--  <li class="nav-item {{ Route::currentRouteName() == 'auth.calendario' ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('auth.calendario') }}"><span
                                         class="active-item-here"></span>
                                     <i class="fa fa-calendar mr-5"></i>
                                     <span>Calendario de Actividades</span>
                                 </a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item {{ Route::currentRouteName() == 'auth.celula' ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('auth.celula') }}"><span
                                         class="active-item-here"></span>
@@ -214,7 +267,8 @@
                             </ul>
                         </li>
 
-                        @if (Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_DESARROLLADOR)
+                        @if (Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_DESARROLLADOR ||
+                                Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_ADMINISTRADOR)
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
@@ -225,6 +279,7 @@
                                                 class="fa fa-user mr-5"></i> Gestión de
                                             Usuarios</a>
                                     </li>
+
                                 </ul>
                             </li>
                         @endif

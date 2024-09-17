@@ -27,10 +27,18 @@ $(function () {
                     return meta.row + 1;
                 },
             },
-            { title: "Nombre de Celula", data: "nombre", class: "text-left" },
-            { title: "Lider Encargado", data: "nombrelider", class: "text-left" },
-            { title: "Descripción", data: "descripcion", class: "text-left" },
-            { title: "Estado", data: "estado", class: "text-left" },
+            { title: "Nombre de Celula", data: "nombre", class: "text-center" },
+            { title: "Lider Encargado", data: "nombrelider", class: "text-center" },
+            { title: "Descripción", data: "descripcion", class: "text-center" },
+            {
+                title: "Estado",
+                data: "estado",
+                render: function (data) {
+                    return data === 1
+                        ? "<span class='estado-activo'>Activo</span>"
+                        : "<span class='estado-inactivo'>Inactivo</span>";
+                },
+            },
             {
                 data: null,
                 render: function (data) {

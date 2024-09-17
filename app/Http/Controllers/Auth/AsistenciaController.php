@@ -17,13 +17,21 @@ class AsistenciaController extends Controller
 {
     public function index()
     {
-        $celulas = Celula::all();
+        $celulas = Celula::where('estado', 1) // Solo estado 1
+                 ->whereNull('deleted_at') // Excluir registros eliminados
+                 ->get();
+        $User = Auth::guard('web')->user();
+        $userId = $User->id; // Extraer el ID del usuario         
         $tipoprograma = TipoPrograma::all();
-        return view('auth.asistencia.index', compact('celulas','tipoprograma'));
+        return view('auth.asistencia.index', compact('celulas','tipoprograma','userId'));
     }
 
     public function verlistado(){
-        $celulas = Celula::all();
+        $celulas = Celula::where('estado', 1) // Solo estado 1
+                 ->whereNull('deleted_at') // Excluir registros eliminados
+                 ->get();
+
+
         return view('auth.asistencia.listado' , compact('celulas'));
     }
 
@@ -33,7 +41,7 @@ class AsistenciaController extends Controller
         $celulaId = $request->input('id');
 
         // Obtener los asistentes correspondientes a la célula
-        $asistentes = Asistentes::where('celula_id', $celulaId)->get();
+        $asistentes = Asistentes::where('celula_id', $celulaId)->where('estado',1)->get();
 
         return response()->json($asistentes);
     }
@@ -100,7 +108,20 @@ class AsistenciaController extends Controller
             'programa_id' => 'required|exists:tipo_programas,id',
             'fecha_registro' => 'required|date',
             'celula_id' => 'required|exists:celulas,id',
-            'asistente_id' => 'required|exists:asistentes,id',
+            'asistente_id' => [
+                'required',
+                'exists:asistentes,id',
+                function ($attribute, $value, $fail) use ($request) {
+                    // Verifica si ya existe un registro para el mismo asistente y fecha
+                    $exists = Asistencia::where('asistente_id', $value)
+                        ->where('fecha_registro', $request->input('fecha_registro'))
+                        ->exists();
+
+                    if ($exists) {
+                        $fail('El asistente ya está registrado para esta fecha.');
+                    }
+                },
+            ],
             'estado' => 'required|in:presente,ausente,justificado',
         ]);
         
@@ -116,7 +137,8 @@ class AsistenciaController extends Controller
             'celula_id' => $request->input('celula_id'),
             'asistente_id' => $request->input('asistente_id'),
             'estado' => $request->input('estado'),
-            'motivo' => $request->input('motivo') // Puede ser null si no se proporciona
+            'motivo' => $request->input('motivo'), // Puede ser null si no se proporciona
+            'id_user' => $request->input('id_user'),
         ];
         
         // Crea el nuevo registro en la base de datos

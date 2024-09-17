@@ -349,6 +349,13 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
         Route::post('/store', 'Auth\CalendarioController@store')->name('auth.calendario.store');
         // routes/web.php
         Route::post('/delete', 'Auth\CalendarioController@delete')->name('auth.calendario.delete');
+        /* VISTA */
+        Route::get('listado', 'Auth\CalendarioController@verlistado')->name('auth.calendario.listado');
+        /* LISTAR EN TABLA */
+        Route::get('listarCalendario', 'Auth\CalendarioController@listarCalendario')->name('auth.calendario.listarCalendario');
+        /* abrir modal con datos */
+        Route::get('/partialView/{id}', 'Auth\CalendarioController@partialView')->name('auth.calendario.create');
+        Route::post('/update', 'Auth\CalendarioController@update')->name('auth.calendario.update');
 
     });
 
@@ -361,7 +368,7 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
 Route::group(['prefix' => 'auth'], function () {
     Route::get('/', 'Auth\LoginController@showLoginForm');
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('auth.login');
-    Route::post('login', 'Auth\LoginController@login')->name('auth.login.post');
+    Route::post('login', 'Auth\LoginController@login')->name('auth.login.post');;
     Route::post('logout', 'Auth\LoginController@logout')->name('auth.logout');
 
     Route::get('/changePassword/partialView', 'Auth\LoginController@partialView_change_password')->name('auth.login.partialView_change_password');
@@ -373,3 +380,6 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::get('publicar_oferta', 'Auth\LoginController@view_publicar_oferta');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

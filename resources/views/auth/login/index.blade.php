@@ -16,7 +16,7 @@
     <section class="login">
         <div class="wrap-content">
             <div class="form-logo">
-                <img src="{{ asset('app/img/logojac.png') }}" alt="JAC">
+                <img src="{{ asset('app/img/logojac.png') }}" alt="JAC" style="width:30px;">
             </div>
             <h3 class="form-title">Iniciar Sesión</h3>
             <form method="post" action="{{ route('auth.login.post') }}">
@@ -39,10 +39,8 @@
                         </span>
                     @endif
                 </div>
-                <button type="submit" class="button">Ingresar</button>
+                <button type="submit" class="button">Ingresar Sesión</button>
                 <br>
-                {{-- Se Aumento  --}}
-                <a href="{{ route('index') }}" class="return-label">Regresar a la página principal</a>
             </form>
         </div>
     </section>

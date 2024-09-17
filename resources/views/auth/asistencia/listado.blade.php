@@ -85,9 +85,8 @@
                 </div>
                 <!-- Botón de Consulta -->
                 <div class="form-group col-lg-3 col-md-12 d-flex flex-column">
-                    <label for="" class="m-0 w-100">.</label>
                     <a href="javascript:void(0)" id="btn-consultar" class="btn-m btn-primary-m">
-                        <i class="fa fa-search"></i> Consultar
+                        <i class="fa fa-search"></i> Consultar Asistencia por Filtro
                     </a>
                 </div>
             </div>

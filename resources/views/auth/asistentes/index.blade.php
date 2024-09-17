@@ -141,8 +141,10 @@
                         </div>
 
                         <div class="form-group col-lg-6">
-                            <label for="banner_anuncio" class="m-0 label-primary"
-                                style="font-size: 15px;">Fotografía</label>
+                            <label for="banner_anuncio" class="m-0 label-primary" style="font-size: 15px;">
+                                Fotografía <span style="font-size: 12px; color: #008f40;">(opcional)</span>
+                            </label>
+                            
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input form-control-lg" id="foto"
                                     name="foto" onchange="validateFile(this)">
@@ -211,6 +213,13 @@
             @csrf
             <div class="row">
                 <div class="col-md-12">
+                    <div class="col-lg-12">
+                        <div class="alert alert-success" role="alert">
+                            <span class="fa fa-check-circle"></span> <!-- Icono de check -->
+                            <strong>¡Atención!</strong> Los participantes con una fila de color amarillo han alcanzado la mayoría de edad.
+                        </div>
+                    </div>
+                    
                     <table id="tableAsistentes" width="100%"
                         class='table dataTables_wrapper container-fluid dt-bootstrap4 no-footer'></table>
                     <div class="form-group col-lg-3 col-md-12 d-flex flex-column">

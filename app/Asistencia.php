@@ -11,7 +11,7 @@ class Asistencia extends Model
         use SoftDeletes;
 
         protected $fillable = [
-            'id','programa_id','fecha_registro','celula_id','asistente_id','estado','motivo'
+            'id','programa_id','fecha_registro','celula_id','asistente_id','estado','motivo','id_user'
         ];
     
         public $timestamps = false;
