@@ -29,10 +29,10 @@ class UsuariosController extends Controller
             ->orderBy('id', 'desc')
             ->get();
         
-        // Mapea los usuarios para agregar una representación del estado
-        $formattedUsers = $users->map(function($user) {
+            // Mapea los usuarios para agregar una representación del estado
+            $formattedUsers = $users->map(function($user) {
             // Convierte el estado en un texto legible
-            $estadoTexto = $user->estado === 1 ? 'Activo' : 'Inactivo';
+            $estadoTexto = $user->estado === 1 ? '1' : '2';
             
             // Devuelve el usuario con el estado formateado
             return [

@@ -1,46 +1,56 @@
-$(document).ready(function() {
-    $('#celula_id').change(function() {
+$(document).ready(function () {
+    $("#celula_id").change(function () {
         var celulaId = $(this).val();
-        
+
         if (celulaId) {
             $.ajax({
-                type: 'POST',
-                url: '/auth/asistencia/asistentesPorCelula',
+                type: "POST",
+                url: "/auth/asistencia/asistentesPorCelula",
                 data: {
                     id: celulaId,
-                    _token: csrfToken
+                    _token: csrfToken,
                 },
-                dataType: 'json',
-                success: function(response) {
-                    var $asistentesSelect = $('#asistente_id');
+                dataType: "json",
+                success: function (response) {
+                    var $asistentesSelect = $("#asistente_id");
                     $asistentesSelect.empty(); // Limpia el select
-            
+
                     // Añade la opción por defecto
-                    $asistentesSelect.append('<option value="" disabled selected>Seleccione Asistente..</option>');
-            
-                    $.each(response, function(index, asistente) {
+                    $asistentesSelect.append(
+                        '<option value="" disabled selected>Seleccione Asistente..</option>'
+                    );
+
+                    $.each(response, function (index, asistente) {
                         // Verifica que los campos existen en el objeto asistente
-                        var nombreCompleto = asistente.nombre + ' ' + asistente.apellido; 
-                        $asistentesSelect.append('<option value="' + asistente.id + '">' + nombreCompleto + '</option>');
+                        var nombreCompleto =
+                            asistente.nombre + " " + asistente.apellido;
+                        $asistentesSelect.append(
+                            '<option value="' +
+                                asistente.id +
+                                '">' +
+                                nombreCompleto +
+                                "</option>"
+                        );
                     });
-                    
                 },
-                error: function(xhr, status, error) {
-                    console.error('Error en la solicitud AJAX:', status, error);
-                }
+                error: function (xhr, status, error) {
+                    console.error("Error en la solicitud AJAX:", status, error);
+                },
             });
-            
         } else {
             // Si no hay célula seleccionada, limpia el select de asistentes
-            $('#asistente_id').empty().append('<option value="" disabled selected>Seleccione Asistente..</option>');
+            $("#asistente_id")
+                .empty()
+                .append(
+                    '<option value="" disabled selected>Seleccione Asistente..</option>'
+                );
         }
     });
 });
 
-function clickExcel(){
-    $('.dt-buttons .buttons-excel').click()
+function clickExcel() {
+    $(".dt-buttons .buttons-excel").click();
 }
-
 
 $(function () {
     const $table = $("#tableAsistencia");
@@ -62,11 +72,11 @@ $(function () {
         ajax: {
             url: "/auth/asistencia/list_all",
             data: function (d) {
-                d.fecha_exacta = $('#fecha_exacta').val();
-                d.estado_asistencia = $('#estado_asistencia').val();
-                d.celula_filter_id = $('#celula_filter_id').val();
+                d.fecha_exacta = $("#fecha_exacta").val();
+                d.estado_asistencia = $("#estado_asistencia").val();
+                d.celula_filter_id = $("#celula_filter_id").val();
             },
-            dataSrc: 'data'  // Aquí se especifica que los datos están dentro de la propiedad `data` en la respuesta JSON
+            dataSrc: "data", // Aquí se especifica que los datos están dentro de la propiedad `data` en la respuesta JSON
         },
         columns: [
             {
@@ -76,16 +86,30 @@ $(function () {
                     return meta.row + 1;
                 },
             },
-            { title: "Programa", data: "programa.nombre_programa", class: "text-left" },
-            { title: "Fecha de Programa", data: "fecha_registro", class: "text-left" },
-            { title: "Celula", data: "celula.nombre_celula", class: "text-left" },
+            {
+                title: "Programa",
+                data: "programa.nombre_programa",
+                class: "text-left",
+            },
+            {
+                title: "Fecha de Programa",
+                data: "fecha_registro",
+                class: "text-left",
+            },
+            {
+                title: "Celula",
+                data: "celula.nombre_celula",
+                class: "text-left",
+            },
             {
                 title: "Asistente",
                 data: "asistente",
                 class: "text-left",
                 render: function (data) {
-                    return data ? `${data.nombre_asistente} ${data.apellido_asistente}` : "-";
-                }
+                    return data
+                        ? `${data.nombre_asistente} ${data.apellido_asistente}`
+                        : "-";
+                },
             },
             {
                 title: "Estado",
@@ -93,16 +117,16 @@ $(function () {
                 class: "text-left",
                 render: function (data) {
                     switch (data) {
-                        case 'presente':
+                        case "presente":
                             return '<span class="estado presente">Presente</span>';
-                        case 'ausente':
+                        case "ausente":
                             return '<span class="estado ausente">Ausente</span>';
-                        case 'justificado':
+                        case "justificado":
                             return '<span class="estado justificado">Justificado</span>';
                         default:
                             return '<span class="estado desconocido">Desconocido</span>';
                     }
-                }
+                },
             },
             {
                 data: null,
@@ -111,8 +135,8 @@ $(function () {
                         '<div class="btn-group">' +
                         '<a href="javascript:void(0)" class="btn-delete btn btn-danger" idDato="' +
                         data.id +
-                        '"><i class="fa fa-trash"></i> </a>'+
-                        '</div>'
+                        '"><i class="fa fa-trash"></i> </a>' +
+                        "</div>"
                     );
                 },
             },
@@ -120,7 +144,7 @@ $(function () {
     });
 
     // Actualizar los datos de la tabla al hacer clic en el botón de consulta
-    $('#btn-consultar').on('click', function () {
+    $("#btn-consultar").on("click", function () {
         $dataTableAsistencia.ajax.reload(null, false);
     });
 
@@ -141,7 +165,4 @@ $(function () {
             }
         );
     });
-
-   
 });
-

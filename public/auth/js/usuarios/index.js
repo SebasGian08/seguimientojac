@@ -29,7 +29,7 @@ $(function () {
                 title: "Estado",
                 data: "estado",
                 render: function (data) {
-                    return data === 'Activo'
+                    return data === 1 || data === '1'
                         ? "<span class='estado-activo'>Activo</span>"
                         : "<span class='estado-inactivo'>Inactivo</span>";
                 },

@@ -1,5 +1,5 @@
-function clickExcel(){
-    $('.dt-buttons .buttons-excel').click()
+function clickExcel() {
+    $(".dt-buttons .buttons-excel").click();
 }
 
 $(function () {
@@ -11,7 +11,10 @@ $(function () {
         const birth = new Date(birthDate);
         let age = today.getFullYear() - birth.getFullYear();
         const monthDifference = today.getMonth() - birth.getMonth();
-        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birth.getDate())) {
+        if (
+            monthDifference < 0 ||
+            (monthDifference === 0 && today.getDate() < birth.getDate())
+        ) {
             age--;
         }
         return age;
@@ -65,7 +68,11 @@ $(function () {
                     return calculateAge(data);
                 },
             },
-            { title: "Distrito", data: "distrito_nombre", class: "text-center" },
+            {
+                title: "Distrito",
+                data: "distrito_nombre",
+                class: "text-center",
+            },
             { title: "Dirección", data: "direccion", class: "text-center" },
             { title: "Teléfono", data: "tel", class: "text-center" },
             { title: "Género", data: "genero", class: "text-center" },
@@ -74,7 +81,7 @@ $(function () {
                 title: "Estado",
                 data: "estado",
                 render: function (data) {
-                    return data === 1
+                    return data === 1 || data === '1'
                         ? "<span class='estado-activo'>Activo</span>"
                         : "<span class='estado-inactivo'>Inactivo</span>";
                 },
@@ -104,16 +111,18 @@ $(function () {
         ],
         drawCallback: function () {
             // Se ejecuta cada vez que se dibuja la tabla
-            this.api().rows().every(function () {
-                var data = this.data();
-                var age = calculateAge(data.fecha_nac);
-                if (age > 25) {
-                    $(this.node()).addClass('highlight-row');
-                } else {
-                    $(this.node()).removeClass('highlight-row');
-                }
-            });
-        }
+            this.api()
+                .rows()
+                .every(function () {
+                    var data = this.data();
+                    var age = calculateAge(data.fecha_nac);
+                    if (age > 25) {
+                        $(this.node()).addClass("highlight-row");
+                    } else {
+                        $(this.node()).removeClass("highlight-row");
+                    }
+                });
+        },
     });
 
     /* Para abrir modal y editar */

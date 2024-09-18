@@ -24,7 +24,6 @@
                 </a>
             </div>
         </section>
-
         <br>
         {{-- Cargando --}}
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -270,10 +269,30 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script type="text/javascript" src="{{ asset('auth/js/inicio/index.js') }}"></script>
+
     <script type="text/javascript">
         // Obtener los datos proporcionados por el controlador
-
         var TotalDeAsistentesporCelula = @json($TotalDeAsistentesporCelula);
+        var seguimientoPorCelula = @json($seguimientoPorCelula);
+        var asistenciasPresente = @json($asistenciasPresente);
+        var asistenciasAusente = @json($asistenciasAusente);
+        var asistenciasPorPrograma = @json($asistenciasPorPrograma);
+
+        // Imprimir datos en la consola para depuración
+        console.log('TotalDeAsistentesporCelula:', TotalDeAsistentesporCelula);
+        console.log('seguimientoPorCelula:', seguimientoPorCelula);
+        console.log('asistenciasPresente:', asistenciasPresente);
+        console.log('asistenciasAusente:', asistenciasAusente);
+        console.log('asistenciasPorPrograma:', asistenciasPorPrograma);
+
+        // Función para transformar datos a números
+        function transformData(data) {
+            return data.map(item => ({
+                name: item.celula || item.name,
+                y: parseFloat(item.cantidad_asistentes || item.cantidad_seguimientos || item.y)
+            }));
+        }
+
         // Configurar el gráfico de Highcharts
         Highcharts.chart('container', {
             chart: {
@@ -300,14 +319,10 @@
             series: [{
                 name: 'Cantidad',
                 colorByPoint: true,
-                data: TotalDeAsistentesporCelula.map(item => ({
-                    name: item.celula,
-                    y: item.cantidad_asistentes
-                }))
+                data: transformData(TotalDeAsistentesporCelula)
             }]
         });
 
-        var data = @json($seguimientoPorCelula); // Carga los datos dinámicamente
         Highcharts.chart('seguimiento', {
             chart: {
                 plotBackgroundColor: null,
@@ -332,7 +347,7 @@
                     allowPointSelect: true,
                     cursor: 'pointer',
                     dataLabels: {
-                        enabled: true, // Habilita las etiquetas de datos para mostrar nombre y cantidad
+                        enabled: true,
                         format: '{point.name}: {point.y}'
                     },
                     showInLegend: true
@@ -341,15 +356,10 @@
             series: [{
                 name: 'Cantidad de Seguimientos',
                 colorByPoint: true,
-                data: data.map(item => ({
-                    name: item.celula,
-                    y: item.cantidad_seguimientos
-                }))
+                data: transformData(seguimientoPorCelula)
             }]
         });
 
-
-        var seriesData = @json($asistenciasPresente);
         Highcharts.chart('grafico', {
             chart: {
                 type: 'bar'
@@ -384,12 +394,10 @@
             series: [{
                 name: 'Cantidad de Asistencias',
                 colorByPoint: true,
-                data: seriesData
+                data: transformData(asistenciasPresente)
             }]
         });
 
-        /*  */
-        var asistenciasAusente = @json($asistenciasAusente);
         Highcharts.chart('carreraporcontratado', {
             chart: {
                 type: 'column'
@@ -424,12 +432,10 @@
             series: [{
                 name: 'Cantidad de Contratados',
                 colorByPoint: true,
-                data: asistenciasAusente
+                data: transformData(asistenciasAusente)
             }]
         });
 
-        // Datos pasados desde el controlador
-        var seriesData = @json($asistenciasPorPrograma);
         Highcharts.chart('otro', {
             chart: {
                 type: 'column'
@@ -464,7 +470,7 @@
             series: [{
                 name: 'Cantidad de Asistencias',
                 colorByPoint: true,
-                data: seriesData
+                data: transformData(asistenciasPorPrograma)
             }]
         });
     </script>
