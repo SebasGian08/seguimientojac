@@ -32,14 +32,14 @@ class UsuariosController extends Controller
             // Mapea los usuarios para agregar una representación del estado
             $formattedUsers = $users->map(function($user) {
             // Convierte el estado en un texto legible
-            $estadoTexto = $user->estado === '1' ? '1' : '0';
+            /* $estadoTexto = $user->estado === '1' ? '1' : '0'; */
             
             // Devuelve el usuario con el estado formateado
             return [
                 'id' => $user->id,
                 'nombres' => $user->nombres,
                 'email' => $user->email,
-                'estado' => $estadoTexto,
+                'estado' => $user->estado,
                 'profile' => $user->profile, // Asegúrate de incluir cualquier otro campo necesario
                 'inicio_sesion' => $user->inicio_sesion,
                 'online' => $user->online

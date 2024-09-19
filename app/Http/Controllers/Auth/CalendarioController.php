@@ -50,7 +50,6 @@ class CalendarioController extends Controller
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
             'fecha_registro' => 'required|date', // Laravel valida que sea en el formato YYYY-MM-DD
-            'lugar' => 'required|string|max:255',
         ]);
 
         try {
@@ -61,10 +60,11 @@ class CalendarioController extends Controller
             $event = Calendario::create([
                 'nombre' => $validatedData['nombre'],
                 'fecha_registro' => $startDate, // Guardar la fecha tal como está
-                'lugar' => $validatedData['lugar'],
+                'tema' =>  $request->tema,
+                'libro' =>  $request->libro,
+                'responsable' =>  $request->responsable,
             ]);
 
-            // Redireccionar a la ruta del programa con un mensaje de éxito
             return redirect()->route('auth.calendario')->with('success', 'Actividad registrada exitosamente.');
 
         } catch (\Exception $e) {
@@ -84,7 +84,7 @@ class CalendarioController extends Controller
     public function listarCalendario()
     {
         // Obtener los datos del calendario con los campos necesarios
-        $calendarioData = Calendario::select('id', 'nombre', 'fecha_registro', 'estado', 'lugar')
+        $calendarioData = Calendario::select('id', 'nombre', 'fecha_registro', 'estado', 'responsable','tema','libro')
                                     ->orderby('id', 'desc')
                                     ->get();
 
@@ -119,7 +119,9 @@ class CalendarioController extends Controller
             $entity->nombre = $request->nombre;
             $entity->fecha_registro = $request->fecha_registro;
             $entity->estado = $request->estado;
-            $entity->lugar = $request->lugar;
+            $entity->tema = $request->tema;
+            $entity->libro = $request->libro;
+            $entity->responsable = $request->responsable;
 
             if($entity->save()) $status = true;            
         }

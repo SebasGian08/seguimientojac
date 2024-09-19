@@ -251,6 +251,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12 mb-4">
+                    <h3 style="text-align: center;font-weight: 700">Control de Asistencia</h3>
                     <section class="content-header">
                         @csrf
                         <table id="tableInicio" width="100%"

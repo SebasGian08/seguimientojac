@@ -11,7 +11,7 @@ class Calendario extends Model
         use SoftDeletes;
 
         protected $fillable = [
-            'id','nombre','fecha_registro','estado','lugar'
+            'id','nombre','fecha_registro','tema','libro','estado','responsable'
         ];
     
         public $timestamps = false;

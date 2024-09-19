@@ -25,6 +25,11 @@
                     <table id="tableActividades"
                         class="table table-bordered table-striped display nowrap margin-top-10 dataTable no-footer"></table>
                 </div>
+                <div class="form-group col-lg-3 col-md-12 d-flex flex-column">
+                    <a href="javascript:void(0)" class="btn-m btn-success-m" onclick="clickExcel()">
+                        <i class="fa fa-file"></i> Reporte de Actividades
+                    </a>
+                </div>
             </div>
         </section>
 

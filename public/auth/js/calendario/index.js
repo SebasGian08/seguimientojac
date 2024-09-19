@@ -31,13 +31,21 @@ $(function () {
                 title: "Fecha Registro",
                 data: "fecha_registro",
                 class: "text-center",
+                render: function (data) {
+                    if (!data) return "-"; // Maneja caso de datos nulos
+                    const date = new Date(data);
+                    const options = { day: '2-digit', month: 'short' };
+                    return new Intl.DateTimeFormat('en-GB', options).format(date);
+                },
             },
             {
                 title: "Nombre de Actividad",
                 data: "nombre",
                 class: "text-center",
             },
-            { title: "Lugar", data: "lugar", class: "text-center" },
+            { title: "Tema", data: "tema", class: "text-center" },
+            { title: "Libro", data: "libro", class: "text-center" },
+            { title: "Responsable", data: "responsable", class: "text-center" },
             {
                 title: "Estado",
                 data: "estado",
@@ -61,6 +69,7 @@ $(function () {
             },
         ],
     });
+
     /* Para abrir modal y editar */
     $table.on("click", ".btn-update", function () {
         const id = $dataTableActividades.row($(this).parents("tr")).data().id;

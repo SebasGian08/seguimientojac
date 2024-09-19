@@ -30,13 +30,13 @@ $(function () {
                     return meta.row + 1;
                 },
             },
-            { title: "Nombre del Asistente", data: "NombreDelAsistente", class: "text-left" },
-            { title: "Célula", data: "Célula", class: "text-left" },
-            { title: "Programas Registrados", data: "NúmeroDeEventosRegistrados", class: "text-left" },
-            { title: "Programas Asistidos", data: "NúmeroDeEventosAsistidos", class: "text-left" },
-            { title: "Porcentaje de Asistencia", data: "PorcentajeDeAsistencia", class: "text-left" },
-            { title: "Última Asistencia", data: "ÚltimaAsistencia", class: "text-left" },
-            { title: "Estado de Compromiso", data: "EstadoDeCompromiso", class: "text-left" },
+            { title: "Nombre del Asistente", data: "NombreDelAsistente", class: "text-center" },
+            { title: "Célula", data: "Célula", class: "text-center" },
+            { title: "Programas Registrados", data: "NúmeroDeEventosRegistrados", class: "text-center" },
+            { title: "Programas Asistidos", data: "NúmeroDeEventosAsistidos", class: "text-center" },
+            { title: "Porcentaje de Asistencia", data: "PorcentajeDeAsistencia", class: "text-center" },
+            { title: "Última Asistencia", data: "ÚltimaAsistencia", class: "text-center" },
+            { title: "Estado de Compromiso", data: "EstadoDeCompromiso", class: "text-center" },
         ],
     });
 });

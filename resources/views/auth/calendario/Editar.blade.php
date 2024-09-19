@@ -32,11 +32,25 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <label for="lugar">Lugar</label>
-                                <input type="text" class="form-input" name="lugar"
-                                    value="{{ $Entity ? $Entity->lugar : '' }}" id="lugar" autocomplete="off"
+                                <label for="tema">Tema</label>
+                                <input type="text" class="form-input" name="tema"
+                                    value="{{ $Entity ? $Entity->tema : '' }}" id="tema" autocomplete="off"
                                     required>
                                 <span data-valmsg-for="nombres" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="libro">Libro</label>
+                                <input type="text" class="form-input" name="libro"
+                                    value="{{ $Entity ? $Entity->libro : '' }}" id="libro" autocomplete="off"
+                                    required>
+                                <span data-valmsg-for="libro" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="responsable">Responsable</label>
+                                <input type="text" class="form-input" name="responsable"
+                                    value="{{ $Entity ? $Entity->responsable : '' }}" id="responsable" autocomplete="off"
+                                    required>
+                                <span data-valmsg-for="responsable" class="text-danger"></span>
                             </div>
                             <div class="col-md-12">
                                 <label for="estado">

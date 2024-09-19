@@ -86,15 +86,29 @@
                             <input autocomplete="off" type="date" class="form-control form-control-lg"
                                 id="fecha_registro" name="fecha_registro" required>
                         </div>
-
-                        <!-- Campo Lugar -->
                         <div class="form-group col-lg-6">
-                            <label for="lugar" class="m-0 label-primary" style="font-size: 15px;">
-                                <i class="fa fa-map-marker"></i> Lugar de Actividad
+                            <label for="tema" class="m-0 label-primary" style="font-size: 15px;">
+                                <i class="fa fa-book"></i> Tema
                             </label>
-                            <input autocomplete="off" type="text" class="form-control form-control-lg" id="lugar"
-                                name="lugar" placeholder="Ingrese lugar del evento" required>
+                            <input autocomplete="off" type="text" class="form-control form-control-lg" id="tema"
+                                name="tema" placeholder="Ingrese tema" required>
                         </div>
+                        <div class="form-group col-lg-6">
+                            <label for="libro" class="m-0 label-primary" style="font-size: 15px;">
+                                <i class="fa fa-book"></i> Libro
+                            </label>
+                            <input autocomplete="off" type="text" class="form-control form-control-lg" id="libro"
+                                name="libro" placeholder="Ingrese libro" required>
+                        </div>
+                        <!-- Campo responsable -->
+                        <div class="form-group col-lg-6">
+                            <label for="responsable" class="m-0 label-primary" style="font-size: 15px;">
+                                <i class="fa fa-user"></i> Responsable de Actividad
+                            </label>
+                            <input autocomplete="off" type="text" class="form-control form-control-lg" id="responsable"
+                                name="responsable" placeholder="Ingrese responsable" required>
+                        </div>
+                        
                     </div>
 
                     <div class="form-group col-lg-12">

@@ -286,8 +286,8 @@ function notification() {
                             (daysUntilEvent === 0
                                 ? "hoy"
                                 : daysUntilEvent + " días") +
-                            ". Lugar: " +
-                            event.lugar +
+                            ". responsable: " +
+                            event.responsable +
                             "</li>"
                     );
                 });
