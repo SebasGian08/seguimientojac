@@ -1,3 +1,7 @@
+function clickExcel(){
+    $('.dt-buttons .buttons-excel').click()
+}
+
 $(function () {
     const $table = $("#tableActividades");
 
@@ -17,7 +21,11 @@ $(function () {
         info: false,
         ajax: {
             url: "/auth/calendario/listarCalendario",
-            data: function (s) {},
+            data: function (d) {
+                // Add date filters to the request
+                d.fecha_desde = $("#fecha_desde").val();
+                d.fecha_hasta = $("#fecha_hasta").val();
+            },
         },
         columns: [
             {
@@ -32,7 +40,7 @@ $(function () {
                 data: "fecha_registro",
                 class: "text-center",
                 render: function (data) {
-                    if (!data) return "-"; // Maneja caso de datos nulos
+                    if (!data) return "-";
                     const date = new Date(data);
                     const options = { day: '2-digit', month: 'short' };
                     return new Intl.DateTimeFormat('en-GB', options).format(date);
@@ -70,7 +78,11 @@ $(function () {
         ],
     });
 
-    /* Para abrir modal y editar */
+    // Filter button click event
+    $("#btn-consultar").on("click", function () {
+        $dataTableActividades.ajax.reload(); // Reload data with new parameters
+    });
+
     $table.on("click", ".btn-update", function () {
         const id = $dataTableActividades.row($(this).parents("tr")).data().id;
         invocarModalView(id);

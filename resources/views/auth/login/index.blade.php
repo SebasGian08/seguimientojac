@@ -30,17 +30,44 @@
                         </span>
                     @endif
                 </div>
-                <div class="form-group">
+                <div class="form-group position-relative">
                     <input type="password" class="form-input {{ $errors->has('password') ? ' is-invalid' : '' }}"
                         name="password" id="password" placeholder="Contraseña" required>
+                    <span id="togglePassword" class="toggle-password" role="button">👁️</span>
                     @if ($errors->has('password'))
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('password') }}</strong>
                         </span>
                     @endif
                 </div>
+                
+                <script>
+                    document.getElementById('togglePassword').addEventListener('click', function() {
+                        const passwordInput = document.getElementById('password');
+                        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                        passwordInput.setAttribute('type', type);
+                        this.textContent = type === 'password' ? '👁️' : '🙈'; // Cambia el ícono según el estado
+                    });
+                </script>
+                
+                <style>
+                    .position-relative {
+                        position: relative;
+                    }
+                    .toggle-password {
+                        position: absolute;
+                        right: 10px; /* Ajusta según sea necesario */
+                        top: 50%;
+                        transform: translateY(-50%);
+                        cursor: pointer;
+                        user-select: none; /* Evita que el texto sea seleccionado al hacer clic */
+                    }
+                </style>
+                
                 <button type="submit" class="button">Ingresar Sesión</button>
                 <br>
+                    {{-- Se Aumento  --}}
+                 <a href="{{ route('index') }}" class="return-label">Regresar a la página principal</a>
             </form>
         </div>
     </section>

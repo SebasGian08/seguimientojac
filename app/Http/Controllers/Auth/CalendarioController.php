@@ -81,19 +81,29 @@ class CalendarioController extends Controller
 
 
 
-    public function listarCalendario()
+    public function listarCalendario(Request $request)
     {
-        // Obtener los datos del calendario con los campos necesarios
-        $calendarioData = Calendario::select('id', 'nombre', 'fecha_registro', 'estado', 'responsable','tema','libro')
-                                    ->orderby('id', 'desc')
-                                    ->get();
-
-        // Retornar los datos en formato JSON
+        $fechaDesde = $request->input('fecha_desde');
+        $fechaHasta = $request->input('fecha_hasta');
+    
+        $calendarioQuery = Calendario::select('id', 'nombre', 'fecha_registro', 'estado', 'responsable', 'tema', 'libro')
+                                      ->orderby('id', 'desc');
+    
+        if ($fechaDesde) {
+            $calendarioQuery->where('fecha_registro', '>=', $fechaDesde);
+        }
+    
+        if ($fechaHasta) {
+            $calendarioQuery->where('fecha_registro', '<=', $fechaHasta);
+        }
+    
+        $calendarioData = $calendarioQuery->get();
+    
         return response()->json([
             'data' => $calendarioData
         ]);
     }
-
+    
 
 
     public function partialView($id = null)

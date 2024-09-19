@@ -368,7 +368,8 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
 Route::group(['prefix' => 'auth'], function () {
     Route::get('/', 'Auth\LoginController@showLoginForm');
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('auth.login');
-    Route::post('login', 'Auth\LoginController@login')->name('auth.login.post');;
+    Route::post('login', 'Auth\LoginController@login')->name('auth.login.store'); // Ruta para el inicio de sesión
+    Route::post('login', 'Auth\LoginController@login')->name('auth.login.post');
     Route::post('logout', 'Auth\LoginController@logout')->name('auth.logout');
 
     Route::get('/changePassword/partialView', 'Auth\LoginController@partialView_change_password')->name('auth.login.partialView_change_password');

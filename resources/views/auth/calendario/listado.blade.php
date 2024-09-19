@@ -17,7 +17,28 @@
                 <small>| Mantenimiento</small>
             </h1>
         </section>
-
+        <br>
+        <div class="content-header">
+            <div class="form-row">
+                <!-- Filtro fecha_desde -->
+                <div class="form-group col-lg-4 col-md-6">
+                    <label for="fecha_desde" class="m-0 label-primary">Fecha desde</label>
+                    <input type="date" class="form-control-m form-control-sm" id="fecha_desde">
+                </div>
+                <div class="form-group col-lg-4 col-md-6">
+                    <label for="fecha_hasta" class="m-0 label-primary">Fecha hasta</label>
+                    <input type="date" class="form-control-m form-control-sm" id="fecha_hasta">
+                </div>
+                <!-- Botón de Consulta -->
+                <div class="form-group col-lg-3 col-md-12 d-flex flex-column">
+                    <label for="" class="m-0 w-100">.</label>
+                    <a href="javascript:void(0)" id="btn-consultar" class="btn-m btn-primary-m">
+                        <i class="fa fa-search"></i> Consultar Actividad
+                    </a>
+                </div>
+            </div>
+        </div>
+        <hr>
         <section class="content">
             @csrf
             <div class="row">

@@ -29,6 +29,43 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <div class="container">
+            <!-- Shortcut Buttons Row -->
+            <div class="row justify-content-center mb-4">
+                <div class="col-6 col-md-3 text-center mb-3">
+                    <a href="{{ route('auth.asistencia') }}" class="btn"
+                        style="background-color: #28a745; color: #ffffff; padding: 15px 20px; border-radius: 10px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                        <i class="fa fa-check-circle fa-2x"></i><br>
+                        <span style="font-size: 1.2em;">Registrar Asistencia</span>
+                    </a>
+                </div>
+                <div class="col-6 col-md-3 text-center mb-3">
+                    <a href="{{ route('auth.asistentes') }}" class="btn" style="background-color: #007bff; color: #ffffff; padding: 15px 20px; border-radius: 10px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                        <i class="fa fa-user-plus fa-2x"></i><br>
+                        <span style="font-size: 1.2em;">Registrar Asistentes</span>
+                    </a>
+                </div>
+                <div class="col-6 col-md-3 text-center mb-3">
+                    <a href="{{ route('auth.asistencia.listado') }}" class="btn"
+                        style="background-color: #ffc107; color: #ffffff; padding: 15px 20px; border-radius: 10px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                        <i class="fa fa-calendar fa-2x"></i><br>
+                        <span style="font-size: 1.2em;">Listado de Asistencia</span>
+                    </a>
+                </div>
+                <div class="col-6 col-md-3 text-center mb-3">
+                    <a href="{{-- {{ route('auth.reporte') }} --}}" class="btn" style="background-color: #dc3545; color: #ffffff; padding: 15px 20px; border-radius: 10px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                        <i class="fa fa-users fa-2x"></i><br>
+                        <span style="font-size: 1.2em;">Nuevos Asistentes</span>
+                    </a>
+                </div>
+            </div>
+            
+            <style>
+                .btn:hover {
+                    filter: brightness(1.1);
+                    transform: translateY(-5px);
+                }
+            </style>
+            
             <div class="row justify-content-center">
                 <div class="col-lg-3 mb-4">
                     <div class="container rounded"
@@ -61,64 +98,11 @@
                         </form>
                     </div>
                 </div>
-                {{-- Style hecho por sebastian --}}
-                <style>
-                    .zoom-container {
-                        transition: transform 0.2s ease;
-                        /* Transición suave */
-                    }
 
-                    .zoom-container:hover {
-                        transform: scale(1.05);
-                        /* Escala del 105% al hacer hover */
-                    }
-
-                    .range {
-                        width: 100%;
-                        height: 10px;
-                        /* Altura del barra de carga */
-                        background-color: rgba(255, 255, 255, 0.2);
-                        /* Color de fondo */
-                        border-radius: 5px;
-                        /* Bordes redondeados */
-                        overflow: hidden;
-                        /* Oculta el contenido que se desborda */
-                    }
-
-                    .fill {
-                        width: 0%;
-                        /* Ancho inicial de la barra de carga */
-                        height: 100%;
-                        /* Altura para llenar completamente el contenedor */
-                        background-color: #00e272;
-                        /* Color de la barra de carga */
-                        animation: fillAnimation 2s ease-out forwards;
-                        /* Animación de llenado */
-                    }
-
-                    @keyframes fillAnimation {
-                        0% {
-                            width: 0%;
-                        }
-
-                        100% {
-                            width: 100%;
-                        }
-                    }
-
-                    .icon-up {
-                        margin-left: 5px;
-                        /* Espacio entre el texto y el icono */
-                        color: rgb(255, 255, 255);
-                        /* Color del icono */
-                        font-size: 13px;
-                        /* Tamaño del icono */
-                    }
-                </style>
-                {{-- Fin estilo --}}
+                {{-- Remaining content (totals) goes here --}}
                 <div class="col-lg-3 mb-4 zoom-container">
                     <div class="totales text-center"
-                        style="background: linear-gradient(to bottom right, #007bc5, #00b2e9);">
+                        style="background: linear-gradient(to bottom right, #34495e, #536f8b);">
                         <div class="title">
                             <p class="title-text" style="color:rgb(255, 255, 255)">
                                 <i class="fa fa-user"></i> Total de Asistentes
@@ -151,7 +135,7 @@
                         <div class="title">
                             <p class="title-text" style="color:rgb(0, 175, 102)">
                                 <i class="fa fa-users"></i> Total de Celulas
-                                <span class="icon-up"><i class="fa fa-arrow-up"></i></span>
+                                <span class="icon-up"><i class="fa fa-arrow-up" style="color:white"></i></span>
                             </p>
                         </div>
                         <div class="data">
@@ -173,7 +157,7 @@
 
                 <div class="col-lg-3 mb-4 zoom-container">
                     <div class="totales text-center"
-                        style="background: linear-gradient(to bottom right, #007bc5, #00b2e9);">
+                        style="background: linear-gradient(to bottom right, #34495e, #536f8b);">
                         <div class="title">
                             <p class="title-text" style="color:rgb(255, 255, 255)">
                                 <i class="fa fa-calendar mr-5"></i> Total de Actividades
@@ -188,7 +172,7 @@
                                 <div class="fill" style="background-color: #00e272 !important;"></div>
                             </div>
                             <div style="margin-top: 10px;"> <!-- Espacio entre contenido principal y enlace -->
-                                <a href="{{ route('auth.calendario') }}" class="ver-mas"
+                                <a href="{{ route('auth.calendario.listado') }}" class="ver-mas"
                                     style="color: white; text-decoration: none; margin-top: 10px;">
                                     Ver más <i class="fa fa-chevron-right"></i>
                                 </a>
@@ -198,69 +182,72 @@
                 </div>
             </div>
 
-            <div class="row justify-content-center mt-4">
-                <div class="col-lg-9">
-                    <div class="alert alert-success" role="alert">
-                        <span class="fa fa-check-circle"></span> <!-- Icono de check -->
-                        Por favor, aplique filtros por fecha para visualizar gráficos e indicadores actualizados.
-                    </div>
+        </div>
+
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-9">
+                <div class="alert alert-success" role="alert">
+                    <span class="fa fa-check-circle"></span>
+                    Por favor, aplique filtros por fecha para visualizar gráficos e indicadores actualizados.
+                </div>
+            </div>
+        </div>
+  
+
+
+    <br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="content-header"
+                    style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
+                    <div id="container"></div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="content-header"
+                    style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
+                    <div id="seguimiento"></div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="col-lg-12 mb-4">
+                <div class="content-header"
+                    style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
+                    <div id="grafico"></div>
                 </div>
             </div>
 
         </div>
-        <br>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-6 mb-4">
-                    <div class="content-header"
-                        style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
-                        <div id="container"></div>
-                    </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                    <div class="content-header"
-                        style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
-                        <div id="seguimiento"></div>
-                    </div>
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="content-header"
+                    style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
+                    <div id="carreraporcontratado"></div>
                 </div>
             </div>
-
-            <br>
-            <div class="row">
-                <div class="col-lg-12 mb-4">
-                    <div class="content-header"
-                        style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
-                        <div id="grafico"></div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="row">
-                <div class="col-lg-6 mb-4">
-                    <div class="content-header"
-                        style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
-                        <div id="carreraporcontratado"></div>
-                    </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                    <div class="content-header"
-                        style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
-                        <div id="otro"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 mb-4">
-                    <h3 style="text-align: center;font-weight: 700">Control de Asistencia</h3>
-                    <section class="content-header">
-                        @csrf
-                        <table id="tableInicio" width="100%"
-                            class='table dataTables_wrapper container-fluid dt-bootstrap4 no-footer'></table>
-                    </section>
+            <div class="col-lg-6 mb-4">
+                <div class="content-header"
+                    style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
+                    <div id="otro"></div>
                 </div>
             </div>
         </div>
-        <br>
+        <div class="row">
+            <div class="col-lg-12 mb-4">
+                <h3 style="text-align: center;font-weight: 700">Control de Asistencia</h3>
+                <section class="content-header">
+                    @csrf
+                    <table id="tableInicio" width="100%"
+                        class='table dataTables_wrapper container-fluid dt-bootstrap4 no-footer'></table>
+                </section>
+            </div>
+        </div>
+    </div>
+    <br>
 
     </div>
 @endsection
