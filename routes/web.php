@@ -337,8 +337,7 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
         Route::post('/asistentesPorCelula', 'Auth\AsistenciaController@asistentesPorCelula')->name('auth.asistentes.asistentesPorCelula');
         Route::get('/list_all', 'Auth\AsistenciaController@list_all')->name('auth.asistencia.list_all');
         Route::post('/delete', 'Auth\AsistenciaController@delete')->name('auth.asistencia.delete');
-        Route::post('/store', 'Auth\AsistenciaController@store')->name('auth.asistencia.store');
-        
+        Route::post('/store', 'Auth\AsistenciaController@store')->name('auth.asistencia.store');  
     });
 
     Route::group(['prefix' => 'calendario'], function () {
@@ -356,7 +355,7 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
         /* abrir modal con datos */
         Route::get('/partialView/{id}', 'Auth\CalendarioController@partialView')->name('auth.calendario.create');
         Route::post('/update', 'Auth\CalendarioController@update')->name('auth.calendario.update');
-
+        Route::post('/delete', 'Auth\CalendarioController@delete')->name('auth.calendario.delete');
     });
 
     

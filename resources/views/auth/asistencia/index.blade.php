@@ -106,8 +106,8 @@
                             </select>
                         </div>
 
-                        <!-- Asistentes -->
-                        <div class="form-group col-lg-6">
+                        <!-- Asistentes - Opción 1 -->
+                        {{-- <div class="form-group col-lg-6">
                             <label for="asistentes" class="m-0 label-primary" style="font-size: 17px;">
                                 <i class="fa fa-user"></i> Asistentes
                             </label>
@@ -115,6 +115,56 @@
                                 <option value="" disabled selected>Seleccione Asistente..</option>
                                 <!-- Opciones dinámicas aquí -->
                             </select>
+                        </div> --}}
+                        <style>
+                            .custom-checkbox {
+                                display: flex;
+                                align-items: center;
+                                justify-content: flex-end;
+                                margin-bottom: 10px;
+                                padding: 10px;
+                                border: 1px solid #ccc;
+                                border-radius: 5px;
+                                transition: background-color 0.3s ease, border-color 0.3s ease;
+                            }
+                        
+                            .custom-checkbox:hover {
+                                background-color: #f0f0f0;
+                            }
+                        
+                            .form-check-label {
+                                font-size: 16px;
+                                color: #333;
+                                cursor: pointer;
+                                transition: color 0.3s ease;
+                                flex-grow: 1;
+                                margin-right: 20px;
+                            }
+                        
+                            .form-check-input {
+                                width: 20px;
+                                height: 20px;
+                                cursor: pointer;
+                            }
+                        
+                            /* Estilo para el checkbox seleccionado */
+                            .custom-checkbox.selected {
+                                background-color: #007bff;
+                                color: white;
+                                border-color: #0056b3;
+                            }
+                        </style>
+                        
+                        <!-- Asistentes - Opción 2-->
+                        <div class="form-group col-lg-12">
+                            <label class="m-0 label-primary" style="font-size: 17px; font-weight: bold; color: #007bff;">
+                                <i class="fa fa-user"></i> Asistentes
+                            </label>
+                            <div id="asistentes-container" style="padding: 12px; border: 2px solid #007bff; border-radius: 8px; background-color: #f8f9fa; margin-top: 10px;">
+                                <p style="font-size: 15px; color: #343a40; text-align: center;">
+                                    No hay asistentes disponibles. Seleccione una célula primero.
+                                </p>
+                            </div>
                         </div>
 
                         <!-- Asistió? -->

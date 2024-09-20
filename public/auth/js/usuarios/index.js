@@ -57,8 +57,12 @@ $(function () {
                 data: "inicio_sesion",
                 className: "text-center"
             },
+            {
+                title: "Último cierre de sesión",
+                data: "cerrar_sesion",
+                className: "text-center"
+            },
             
-
             {
                 data: null,
                 defaultContent:

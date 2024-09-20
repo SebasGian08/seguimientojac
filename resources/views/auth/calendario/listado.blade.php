@@ -42,6 +42,12 @@
         <section class="content">
             @csrf
             <div class="row">
+                <style>
+                    #tableActividades tbody tr:hover {
+                        cursor: pointer;
+                        /* Cambia el cursor a una mano cuando se pasa sobre la fila */
+                    }
+                </style>
                 <div class="col-md-12">
                     <table id="tableActividades"
                         class="table table-bordered table-striped display nowrap margin-top-10 dataTable no-footer"></table>

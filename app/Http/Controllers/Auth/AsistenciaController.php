@@ -71,6 +71,7 @@ class AsistenciaController extends Controller
                 'id' => $asistencia->id,
                 'fecha_registro' => $asistencia->fecha_registro,
                 'estado' => $asistencia->estado,
+                'motivo' => $asistencia->motivo,
                 'programa' => $asistencia->programa ? [
                     'id_programa' => $asistencia->programa->id,
                     'nombre_programa' => $asistencia->programa->nombre,
@@ -101,7 +102,8 @@ class AsistenciaController extends Controller
         return response()->json(['Success' => $status]);
     }
 
-    public function store(Request $request)
+    //SOLO GUARDAR CON UNO
+    /* public function store_old(Request $request)
     {
         // Validar los datos del formulario
         $validator = Validator::make($request->all(), [
@@ -146,6 +148,64 @@ class AsistenciaController extends Controller
         
         // Redireccionar a la ruta del programa con un mensaje de éxito
         return redirect()->route('auth.asistencia')->with('success', 'Registro creado exitosamente.');
-    }
+    } */
+
+
+
+    //GUARDAR CON UN ARRAY
+    public function store(Request $request)
+        {
+            // Validar los datos del formulario
+            $validator = Validator::make($request->all(), [
+                'programa_id' => 'required|exists:tipo_programas,id',
+                'fecha_registro' => 'required|date',
+                'celula_id' => 'required|exists:celulas,id',
+                'asistente_id' => 'required|array', // Cambia a 'asistente_ids' como un array
+                'asistente_id.*' => 'exists:asistentes,id', // Valida cada ID en el array
+                'estado' => 'required|in:presente,ausente,justificado',
+            ]);
+            
+            // Verifica si la validación falla
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            
+            // Recolecta los datos comunes para crear el nuevo registro
+            $programaId = $request->input('programa_id');
+            $fechaRegistro = $request->input('fecha_registro');
+            $celulaId = $request->input('celula_id');
+            $estado = $request->input('estado');
+            $motivo = $request->input('motivo'); // Puede ser null si no se proporciona
+            $idUser = $request->input('id_user');
+            
+            // Recorre cada asistente y guarda un registro
+            foreach ($request->input('asistente_id') as $asistenteId) {
+                // Verifica si ya existe un registro para el mismo asistente y fecha
+                $exists = Asistencia::where('asistente_id', $asistenteId)
+                    ->where('fecha_registro', $fechaRegistro)
+                    ->exists();
+
+                if ($exists) {
+                    // Si ya existe, puedes redirigir con un mensaje de error
+                    return redirect()->back()->withErrors(['asistente_id' => "El asistente ID {$asistenteId} ya está registrado para esta fecha."])->withInput();
+                }
+
+                // Crea el nuevo registro en la base de datos
+                Asistencia::create([
+                    'programa_id' => $programaId,
+                    'fecha_registro' => $fechaRegistro,
+                    'celula_id' => $celulaId,
+                    'asistente_id' => $asistenteId,
+                    'estado' => $estado,
+                    'motivo' => $motivo,
+                    'id_user' => $idUser,
+                ]);
+            }
+
+            // Redireccionar a la ruta del programa con un mensaje de éxito
+            return redirect()->route('auth.asistencia')->with('success', 'Registros creados exitosamente.');
+        }
+    
+
 
 }

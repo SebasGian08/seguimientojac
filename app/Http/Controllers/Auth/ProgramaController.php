@@ -16,19 +16,19 @@ use Illuminate\Support\Facades\DB;
 class ProgramaController extends Controller
 {
     public function index()
-    {
+
+    {   
+        if (Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_DESARROLLADOR) {
+
         return view('auth.programa.index');
+
+        }   
+        
+        return redirect('/auth/inicio'); 
+        
     }
 
 
-    /* Actualmente se tiene este */
-        /* public function listAll()
-    {
-        $programas = Programa::orderBy('id', 'desc')->get();
-
-        // Devolver los datos en formato JSON
-        return response()->json(['data' => $programas]);
-    } */
     public function listAll()
 {
     $programas = Programa::select(

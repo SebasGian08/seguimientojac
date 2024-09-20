@@ -42,7 +42,8 @@ class UsuariosController extends Controller
                 'estado' => $user->estado,
                 'profile' => $user->profile, // Asegúrate de incluir cualquier otro campo necesario
                 'inicio_sesion' => $user->inicio_sesion,
-                'online' => $user->online
+                'online' => $user->online,
+                'cerrar_sesion' => $user->cerrar_sesion
             ];
         });
 

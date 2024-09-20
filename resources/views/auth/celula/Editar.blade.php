@@ -62,8 +62,13 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit"
-                        class="btn btn-bold btn-pure btn-primary">{{ $Entity != null ? 'Modificar' : ' Registrar' }}
+                        class="btn btn-bold btn-pure btn-primary"><i class="fa fa-edit"></i> {{ $Entity != null ? 'Modificar' : ' Registrar' }}
                         Celula</button>
+                        <!-- Botón de Cancelar (opcional) -->
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    style="background-color:#e74c3c; border-color:#e74c3c; color:#fff;">
+                    <i class="fa fa-times"></i> Cancelar
+                </button>
                 </div>
             </div>
         </form>

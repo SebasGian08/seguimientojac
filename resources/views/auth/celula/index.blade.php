@@ -24,7 +24,7 @@
 
         <section class="content-header">
             <h1>
-                Gestión de celulas 
+                Gestión de celulas
             </h1>
         </section>
 
@@ -106,6 +106,11 @@
                 border: 1px solid #ddd;
                 padding: 8px;
                 text-align: center;
+            }
+
+            #tableCelula tbody tr:hover {
+                cursor: pointer;
+                /* Cambia el cursor a una mano cuando se pasa sobre la fila */
             }
         </style>
 

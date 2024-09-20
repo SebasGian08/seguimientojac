@@ -35,37 +35,38 @@
                     <a href="{{ route('auth.asistencia') }}" class="btn"
                         style="background-color: #28a745; color: #ffffff; padding: 15px 20px; border-radius: 10px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
                         <i class="fa fa-check-circle fa-2x"></i><br>
-                        <span style="font-size: 1.2em;">Registrar Asistencia</span>
+                        <span style="font-size: 1.2em;">Reg. Asistencia</span>
                     </a>
                 </div>
                 <div class="col-6 col-md-3 text-center mb-3">
-                    <a href="{{ route('auth.asistentes') }}" class="btn" style="background-color: #007bff; color: #ffffff; padding: 15px 20px; border-radius: 10px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                    <a href="{{ route('auth.asistentes') }}" class="btn"
+                        style="background-color: #007bff; color: #ffffff; padding: 15px 20px; border-radius: 10px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
                         <i class="fa fa-user-plus fa-2x"></i><br>
-                        <span style="font-size: 1.2em;">Registrar Asistentes</span>
+                        <span style="font-size: 1.2em;">Reg. Asistentes</span>
                     </a>
                 </div>
                 <div class="col-6 col-md-3 text-center mb-3">
                     <a href="{{ route('auth.asistencia.listado') }}" class="btn"
                         style="background-color: #ffc107; color: #ffffff; padding: 15px 20px; border-radius: 10px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
                         <i class="fa fa-calendar fa-2x"></i><br>
-                        <span style="font-size: 1.2em;">Listado de Asistencia</span>
+                        <span style="font-size: 1.2em;">List. Asistencia</span>
                     </a>
                 </div>
                 <div class="col-6 col-md-3 text-center mb-3">
-                    <a href="{{-- {{ route('auth.reporte') }} --}}" class="btn" style="background-color: #dc3545; color: #ffffff; padding: 15px 20px; border-radius: 10px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-                        <i class="fa fa-users fa-2x"></i><br>
-                        <span style="font-size: 1.2em;">Nuevos Asistentes</span>
+                    <a href="{{ route('auth.calendario') }}" class="btn"
+                        style="background-color: #384e63; color: #ffffff; padding: 15px 20px; border-radius: 10px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                        <i class="fa fa-calendar-check-o fa-2x"></i><br>
+                        <span style="font-size: 1.2em;">Reg. Actividad</span>
                     </a>
                 </div>
             </div>
-            
             <style>
                 .btn:hover {
                     filter: brightness(1.1);
                     transform: translateY(-5px);
                 }
             </style>
-            
+
             <div class="row justify-content-center">
                 <div class="col-lg-3 mb-4">
                     <div class="container rounded"
@@ -98,7 +99,6 @@
                         </form>
                     </div>
                 </div>
-
                 {{-- Remaining content (totals) goes here --}}
                 <div class="col-lg-3 mb-4 zoom-container">
                     <div class="totales text-center"
@@ -125,11 +125,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
                 <div class="col-lg-3 mb-4 zoom-container">
                     <div class="totales text-center">
                         <div class="title">
@@ -154,7 +149,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-3 mb-4 zoom-container">
                     <div class="totales text-center"
                         style="background: linear-gradient(to bottom right, #34495e, #536f8b);">
@@ -181,9 +175,7 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
         <div class="row justify-content-center mt-4">
             <div class="col-lg-9">
                 <div class="alert alert-success" role="alert">
@@ -192,62 +184,58 @@
                 </div>
             </div>
         </div>
-  
-
-
-    <br>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-6 mb-4">
-                <div class="content-header"
-                    style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
-                    <div id="container"></div>
-                </div>
-            </div>
-            <div class="col-lg-6 mb-4">
-                <div class="content-header"
-                    style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
-                    <div id="seguimiento"></div>
-                </div>
-            </div>
-        </div>
-
         <br>
-        <div class="row">
-            <div class="col-lg-12 mb-4">
-                <div class="content-header"
-                    style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
-                    <div id="grafico"></div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="content-header"
+                        style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
+                        <div id="container"></div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="content-header"
+                        style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
+                        <div id="seguimiento"></div>
+                    </div>
                 </div>
             </div>
 
-        </div>
-        <div class="row">
-            <div class="col-lg-6 mb-4">
-                <div class="content-header"
-                    style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
-                    <div id="carreraporcontratado"></div>
+            <br>
+            <div class="row">
+                <div class="col-lg-12 mb-4">
+                    <div class="content-header"
+                        style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
+                        <div id="grafico"></div>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-6 mb-4">
-                <div class="content-header"
-                    style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
-                    <div id="otro"></div>
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="content-header"
+                        style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
+                        <div id="carreraporcontratado"></div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="content-header"
+                        style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
+                        <div id="otro"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 mb-4">
+                    <h3 style="text-align: center;font-weight: 700">Control de Asistencia</h3>
+                    <section class="content-header">
+                        @csrf
+                        <table id="tableInicio" width="100%"
+                            class='table dataTables_wrapper container-fluid dt-bootstrap4 no-footer'></table>
+                    </section>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12 mb-4">
-                <h3 style="text-align: center;font-weight: 700">Control de Asistencia</h3>
-                <section class="content-header">
-                    @csrf
-                    <table id="tableInicio" width="100%"
-                        class='table dataTables_wrapper container-fluid dt-bootstrap4 no-footer'></table>
-                </section>
-            </div>
-        </div>
-    </div>
-    <br>
+        <br>
 
     </div>
 @endsection

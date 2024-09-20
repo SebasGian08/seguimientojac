@@ -71,7 +71,10 @@ $(function () {
                         '<a href="javascript:void(0)" class="btn-update btn btn-primary" idDato="' +
                         data.id +
                         '" style="margin-right: 5px;"><i class="fa fa-edit"></i> </a>' +
-                        "</div>"
+                        '<a href="javascript:void(0)" class="btn-delete btn btn-danger" idDato="' +
+                        data.id +
+                        '"><i class="fa fa-trash"></i> </a>' +
+                        '</div>'
                     );
                 },
             },
@@ -97,4 +100,31 @@ $(function () {
             }
         );
     }
+
+    $table.on("click", "tbody tr", function () {
+        const data = $dataTableActividades.row(this).data();
+        invocarModalView(data.id);
+    });
+    
+    // Para evitar que el evento de clic en la fila se dispare al hacer clic en los botones
+    $table.on("click", ".btn-update, .btn-delete", function (e) {
+        e.stopPropagation(); // Evitar que el clic en los botones propague el evento hacia la fila
+    });
+
+    $table.on("click", ".btn-delete", function () {
+        const id = $(this).attr("idDato");
+        const formData = new FormData();
+        formData.append("_token", $("input[name=_token]").val());
+        formData.append("id", id);
+        confirmAjax(
+            `/auth/calendario/delete`,
+            formData,
+            "POST",
+            null,
+            null,
+            function () {
+                $dataTableActividades.ajax.reload(null, false);
+            }
+        );
+    });
 });

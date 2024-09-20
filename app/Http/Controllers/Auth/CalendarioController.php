@@ -137,4 +137,16 @@ class CalendarioController extends Controller
         }
         return response()->json(['Success' => $status, 'Errors' => $validator->errors()]);
     }
+
+
+    public function delete(Request $request)
+    {
+        $status = false;
+
+        $entity = Calendario::find($request->id);
+
+        if($entity->delete()) $status = true;
+
+        return response()->json(['Success' => $status]);
+    }
 }

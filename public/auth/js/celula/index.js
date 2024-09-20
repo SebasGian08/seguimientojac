@@ -103,4 +103,18 @@ $(function () {
             }
         );
     });
+
+    
+    $table.on("click", "tbody tr", function () {
+        const data = $dataTableCelula.row(this).data();
+        invocarModalView(data.id);
+    });
+    
+    // Para evitar que el evento de clic en la fila se dispare al hacer clic en los botones
+    $table.on("click", ".btn-update, .btn-delete", function (e) {
+        e.stopPropagation(); // Evitar que el clic en los botones propague el evento hacia la fila
+    });
+
+    
+    
 });

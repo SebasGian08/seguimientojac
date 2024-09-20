@@ -1,5 +1,5 @@
 <div id="modalMantenimientoCalendario" class="modal modal-fill fade" data-backdrop="false" tabindex="-1">
-    <div class="modal-dialog modal-lg" style="width: 30% !important;">
+    <div class="modal-dialog modal-lg">
         <form enctype="multipart/form-data" action="{{ route('auth.calendario.update') }}" id="registroCalendario" method="POST"
             data-ajax="true" data-close-modal="true" data-ajax-loading="#loading"
             data-ajax-success="OnSuccessRegistroCalendario" data-ajax-failure="OnFailureRegistroCalendario">

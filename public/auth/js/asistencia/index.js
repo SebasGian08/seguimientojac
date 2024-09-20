@@ -1,4 +1,5 @@
-$(document).ready(function () {
+// PARA SELECCIONAR CON UN SELECT
+/* $(document).ready(function () {
     $("#celula_id").change(function () {
         var celulaId = $(this).val();
 
@@ -44,6 +45,65 @@ $(document).ready(function () {
                 .append(
                     '<option value="" disabled selected>Seleccione Asistente..</option>'
                 );
+        }
+    });
+}); */
+
+//PARA SELECCIONAR CON UN CHECK LIST
+$(document).ready(function () {
+    $("#celula_id").change(function () {
+        const celulaId = $(this).val();
+
+        const $asistentesContainer = $("#asistentes-container");
+        $asistentesContainer.empty(); // Limpia el contenedor
+
+        if (celulaId) {
+            $.ajax({
+                type: "POST",
+                url: "/auth/asistencia/asistentesPorCelula",
+                data: {
+                    id: celulaId,
+                    _token: csrfToken,
+                },
+                dataType: "json",
+                success: function (response) {
+                    if (response.length > 0) {
+                        response.forEach((asistente) => {
+                            const nombreCompleto = `${asistente.nombre} ${asistente.apellido}`;
+                            const checkboxHtml = `
+                            <div class="form-check custom-checkbox">
+                            <label class="form-check-label" 
+                                   for="asistente_${asistente.id}" 
+                                   id="label_asistente_${asistente.id}">
+                                ${nombreCompleto}
+                            </label>
+                            <input class="form-check-input" 
+                                   type="checkbox" 
+                                   value="${asistente.id}" 
+                                   id="asistente_${asistente.id}" 
+                                   name="asistente_id[]" 
+                                   aria-labelledby="label_asistente_${asistente.id}">
+                        </div>
+                        
+                            `;
+                            $asistentesContainer.append(checkboxHtml);
+                        });
+                    } else {
+                        $asistentesContainer.append(
+                            "<p>No hay asistentes disponibles para esta célula.</p>"
+                        );
+                    }
+                },
+                error: function () {
+                    $asistentesContainer.append(
+                        "<p>Ocurrió un error al cargar los asistentes. Inténtalo de nuevo.</p>"
+                    );
+                },
+            });
+        } else {
+            $asistentesContainer.append(
+                "<p>No hay asistentes disponibles. Seleccione una célula primero.</p>"
+            );
         }
     });
 });
@@ -129,13 +189,18 @@ $(function () {
                 },
             },
             {
+                title: "Motivo",
+                data: "celula.nombre_celula",
+                class: "text-left",
+            },
+            {
                 data: null,
                 render: function (data) {
                     return (
                         '<div class="btn-group">' +
                         '<a href="javascript:void(0)" class="btn-delete btn btn-danger" idDato="' +
                         data.id +
-                        '"><i class="fa fa-trash"></i> </a>' +
+                        '"><i class="fa fa-trash"></i></a>' +
                         "</div>"
                     );
                 },
@@ -165,4 +230,5 @@ $(function () {
             }
         );
     });
+
 });
