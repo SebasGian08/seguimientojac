@@ -39,12 +39,6 @@ $(function () {
                 title: "Fecha Registro",
                 data: "fecha_registro",
                 class: "text-center",
-                render: function (data) {
-                    if (!data) return "-";
-                    const date = new Date(data);
-                    const options = { day: '2-digit', month: 'short' };
-                    return new Intl.DateTimeFormat('en-GB', options).format(date);
-                },
             },
             {
                 title: "Nombre de Actividad",

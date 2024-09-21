@@ -69,16 +69,17 @@
                                 <i class="fa fa-check"></i> Nombre del Asistente
                             </label>
                             <input autocomplete="off" type="text" class="form-control form-control-lg" id="nombre"
-                                name="nombre" placeholder="Ingrese nombre del asistente" required>
+                                name="nombre" placeholder="Ingrese nombre del asistente" required style="text-transform: uppercase;">
                         </div>
-
+                        
                         <div class="form-group col-lg-6">
                             <label for="apellidos" class="m-0 label-primary" style="font-size: 15px;">
                                 <i class="fa fa-check"></i> Apellidos
                             </label>
                             <input autocomplete="off" type="text" class="form-control form-control-lg" id="apellido"
-                                name="apellido" placeholder="Ingrese apellidos del asistente" required>
+                                name="apellido" placeholder="Ingrese apellidos del asistente" required style="text-transform: uppercase;">
                         </div>
+                        
 
                         <div class="form-group col-lg-6">
                             <label for="fecha_nac" class="m-0 label-primary" style="font-size: 15px;">
