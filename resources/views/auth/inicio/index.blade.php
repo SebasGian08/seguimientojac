@@ -46,17 +46,17 @@
                     </a>
                 </div>
                 <div class="col-6 col-md-3 text-center mb-3">
+                    <a href="{{ route('auth.seguimiento') }}" class="btn"
+                        style="background-color: #384e63; color: #ffffff; padding: 15px 20px; border-radius: 10px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                        <i class="fa fa-folder-open fa-2x"></i><br>
+                        <span style="font-size: 1.1em;">Reg. Seguimiento</span>
+                    </a>
+                </div>
+                <div class="col-6 col-md-3 text-center mb-3">
                     <a href="{{ route('auth.asistencia.listado') }}" class="btn"
                         style="background-color: #ffc107; color: #ffffff; padding: 15px 20px; border-radius: 10px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
                         <i class="fa fa-calendar fa-2x"></i><br>
                         <span style="font-size: 1.2em;">List. Asistencia</span>
-                    </a>
-                </div>
-                <div class="col-6 col-md-3 text-center mb-3">
-                    <a href="{{ route('auth.calendario') }}" class="btn"
-                        style="background-color: #384e63; color: #ffffff; padding: 15px 20px; border-radius: 10px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-                        <i class="fa fa-calendar-check-o fa-2x"></i><br>
-                        <span style="font-size: 1.2em;">Reg. Actividad</span>
                     </a>
                 </div>
             </div>
@@ -298,7 +298,7 @@
                 data: transformData(TotalDeAsistentesporCelula)
             }]
         });
-
+        
         Highcharts.chart('seguimiento', {
             chart: {
                 plotBackgroundColor: null,

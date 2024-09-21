@@ -358,7 +358,10 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
         Route::post('/delete', 'Auth\CalendarioController@delete')->name('auth.calendario.delete');
     });
 
-    
+    Route::group(['prefix' => 'seguimiento'], function () {
+        Route::get('', 'Auth\SeguimientoController@index')->name('auth.seguimiento');
+        Route::post('/store', 'Auth\SeguimientoController@store')->name('auth.seguimiento.store');  
+    });
 
 });
 

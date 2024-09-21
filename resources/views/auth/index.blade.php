@@ -22,17 +22,17 @@
     <style>
         /* CAMBIAR THEME DE SISTEMA */
         header {
-            /*background-color: white !important; */
+            /* background-color: white !important; */
              background-color: #273746 !important; 
         }
 
-        /*.content-wrapper:before {
+        /* .content-wrapper:before {
             background: radial-gradient(circle, rgba(0, 114, 191, 1) 37%, rgba(0, 195, 244, 1) 100%);
         }
 
         .main-nav {
             background: radial-gradient(circle, rgba(0, 114, 191, 1) 37%, rgba(0, 195, 244, 1) 100%);
-        }*/
+        } */
 
         .active-item-here {
             color: #34495e;
@@ -87,20 +87,24 @@
         .li_notifi:hover {
             background: rgb(231, 229, 229) !important;
         }
+
         .logo img {
-            max-width: 100%; /* Ajusta para no salirse del contenedor */
-            height: auto;    /* Mantiene la proporción */
+            max-width: 100%;
+            /* Ajusta para no salirse del contenedor */
+            height: auto;
+            /* Mantiene la proporción */
         }
 
         @media (max-width: 767px) {
             .logo img {
-                width:90px !important;
+                width: 90px !important;
             }
         }
 
         @media (min-width: 768px) {
             .logo img {
-                max-width: 50%; /* Ajusta el tamaño para pantallas más grandes */
+                max-width: 50%;
+                /* Ajusta el tamaño para pantallas más grandes */
             }
         }
 
@@ -176,9 +180,11 @@
                                                     onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                                     <i class="fa fa-power-off"></i> {{ __('Cerrar Sesión') }}
                                                 </a>
-                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                    style="display: none;">
                                                     @csrf
-                                                    <input type="text" name="validacion" value="{{ Auth::guard('web')->user()->email }}">
+                                                    <input type="text" name="validacion"
+                                                        value="{{ Auth::guard('web')->user()->email }}">
                                                 </form>
                                             </div>
                                         </div>
@@ -247,11 +253,11 @@
                                         <i class="fa fa-save mr-5"></i> Registro de Asistentes
                                     </a>
                                 </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('auth.asistencia.listado') }}">
-                                            <i class="fa fa-table mr-5"></i> Listado de Asistencia
-                                        </a>
-                                    </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('auth.asistencia.listado') }}">
+                                        <i class="fa fa-table mr-5"></i> Listado de Asistencia
+                                    </a>
+                                </li>
                             </ul>
                         </li>
 
