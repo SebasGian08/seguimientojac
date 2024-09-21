@@ -22,17 +22,17 @@
     <style>
         /* CAMBIAR THEME DE SISTEMA */
         header {
-            background-color: white !important;
-            /* background-color: #273746 !important; */
+            /*background-color: white !important; */
+             background-color: #273746 !important; 
         }
 
-        .content-wrapper:before {
+        /*.content-wrapper:before {
             background: radial-gradient(circle, rgba(0, 114, 191, 1) 37%, rgba(0, 195, 244, 1) 100%);
         }
 
         .main-nav {
             background: radial-gradient(circle, rgba(0, 114, 191, 1) 37%, rgba(0, 195, 244, 1) 100%);
-        }
+        }*/
 
         .active-item-here {
             color: #34495e;
@@ -94,7 +94,7 @@
 
         @media (max-width: 767px) {
             .logo img {
-                max-width: 20% !important; /* Ajusta el tamaño según el diseño móvil */
+                width:90px !important;
             }
         }
 
@@ -120,7 +120,7 @@
             <div class="inside-header">
                 <a href="{{ route('auth.inicio') }}" class="logo">
                     <span class="logo-m">
-                        <img src="{{ asset('app/img/logo.png') }}" alt="logo" class="light-logo">
+                        <img src="{{ asset('app/img/logojac.png') }}" alt="logo" class="light-logo">
                     </span>
                 </a>
                 <nav class="navbar navbar-static-top">
@@ -132,7 +132,7 @@
                         <ul class="nav navbar-nav mt-5">
                             <li id="notifications" class="dropdown notifications-menu">
                                 <button type="button" class="mt-3 dropdown-toggle btn btn-light" data-toggle="dropdown"
-                                    style="margin-top:10px !important;">
+                                    style="margin-top:15px !important;">
                                     <i class="mdi mdi-bell faa-ring animated"></i>
                                     <span class="badge badge-danger pt-3 pb-0" id="number_notify"></span>
                                 </button>
@@ -247,14 +247,11 @@
                                         <i class="fa fa-save mr-5"></i> Registro de Asistentes
                                     </a>
                                 </li>
-                                @if (Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_DESARROLLADOR ||
-                                        Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_ADMINISTRADOR)
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('auth.asistencia.listado') }}">
                                             <i class="fa fa-table mr-5"></i> Listado de Asistencia
                                         </a>
                                     </li>
-                                @endif
                             </ul>
                         </li>
 
