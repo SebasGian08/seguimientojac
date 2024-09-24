@@ -22,17 +22,17 @@
     <style>
         /* CAMBIAR THEME DE SISTEMA */
         header {
-            /* background-color: white !important; */
-             background-color: #273746 !important; 
+            background-color: white !important;
+            /*  background-color: #273746 !important;  */
         }
 
-        /* .content-wrapper:before {
+        .content-wrapper:before {
             background: radial-gradient(circle, rgba(0, 114, 191, 1) 37%, rgba(0, 195, 244, 1) 100%);
         }
 
         .main-nav {
             background: radial-gradient(circle, rgba(0, 114, 191, 1) 37%, rgba(0, 195, 244, 1) 100%);
-        } */
+        }
 
         .active-item-here {
             color: #34495e;
@@ -124,7 +124,7 @@
             <div class="inside-header">
                 <a href="{{ route('auth.inicio') }}" class="logo">
                     <span class="logo-m">
-                        <img src="{{ asset('app/img/logojac.png') }}" alt="logo" class="light-logo">
+                        <img src="{{ asset('app/img/logo.png') }}" alt="logo" class="light-logo">
                     </span>
                 </a>
                 <nav class="navbar navbar-static-top">

@@ -3,6 +3,10 @@
 App::setLocale('es');
 
 Route::get('/', 'App\HomeController@index')->name('index');
+
+
+
+
 Route::get('/loginEmpresa', 'App\HomeController@loginEmpresa')->name('loginEmpresa');
 //Route::get('/actualizar', 'App\HomeController@actualizar')->name('actualizar');
 Route::get('/filtro_distritos/{id}', 'App\HomeController@filtro_distritos')->name('filtro_distritos');
@@ -48,49 +52,6 @@ Route::group(['middleware' => 'auth:alumnos'], function () {
     });
 });
 
-/* -------------- MIS POSTULACIONES ----------------*/
-Route::get('/postulaciones', 'App\PostulacionesController@index')->name('alumno.postulaciones');
-/* ------------------------------------ */
-
-Route::get('/{empresa}/aviso/{slug}/postulantes/{alumno}', 'App\AvisoController@donwloadCValumno')->name('empresa.cv_postulante');
-
-Route::get('/alumno/pdf', 'App\AlumnoController@donwloadCValumno');
-
-Route::group(['middleware' => 'auth:empresasw'], function () {
-    Route::group(['prefix' => 'empresa'], function () {
-
-        Route::get('/perfil', 'App\EmpresaController@index')->name('empresa.perfil');
-        Route::post('/perfil', 'App\EmpresaController@store')->name('empresa.store');
-        /* ACA SON LAS RUTAS DE CAMBIO LINK POR ID */
-
-        /* Este es para el nuevo requerimiento de republicar - Hecho por sebastian */
-        /* JALAR DATOS AL NUEVO REPUBLICAR */
-        Route::get('/avisos/partialView2/{id}', 'App\EmpresaController@partialView2')->name('empresa.partialView2');
-        /* GUARDAR */
-        Route::post('/avisos/republicar', 'App\EmpresaController@republicar')->name('empresa.republicar');
-        /* Route::get('/avisos/listarr_aviso2', 'App\EmpresaController@listarr_aviso2')->name('empresa.listarr_aviso2'); */
-
-
-        Route::get('/avisos', 'App\EmpresaController@listar_aviso')->name('empresa.avisos');
-        Route::get('/{empresa}/aviso/{slug}', 'App\AvisoController@informacion')->name('empresa.informacion');
-        Route::get('/{empresa}/aviso/{slug}/postulantes', 'App\AvisoController@postulantes')->name('empresa.postulantes');
-        Route::get('/{empresa}/aviso/{slug}/postulantes/{alumno}', 'App\AvisoController@postulante_informacion')->name('empresa.postulante_informacion');
-        Route::get('/avisos/registrar', 'App\EmpresaController@registrar_aviso')->name('empresa.registrar_aviso');
-        Route::get('/avisos/listar', 'App\EmpresaController@listar_aviso')->name('empresa.listar_aviso');
-        Route::get('/avisos/listar_json', 'App\EmpresaController@listar_aviso_json')->name('empresa.listar_aviso_json');
-        Route::get('/avisos/partialView/{id}', 'App\EmpresaController@partialView_aviso')->name('empresa.partialView_aviso');
-        Route::get('/avisos/partialViewPostulante/{id}', 'App\EmpresaController@partialViewAvisoPostulantes')->name('empresa.aviso.postulantes');
-        Route::get('/avisos/list_all_postulantes', 'App\EmpresaController@list_avisoPostulantes')->name('empresa.aviso.list_postulantes');
-
-        Route::post('/avisos/storeAviso', 'App\EmpresaController@store_aviso')->name('empresa.store_aviso');
-        Route::post('/avisos/updateAviso', 'App\EmpresaController@update_aviso')->name('empresa.update_aviso');
-        Route::post('/avisos/alumno/clasificar', 'App\AvisoController@clasificar_aviso')->name('empresa.clasificar_aviso');
-        Route::post('/avisos/delete', 'Auth\AvisoController@delete')->name('empresa.aviso.delete');
-        Route::get('/app/listar_aviso_json', 'App\EmpresaController@listar_aviso_json')->name('app.listar_aviso_json');
-        });
-});
-
-
 
 Route::post('empresa/login', 'App\LoginEmpresaController@login')->name('empresa.login.post');
 Route::post('empresa/logout', 'App\LoginEmpresaController@logout')->name('empresa.logout');
@@ -117,14 +78,6 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
 
     });
 
-    Route::group(['prefix' => 'alumno'], function () {
-        Route::get('/', 'Auth\AlumnoController@index')->name('auth.alumno');
-        Route::get('/list_all', 'Auth\AlumnoController@list')->name('auth.alumno.list');
-        Route::get('/partialView/{id}', 'Auth\AlumnoController@partialView')->name('auth.alumno.create');
-        Route::get('/print_cv_pdf/{id}/', 'Auth\AlumnoController@print_cv_pdf')->name('auth.alumno.print_cv_pdf');
-        Route::post('/update', 'Auth\AlumnoController@update')->name('auth.alumno.update');
-        Route::post('/delete', 'Auth\AlumnoController@delete')->name('auth.alumno.delete');
-    });
 
     Route::group(['prefix' => 'empresa'], function () {
         Route::get('/', 'Auth\EmpresaController@index')->name('auth.empresa');
@@ -135,50 +88,6 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
         Route::post('/delete', 'Auth\EmpresaController@delete')->name('auth.empresa.delete');
     });
 
-    Route::group(['prefix' => 'aviso'], function () {
-        Route::get('/', 'Auth\AvisoController@index')->name('auth.aviso');
-        Route::get('/list_all', 'Auth\AvisoController@list')->name('auth.aviso.list');
-        Route::get('/partialViewPostulante/{id}', 'Auth\AvisoController@partialViewPostulantes')->name('auth.aviso.postulantes');
-
-        Route::get('/partialViewEditarEstado/{idalumno}/{idaviso}', 'Auth\AvisoController@partialEditarEstados')->name('auth.aviso.partialEditarEstado');
-        Route::post('/updateEstado', 'Auth\AvisoController@updateEstado')->name('auth.aviso.updateEstado');
-
-        Route::get('/partialViewAviso/{id}', 'Auth\AvisoController@partialViewAviso')->name('auth.aviso.postulantes2');
-
-        Route::get('/partialViewEditarAviso/{id}', 'Auth\AvisoController@partialViewEditarAviso')->name('auth.aviso.partialViewEditarAviso');
-        Route::post('/update', 'Auth\AvisoController@update')->name('auth.aviso.update');
-
-        Route::post('/updateAvisoEstado', 'Auth\AvisoController@updateEstadoAviso')->name('auth.aviso.updateAvisoEstado');
-
-        Route::get('/ajax_list', 'Auth\AvisoController@partialViewPostulantesEstudiantes')->name('auth.aviso.ajax_list');
-
-        Route::get('/ajax_list2', 'Auth\AvisoController@partialViewPostulantesEstudiantes2')->name('auth.aviso.ajax_list2');
-
-        Route::get('/list_all_postulantes', 'Auth\AvisoController@list_postulantes')->name('auth.aviso.list_postulantes');
-        Route::post('/delete', 'Auth\AvisoController@delete')->name('auth.aviso.delete');
-        
-    });
-
-    Route::group(['prefix' => 'avisoPostulacion'], function () {
-        Route::get('/', 'Auth\AvisoPostulacionController@index')->name('auth.avisoPostulacion');
-        Route::get('/list_all', 'Auth\AvisoPostulacionController@list')->name('auth.avisoPostulacion.list');
-    });
-
-    Route::group(['prefix' => 'anuncio'], function () {
-        Route::get('/', 'Auth\AnuncioController@index')->name('auth.anuncio');
-        Route::post('/store', 'Auth\AnuncioController@store')->name('auth.anuncio.store');
-        Route::get('/list_all', 'Auth\AnuncioController@list')->name('auth.anuncio.list');
-        Route::post('/delete', 'Auth\AnuncioController@delete')->name('auth.anuncio.delete');
-        /* Route::get('/list_all', 'Auth\AvisoPostulacionController@list')->name('auth.avisoPostulacion.list'); */
-    });
-
-    Route::group(['prefix' => 'anuncioempresa'], function () {
-         Route::get('/', 'Auth\AnuncioEmpresaController@index')->name('auth.anuncioempresa');
-        Route::post('/store', 'Auth\AnuncioEmpresaController@store')->name('auth.anuncioempresa.store');
-        Route::get('/list_all', 'Auth\AnuncioEmpresaController@list')->name('auth.anuncioempresa.list');
-        Route::post('/delete', 'Auth\AnuncioEmpresaController@delete')->name('auth.anuncioempresa.delete'); 
-        /* Route::get('/list_all', 'Auth\AvisoPostulacionController@list')->name('auth.avisoPostulacion.list'); */
-    });
 
     /* Programa Controladores */
     Route::group(['prefix' => 'programa'], function () {      
@@ -196,14 +105,8 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
          Route::get('/partialViewpar/{id}', 'Auth\ProgramaController@partialViewpar')->name('auth.programa.create');
          Route::post('/updateParticipanteInscrito', 'Auth\ProgramaController@updateParticipanteInscrito')->name('auth.programa.updateParticipanteInscrito');
 
-
-               
-
     });
 
-    Route::post('store_estudiante_aviso', 'Auth\AvisoController@store_estudiante_aviso')->name('auth.aviso.store_estudiante_aviso');
-
-    Route::post('store_seguimiento', 'Auth\AvisoController@store_seguimiento')->name('auth.aviso.store_seguimiento');
 
 
     Route::group(['prefix' => 'area'], function () {
@@ -226,49 +129,6 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
 
     // END SECTION USUARIO
 
-    Route::group(['prefix' => 'cargo'], function () {
-        Route::get('/', 'Auth\CargoController@index')->name('auth.cargo');
-        Route::get('/list_all', 'Auth\CargoController@list_all')->name('auth.cargo.list_all');
-        Route::get('/partialView/{id}', 'Auth\CargoController@partialView')->name('auth.cargo.create');
-        Route::post('/store', 'Auth\CargoController@store')->name('auth.cargo.store');
-        Route::post('/delete', 'Auth\CargoController@delete')->name('auth.cargo.delete');
-    });
-
-    Route::group(['prefix' => 'horario'], function () {
-        Route::get('/', 'Auth\HorarioController@index')->name('auth.horario');
-        Route::get('/list_all', 'Auth\HorarioController@list_all')->name('auth.horario.list_all');
-        Route::get('/partialView/{id}', 'Auth\HorarioController@partialView')->name('auth.horario.create');
-        Route::post('/store', 'Auth\HorarioController@store')->name('auth.horario.store');
-        Route::post('/delete', 'Auth\HorarioController@delete')->name('auth.horario.delete');
-    });
-
-    Route::group(['prefix' => 'modalidad'], function () {
-        Route::get('/', 'Auth\ModalidadController@index')->name('auth.modalidad');
-        Route::get('/list_all', 'Auth\ModalidadController@list_all')->name('auth.modalidad.list_all');
-        Route::get('/partialView/{id}', 'Auth\ModalidadController@partialView')->name('auth.modalidad.create');
-        Route::post('/store', 'Auth\ModalidadController@store')->name('auth.modalidad.store');
-        Route::post('/delete', 'Auth\ModalidadController@delete')->name('auth.modalidad.delete');
-    });
-
-    Route::group(['prefix' => 'habilidad'], function () {
-        Route::get('/', 'Auth\HabilidadController@index')->name('auth.habilidad');
-        Route::get('/profesional', 'Auth\HabilidadController@index_profesional')->name('auth.habilidad_profesional');
-        Route::get('/list_all', 'Auth\HabilidadController@list_all')->name('auth.habilidad.list_all');
-        Route::get('/partialView/{id}', 'Auth\HabilidadController@partialView')->name('auth.habilidad.create');
-        Route::post('/store', 'Auth\HabilidadController@store')->name('auth.habilidad.store');
-        Route::post('/delete', 'Auth\HabilidadController@delete')->name('auth.habilidad.delete');
-    });
-
-    // SECTION ALUMNO SANCIONADO
-    Route::group(['prefix' => 'alumnosancionado'], function () {
-        Route::get('/', 'Auth\AlumnoSancionadoController@index')->name('auth.alumnosancionado');
-        Route::get('/list_all', 'Auth\AlumnoSancionadoController@list_all')->name('auth.usuarios.list_all');
-        Route::post('/store', 'Auth\AlumnoSancionadoController@store')->name('auth.alumnosancionado.store');
-        Route::post('/update', 'Auth\AlumnoSancionadoController@update')->name('auth.alumnosancionado.update');
-        Route::post('/delete', 'Auth\AlumnoSancionadoController@delete')->name('auth.alumnosancionado.delete');
-        Route::get('/partialViewSancionado/{id}', 'Auth\AlumnoSancionadoController@partialViewSancionado')->name('auth.alumnosancionado.create');
-    });
-
     Route::group(['prefix' => 'principal'], function () {
         Route::get('/', 'Auth\PrincipalController@index')->name('auth.principal');
 
@@ -278,31 +138,6 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
         Route::get('/', 'Auth\ErrorController@index')->name('auth.error');
 
     });
-
-    Route::group(['prefix' => 'eventos'], function () {
-        Route::get('/', 'Auth\EventosController@index')->name('auth.eventos');
-        Route::get('/list_all', 'Auth\EventosController@list_all')->name('auth.eventos.list_all');
-        Route::get('/partialView/{id}', 'Auth\EventosController@partialView')->name('auth.eventos.create');
-        Route::post('/store', 'Auth\EventosController@store')->name('auth.eventos.store');
-        /* Falta update */
-        Route::post('/update', 'Auth\EventosController@update')->name('auth.eventos.update');
-        Route::post('/delete', 'Auth\EventosController@delete')->name('auth.eventos.delete');
-        /* Asistentes de Eventos */
-        Route::get('/partialViewAsistentes/{id}', 'Auth\EventosController@partialViewAsistentes')->name('auth.eventos.create');
-        Route::get('/mostrarParticipantesAsistentes', 'Auth\EventosController@mostrarParticipantesAsistentes')->name('auth.eventos.mostrarParticipantesAsistentes');
-        Route::get('/partialViewEditAsistente/{id}', 'Auth\EventosController@partialViewEditAsistente')->name('auth.eventos.create');
-        Route::post('/deleteAsistentes', 'Auth\EventosController@deleteAsistentes')->name('auth.eventos.deleteAsistentes');
-        Route::get('/listA', 'Auth\EventosController@listA')->name('auth.eventos.listA');
-
-    });
-
-    Route::group(['prefix' => 'eventosasistencia'], function () {
-        Route::get('/', 'Auth\EventosAsistenciaController@index')->name('auth.eventosasistencia');
-        Route::post('/store', 'Auth\EventosAsistenciaController@store')->name('auth.eventosasistencia.store');
-        Route::post('/update', 'Auth\EventosAsistenciaController@update')->name('auth.eventosasistencia.update');
-    });
-
-
 
     /* IACYM JAC */
     /* GESTIÓN DE CELULAS */
@@ -366,11 +201,16 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
 });
 
 
+// Ruta para almacenar un nuevo asistente para el aniversario JAC
+Route::get('/aniversario', 'App\AniversarioController@index')->name('app.aniversario.index');
+Route::post('/aniversario/store', 'App\AniversarioController@store')->name('aniversario.store');
+//Página principal registrar opiniones
+Route::post('/home/store', 'App\HomeController@store')->name('home.store');
+
 
 Route::group(['prefix' => 'auth'], function () {
     Route::get('/', 'Auth\LoginController@showLoginForm');
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('auth.login');
-    Route::post('login', 'Auth\LoginController@login')->name('auth.login.store'); // Ruta para el inicio de sesión
     Route::post('login', 'Auth\LoginController@login')->name('auth.login.post');
     Route::post('logout', 'Auth\LoginController@logout')->name('auth.logout');
 

@@ -9,104 +9,97 @@
 <script src="https://kit.fontawesome.com/6f8129a9b1.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="{{ asset('app/css/home/login.css') }}">
 <section class="section_login">
+
     <div class="content_view_login">
         <div class="sect_login">
             <div class="content_login">
                 <div class="content_titulo_login">
-                    <img src="{{ asset('app/img/logo_ial.png') }}" alt=""><br><br>
+                    <img src="{{ asset('app/img/logojac.png') }}" alt=""><br><br>
                     <span>BIENVENIDOS</span>
                     <p class="title_">SOMOS JAC</p>
-                    <p>Registrarse Aquí</p>
-                    <div class="access_administrador">
-                        <a href="{{ route('auth.login') }}"><i style="color: #0072bf; font-size:20px;"
-                                class="fa-solid fa-users-between-lines"></i></a>
-                    </div>
+                    <p>Deja tu opinión aquí</p>
                 </div><br>
-                <form class="form-login" action="{{-- {{ route('auth.login.store') }} --}}" method="post">
+                <form class="form-login" action="{{ route('home.store') }}" method="post">
                     @csrf
-                    <input type="hidden" name="id_nuevo" id="id_nuevo" value="10" required>
-                
-                    {{-- Mensaje de éxito --}}
+                    <div class="form-group">
+                        <label for="opinion" class="text-primary-m">Tu Opinión</label>
+                        <textarea id="opinion" name="opinion" class="form-control-m {{ $errors->has('opinion') ? ' is-invalid' : '' }}"
+                            required placeholder="Escribe tu opinión aquí">{{ old('opinion') }}</textarea>
+                        @if ($errors->has('opinion'))
+                            <span class="invalid-feedback" role="alert">
+                                <span style="color:#cd3232;">{{ $errors->first('opinion') }}</span>
+                            </span>
+                        @endif
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label class="text-primary-m">Calificación</label><br>
+                        <div class="rating">
+                            <input type="radio" id="star5" name="rating" value="5" required />
+                            <label for="star5" title="5 stars">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4" />
+                            <label for="star4" title="4 stars">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3" />
+                            <label for="star3" title="3 stars">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2" />
+                            <label for="star2" title="2 stars">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1" />
+                            <label for="star1" title="1 star">&#9733;</label>
+                        </div>
+                        @if ($errors->has('rating'))
+                            <span class="invalid-feedback" role="alert">
+                                <span style="color:#cd3232;">{{ $errors->first('rating') }}</span>
+                            </span>
+                        @endif
+                    </div>
+                    <br>
+                    <button type="submit" class="btn-m btn-primary-gradient">Enviar Opinión</button>
+                    <br><br>
+                    {{-- Mensajes de éxito y error --}}
                     @if (session('success'))
                         <div class="alert alert-success">
-                            {{ session('success') }}
+                            <i class="fas fa-check-circle"></i> {{ session('success') }}
                         </div>
                     @endif
-                
-                    <div class="form-group">
-                        <label for="nombres" class="text-primary-m">Nombres</label>
-                        <input type="text" autocomplete="off" id="nombres" name="nombre"
-                            class="form-control-m {{ $errors->has('nombres') ? ' is-invalid' : '' }}"
-                            value="{{ old('nombres') }}" required placeholder="Ingrese Nombres">
-                        @if ($errors->has('nombres'))
-                            <span class="invalid-feedback" role="alert">
-                                <span style="color:#cd3232;">{{ $errors->first('nombres') }}</span>
-                            </span>
-                        @endif
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label for="apellido" class="text-primary-m">Apellidos</label>
-                        <input type="text" autocomplete="off" id="apellido" name="apellido"
-                            class="form-control-m {{ $errors->has('apellido') ? ' is-invalid' : '' }}"
-                            value="{{ old('apellido') }}" required placeholder="Ingrese Apellido">
-                        @if ($errors->has('apellido'))
-                            <span class="invalid-feedback" role="alert">
-                                <span style="color:#cd3232;">{{ $errors->first('apellido') }}</span>
-                            </span>
-                        @endif
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label for="tel" class="text-primary-m">WhatsApp</label>
-                        <input type="text" id="tel" name="tel"
-                            class="form-control-m {{ $errors->has('tel') ? ' is-invalid' : '' }}"
-                            value="{{ old('tel') }}" required placeholder="Ingrese WhatsApp">
-                        @if ($errors->has('tel'))
-                            <span class="invalid-feedback" role="alert">
-                                <span style="color:#cd3232;">{{ $errors->first('tel') }}</span>
-                            </span>
-                        @endif
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label for="fecha_nac" class="text-primary-m">Fecha de Nacimiento</label>
-                        <input type="date" id="fecha_nac" name="fecha_nac"
-                            class="form-control-m {{ $errors->has('fecha_nac') ? ' is-invalid' : '' }}"
-                            required>
-                        @if ($errors->has('fecha_nac'))
-                            <span class="invalid-feedback" role="alert">
-                                <span style="color:#cd3232;">{{ $errors->first('fecha_nac') }}</span>
-                            </span>
-                        @endif
-                    </div>
-                    <br>
-                    <div class="">
-                        <button type="submit" class="btn-m btn-primary-gradient">Registrar</button>
-                    </div>
-                    <br>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </form>
-                
-            </div>
 
+            </div>
         </div>
     </div>
 </section>
-
-
-
-<script>
-    function togglePasswordVisibility() {
-        var passwordInput = document.getElementById("password_alumno");
-        var toggleButton = document.getElementById("toggleButton");
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-            toggleButton.classList.remove("fa-eye-slash");
-            toggleButton.classList.add("fa-eye");
-        } else {
-            passwordInput.type = "password";
-            toggleButton.classList.remove("fa-eye");
-            toggleButton.classList.add("fa-eye-slash");
-        }
+<style>
+    .rating {
+        direction: rtl;
+        display: inline-block;
     }
-</script>
+
+    .rating input {
+        display: none;
+    }
+
+    .rating label {
+        font-size: 30px;
+        color: #b9b9b9;
+        cursor: pointer;
+    }
+
+    .rating input:checked~label {
+        color: #f7c04d;
+        /* Color for selected stars */
+    }
+
+    .rating label:hover,
+    .rating label:hover~label {
+        color: #f7c04d;
+        /* Hover color */
+    }
+</style>
