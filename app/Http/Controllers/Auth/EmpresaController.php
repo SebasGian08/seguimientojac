@@ -13,8 +13,11 @@ use BolsaTrabajo\Http\Controllers\Controller;
 class EmpresaController extends Controller
 {
     public function index()
-    {
-        return view('auth.empresa.index');
+    {   
+        if (Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_TIMOTEO) {
+            return view('auth.empresa.index');
+        } // Opcionalmente, podrías manejar el caso en que la condición no se cumple
+        return redirect('/auth/inicio'); // Redirige a una página predeterminada si la condición no se cumple
     }
 
     /* OLD */

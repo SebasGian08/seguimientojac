@@ -1,11 +1,19 @@
 @extends('auth.index')
 
 @section('titulo')
-    <title>JAC | Aniversario</title>
+    <title>JAC | Opiniones y Valoraciones</title>
 @endsection
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('auth/plugins/datatable/datatables.min.css') }}">
+    <style>
+        .star {
+            font-size: 24px;
+            /* Ajusta el tamaño según lo necesites */
+            color: gold;
+            /* Cambia el color si lo deseas */
+        }
+    </style>
 @endsection
 
 @section('contenido')
@@ -13,8 +21,7 @@
 
         <section class="content-header">
             <h1>
-                Listado de Asistentes
-                <small>Aniversario</small>
+                Listado de Opiniones
             </h1>
         </section>
 
@@ -41,7 +48,7 @@
                     </div>
                     <br><br>
                     <div class="content-header">
-                        <table id="tableAniversario"
+                        <table id="tableOpiniones"
                             class="table table-bordered table-striped display nowrap margin-top-10 dataTable no-footer">
                         </table>
                     </div>
@@ -52,8 +59,9 @@
     </div>
 @endsection
 
+
 @section('scripts')
     <script type="text/javascript" src="{{ asset('auth/plugins/datatable/datatables.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('auth/plugins/datatable/dataTables.config.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('auth/js/aniversario/index.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('auth/js/opinion/index.js') }}"></script>
 @endsection

@@ -22,7 +22,7 @@
                                 <label for="nombres" class="m-0 label-primary">Nombres y Apellidos</label>
                                 <div class="input-group">
                                     <input type="text" class="form-input" name="nombres" id="nombres"
-                                        value="{{ $Entity ? $Entity->nombre : '' }}" autocomplete="off" required>
+                                        value="{{ $Entity ? $Entity->nombre : '' }}" autocomplete="off" required disabled>
                                 </div>
                             </div>
                         
@@ -31,7 +31,7 @@
                                 <label for="telefono" class="m-0 label-primary">Teléfono</label>
                                 <div class="input-group">
                                     <input type="text" class="form-input" name="tel" id="tel"
-                                        value="{{ $Entity ? $Entity->tel : '' }}" autocomplete="off" required>
+                                        value="{{ $Entity ? $Entity->tel : '' }}" autocomplete="off" required disabled>
                                 </div>
                             </div>
                         </div>

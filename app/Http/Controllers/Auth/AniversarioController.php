@@ -3,6 +3,7 @@
 namespace BolsaTrabajo\Http\Controllers\Auth;
 
 use BolsaTrabajo\Aniversario;
+use BolsaTrabajo\Celula;
 use Illuminate\Http\Request;
 use BolsaTrabajo\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -18,23 +19,35 @@ class AniversarioController extends Controller
         return view('auth.aniversario.index');
     }
 
-    public function list_all()
-    {
-        $events = Aniversario::orderby('id', 'desc')->get(['id', 'nombre', 'tel', 'foto']); // Asegúrate de incluir 'id'
 
-        // Mapear los eventos para incluir la URL completa de la foto
+    public function list_all(Request $request)
+    {
+        $query = Aniversario::with('celula')->orderby('id', 'desc');
+
+        if ($request->date_from) {
+            $query->where('created_at', '>=', $request->date_from);
+        }
+
+        if ($request->date_to) {
+            $query->where('created_at', '<=', $request->date_to);
+        }
+
+        $events = $query->get(['id', 'nombre', 'tel', 'foto', 'celula_id']);
+
+        // Mapear los eventos para incluir la URL completa de la foto y el nombre de la célula
         $events = $events->map(function ($event) {
             return [
-                'id' => $event->id, // Asegúrate de que 'id' esté aquí
+                'id' => $event->id,
                 'nombre' => $event->nombre,
                 'tel' => $event->tel,
                 'foto' => $event->foto,
+                'celula_id' => $event->celula_id,
+                'celula_nombre' => $event->celula ? $event->celula->nombre : null, // Asumiendo que la relación se llama 'celula'
             ];
         });
 
         return response()->json($events);
     }
-
 
 
     public function partialView($id)

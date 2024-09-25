@@ -204,6 +204,11 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
         Route::get('/partialView/{id}', 'Auth\AniversarioController@partialView')->name('auth.aniversario.create');
     });
 
+    Route::group(['prefix' => 'opinion'], function () {
+        Route::get('', 'Auth\OpinionController@index')->name('auth.opinion');
+        Route::get('/list_all', 'Auth\OpinionController@list_all')->name('auth.opinion.list_all');  
+    });
+
 });
 
 

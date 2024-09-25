@@ -58,13 +58,13 @@
                 <!-- Filtro Fecha Exacta -->
                 <div class="form-group col-lg-4 col-md-6">
                     <label for="fecha_exacta" class="m-0 label-primary">Fecha Exacta de Programa</label>
-                    <input type="date" class="form-control-m form-control-sm" id="fecha_exacta">
+                    <input type="date" class="form-control-m form-control-lg" id="fecha_exacta">
                 </div>
 
                 <!-- Filtro Estado de Asistencia -->
                 <div class="form-group col-lg-4 col-md-6">
                     <label for="estado_asistencia" class="m-0 label-primary">Estado de Asistencia</label>
-                    <select name="estado_asistencia" id="estado_asistencia" class="form-control-m form-control-sm">
+                    <select name="estado_asistencia" id="estado_asistencia" class="form-control-m form-control-lg">
                         <option value="" selected>-- Seleccione --</option>
                         <option value="presente">PRESENTE</option>
                         <option value="ausente">AUSENTE</option>
@@ -75,7 +75,7 @@
                 <!-- Filtro Celula -->
                 <div class="form-group col-lg-4 col-md-6">
                     <label for="celula_filter_id" class="m-0 label-primary">Celula</label>
-                    <select name="celula_filter_id" id="celula_filter_id" class="form-control-m form-control-sm">
+                    <select name="celula_filter_id" id="celula_filter_id" class="form-control-m form-control-lg">
                         <option value="" selected>-- Seleccione --</option>
                         @foreach ($celulas as $celula)
                             <option value="{{ $celula->id }}">{{ $celula->nombre }}</option>

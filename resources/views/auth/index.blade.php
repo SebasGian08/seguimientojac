@@ -276,9 +276,9 @@
                                     <li class="nav-item"><a class="nav-link" href="{{ route('auth.aniversario') }}"><i
                                                 class="fa fa-gift mr-5"></i> Aniversario JAC</a>
                                     </li>
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('auth.usuarios') }}"><i
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('auth.opinion') }}"><i
                                         class="fa fa-star mr-5"></i> Opiniones y Calificaciones</a>
-                            </li>
+                                    </li>
 
                                 </ul>
                             </li>

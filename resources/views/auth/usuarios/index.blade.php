@@ -29,8 +29,12 @@
             @csrf
             <div class="row">
                 <div class="col-md-12">
-                    <table id="tableUsuarios"
-                        class="table table-bordered table-striped display nowrap margin-top-10 dataTable no-footer"></table>
+                    <br>
+                    <div class="content-header">
+                        <table id="tableUsuarios"
+                            class="table table-bordered table-striped display nowrap margin-top-10 dataTable no-footer">
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>

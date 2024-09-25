@@ -22,16 +22,16 @@
             <div class="form-row">
                 <!-- Filtro fecha_desde -->
                 <div class="form-group col-lg-4 col-md-6">
-                    <label for="fecha_desde" class="m-0 label-primary">Fecha desde</label>
-                    <input type="date" class="form-control-m form-control-sm" id="fecha_desde">
+                    <label>Fecha Desde:</label>
+                    <input type="date" id="fecha_desde" class="form-control" />
                 </div>
                 <div class="form-group col-lg-4 col-md-6">
-                    <label for="fecha_hasta" class="m-0 label-primary">Fecha hasta</label>
-                    <input type="date" class="form-control-m form-control-sm" id="fecha_hasta">
+                    <label>Fecha Hasta:</label>
+                    <input type="date" id="fecha_hasta" class="form-control" />
                 </div>
                 <!-- Botón de Consulta -->
                 <div class="form-group col-lg-3 col-md-12 d-flex flex-column">
-                    <label for="" class="m-0 w-100">.</label>
+                    <label>&nbsp;</label>
                     <a href="javascript:void(0)" id="btn-consultar" class="btn-m btn-primary-m">
                         <i class="fa fa-search"></i> Consultar Actividad
                     </a>
@@ -49,14 +49,19 @@
                     }
                 </style>
                 <div class="col-md-12">
-                    <table id="tableActividades"
-                        class="table table-bordered table-striped display nowrap margin-top-10 dataTable no-footer"></table>
+                    <div class="content-header">
+                        <table id="tableActividades"
+                            class="table table-bordered table-striped display nowrap margin-top-10 dataTable no-footer">
+                        </table>
+                        <br>
+                        <div class="form-group col-lg-3 col-md-12 d-flex flex-column">
+                            <a href="javascript:void(0)" class="btn-m btn-success-m" onclick="clickExcel()">
+                                <i class="fa fa-file"></i> Reporte de Actividades
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group col-lg-3 col-md-12 d-flex flex-column">
-                    <a href="javascript:void(0)" class="btn-m btn-success-m" onclick="clickExcel()">
-                        <i class="fa fa-file"></i> Reporte de Actividades
-                    </a>
-                </div>
+                
             </div>
         </section>
 

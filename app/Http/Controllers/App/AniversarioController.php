@@ -3,6 +3,7 @@
 namespace BolsaTrabajo\Http\Controllers\App;
 
 use BolsaTrabajo\Aniversario;
+use BolsaTrabajo\Celula;
 use Illuminate\Http\Request;
 use BolsaTrabajo\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -15,7 +16,10 @@ class AniversarioController extends Controller
 
     public function index()
     {
-        return view('app.aniversario.index'); // Asegúrate de que la ruta sea correcta
+        $celulas = Celula::where('estado', 1) // Solo estado 1
+                 ->whereNull('deleted_at') // Excluir registros eliminados
+                 ->get();
+        return view('app.aniversario.index',['celulas' => $celulas]); // Asegúrate de que la ruta sea correcta
     }
 
 
@@ -44,6 +48,7 @@ class AniversarioController extends Controller
         // Preparar los datos para guardar
         $data = [
             'nombre' => $request->input('nombre'),
+            'celula_id' => $request->input('celula_id'),
             'tel' => $request->input('tel'),
             'foto' => $fotoPath, // Asignar la ruta de la foto
         ];

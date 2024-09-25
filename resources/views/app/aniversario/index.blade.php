@@ -26,14 +26,29 @@
                             <i class="fas fa-money-bill-wave" style="vertical-align: middle; margin-right: 5px;"></i>
                             Colaboración: <strong>S/7.00</strong>
                         </p>
-                    </div><br><br>
+                    </div> <br><br>
                     <input type="hidden" name="id_nuevo" id="id_nuevo" value="10" required>
                     <div class="form-group">
-                        <label for="nombres" class="text-primary-m">Nombres y Apellidos</label>
+                        <label for="nombres" class="text-primary-m">Nombre y Apellido</label>
                         <input type="text" autocomplete="off" id="nombres" name="nombre"
                             class="form-control-m {{ $errors->has('nombre') ? ' is-invalid' : '' }}"
                             value="{{ old('nombre') }}" required placeholder="Ingrese Nombre y Apellido">
                     </div>
+                    <br>
+                    <!-- Células Select -->
+                    <div class="form-group">
+                        <label for="celulas" class="text-primary-m">Célula</label> <small class="form-text text-muted">
+                            (Si no asistes a ninguna célula, seleccione <strong>NUEVO)</strong>.
+                        </small>
+                        <select id="celula_id" name="celula_id" class="form-control-m" required>
+                            <option value="" disabled selected>Seleccione una Célula...</option>
+                            @foreach ($celulas as $celula)
+                                <option value="{{ $celula->id }}">{{ $celula->nombre }}</option>
+                            @endforeach
+                        </select>
+                        
+                    </div>
+                    
                     <br>
                     <div class="form-group">
                         <label for="tel" class="text-primary-m">WhatsApp</label>

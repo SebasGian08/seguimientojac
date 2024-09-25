@@ -9,9 +9,15 @@ class Aniversario extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['id','nombre', 'tel', 'foto'];
+    protected $fillable = ['id','nombre', 'celula_id','tel', 'foto'];
 
     public $timestamps = false;
 
     protected $dates = ['deleted_at'];
+
+     // Definir la relación con Celula
+     public function celula()
+     {
+         return $this->belongsTo(Celula::class, 'celula_id');
+     }
 }
