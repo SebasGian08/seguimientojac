@@ -273,6 +273,12 @@
                                                 class="fa fa-user mr-5"></i> Gestión de
                                             Usuarios</a>
                                     </li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('auth.aniversario') }}"><i
+                                                class="fa fa-gift mr-5"></i> Aniversario JAC</a>
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('auth.usuarios') }}"><i
+                                        class="fa fa-star mr-5"></i> Opiniones y Calificaciones</a>
+                            </li>
 
                                 </ul>
                             </li>

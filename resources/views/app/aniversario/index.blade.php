@@ -14,8 +14,19 @@
     <div class="content_view_login">
         <div class="sect_login">
             <div class="content_login">
-                <form class="form-login" action="{{ route('aniversario.store') }}" method="post" enctype="multipart/form-data">
+                <form class="form-login" action="{{ route('aniversario.store') }}" method="post"
+                    enctype="multipart/form-data">
                     @csrf
+                    <div class="content_titulo_login" style="text-align: center;">
+                        <img src="{{ asset('app/img/logojac.png') }}" alt="Logo JAC"><br><br>
+                        <span style="font-size: 1.5em; font-weight: bold;">ANIVERSARIO JAC</span>
+                        <p class="title_" style="margin: 5px 0;">Código de vestimenta: <strong>Formal/elegante</strong>
+                        </p>
+                        <p style="margin: 5px 0;">
+                            <i class="fas fa-money-bill-wave" style="vertical-align: middle; margin-right: 5px;"></i>
+                            Colaboración: <strong>S/7.00</strong>
+                        </p>
+                    </div><br><br>
                     <input type="hidden" name="id_nuevo" id="id_nuevo" value="10" required>
                     <div class="form-group">
                         <label for="nombres" class="text-primary-m">Nombres y Apellidos</label>
@@ -32,7 +43,8 @@
                     </div>
                     <br>
                     <div class="form-group col-lg-6">
-                        <label for="tel" class="text-primary-m">Captura de pago (No obligatorio, puedes pagarlo el mismo día)</label>
+                        <label for="tel" class="text-primary-m">Captura de pago (No obligatorio, puedes pagarlo el
+                            mismo día)</label>
 
                         <div class="file-upload">
                             <input type="file" class="file-input" id="foto" name="foto"

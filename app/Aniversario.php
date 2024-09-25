@@ -9,7 +9,7 @@ class Aniversario extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['nombre', 'tel', 'foto'];
+    protected $fillable = ['id','nombre', 'tel', 'foto'];
 
     public $timestamps = false;
 

@@ -198,6 +198,12 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
         Route::post('/store', 'Auth\SeguimientoController@store')->name('auth.seguimiento.store');  
     });
 
+    Route::group(['prefix' => 'aniversario'], function () {
+        Route::get('', 'Auth\AniversarioController@index')->name('auth.aniversario');
+        Route::get('/list_all', 'Auth\AniversarioController@list_all')->name('auth.aniversario.list_all');  
+        Route::get('/partialView/{id}', 'Auth\AniversarioController@partialView')->name('auth.aniversario.create');
+    });
+
 });
 
 
