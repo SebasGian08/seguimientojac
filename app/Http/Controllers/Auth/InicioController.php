@@ -196,7 +196,7 @@ class InicioController extends Controller
         public function listSeguimiento(Request $request)
         {
             // Llamar al procedimiento almacenado
-            $data = DB::select('CALL ObtenerDatosAsistencia()');
+            $data = DB::select('CALL ObtenerDatosSeguimiento()');
             // Retornar los datos en formato JSON
             return response()->json([
                 'data' => $data

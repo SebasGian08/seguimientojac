@@ -30,13 +30,13 @@ $(function () {
                     return meta.row + 1;
                 },
             },
-            { title: "Nombre del Asistente", data: "NombreDelAsistente", class: "text-center" },
-            { title: "Célula", data: "Célula", class: "text-center" },
-            { title: "Programas Registrados", data: "NúmeroDeEventosRegistrados", class: "text-center" },
-            { title: "Programas Asistidos", data: "NúmeroDeEventosAsistidos", class: "text-center" },
-            { title: "Porcentaje de Asistencia", data: "PorcentajeDeAsistencia", class: "text-center" },
-            { title: "Última Asistencia", data: "ÚltimaAsistencia", class: "text-center" },
-            { title: "Estado de Compromiso", data: "EstadoDeCompromiso", class: "text-center" },
+            { title: "Fecha de Contacto", data: "fecha_contacto", class: "text-center" },
+            { title: "Célula", data: "celula_nombre", class: "text-center" },
+            { title: "Asistente", data: "asistente_nombre", class: "text-center", render: function(data, type, row) {
+                return row.asistente_nombre + ' ' + row.asistente_apellido;
+            } },
+            
+            { title: "Motivo de oración ", data: "oracion", class: "text-center" },
         ],
     });
 });

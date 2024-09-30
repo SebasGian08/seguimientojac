@@ -190,7 +190,7 @@ $(function () {
             },
             {
                 title: "Motivo",
-                data: "celula.nombre_celula",
+                data: "motivo",
                 class: "text-left",
             },
             {
