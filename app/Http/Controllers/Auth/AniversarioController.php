@@ -32,7 +32,7 @@ class AniversarioController extends Controller
             $query->where('created_at', '<=', $request->date_to);
         }
 
-        $events = $query->get(['id', 'nombre', 'tel', 'foto', 'celula_id']);
+        $events = $query->get(['id', 'nombre', 'tel', 'foto', 'celula_id','created_at']);
 
         // Mapear los eventos para incluir la URL completa de la foto y el nombre de la célula
         $events = $events->map(function ($event) {
@@ -43,6 +43,7 @@ class AniversarioController extends Controller
                 'foto' => $event->foto,
                 'celula_id' => $event->celula_id,
                 'celula_nombre' => $event->celula ? $event->celula->nombre : null, // Asumiendo que la relación se llama 'celula'
+                'created_at' => $event->created_at,
             ];
         });
 
